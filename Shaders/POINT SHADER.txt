@@ -1,0 +1,67 @@
+float4x4 matViewProjection;
+float4x4 InvViewMatrix;
+float4x4 ViewMatrix;
+float4 Ambient;
+float4 Position;
+float4 Attenuation;
+float4 Colour;
+float4 ViewPosition;
+
+struct VS_OUTPUT 
+{
+   float4 Position : POSITION0;
+   float2 TextureCoord : TEXCOORD0;
+   float2 Colour : COLOR0  ; 
+};
+
+float4 LightPoint(float3 VertPosition, float3 VertNormal, float3 LightPosition, float4 LightColour, float4 LightAttenuation, float3 EyeDirection)
+{
+   float3 LightDirection = LightPosition  - VertPosition;
+   float Distiance = length(LightDirection);
+  LightDirection = LightDirection / Distiance;
+  //LightDirection = normalize(LightDirection);
+  
+  //Half Vec
+  float3 HalfVect = normalize(LightDirection - EyeDirection);
+   
+   //Stolen from Shaders
+   float DistanceAttenuation = clamp(0,1, 1 / (LightAttenuation.x + LightAttenuation.y * Distiance + LightAttenuation.z * Distiance * Distiance));
+   
+   float SpecularAttenuation = pow(clamp(0,1,dot(VertNormal, HalfVect)), 32);
+
+   float AngleAttenuation = clamp(0,1,dot(VertNormal, LightDirection));
+   
+   return LightColour *  DistanceAttenuation * (AngleAttenuation + SpecularAttenuation);
+}
+
+VS_OUTPUT vs_main( float4 inPosition : POSITION, float3 inNormal : NORMAL, float2 inTexture : TEXCOORD0 )
+{
+   VS_OUTPUT Output;
+
+   Output.Position = mul(inPosition, matViewProjection);
+   Output.TextureCoord = inTexture;
+   
+   //Output.Colour = Light_PointDiffuse(inPosition, inNormal, Light_Position, Light_Colour, Light_Attenuation);
+   
+   float4 Colour = Ambient;
+   
+   float3 EyeVector = -normalize(mul(InvViewMatrix, float4(0,0,10,1)) + inPosition);
+   
+   Colour += LightPoint(inPosition, inNormal, Position, Colour, Attenuation, EyeVector);
+   
+   Output.Colour = Colour;
+   
+   return( Output );
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+sampler Texture;
+
+float4 ps_main(float4 inColour : COLOR0, float2 inTexture : TEXCOORD0) : COLOR
+{   
+   return inColour * tex2D(Texture, inTexture); 
+}
+
+
+
