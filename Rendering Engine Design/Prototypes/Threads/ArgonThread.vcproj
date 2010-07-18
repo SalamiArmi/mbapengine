@@ -166,6 +166,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ArgonThreadTarget.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\main.cpp"
 				>
 			</File>
@@ -177,6 +181,10 @@
 			>
 			<File
 				RelativePath=".\ArgonThread.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ArgonThreadTarget.h"
 				>
 			</File>
 			<File

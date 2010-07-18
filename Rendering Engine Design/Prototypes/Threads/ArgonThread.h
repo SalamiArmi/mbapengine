@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ArgonThreadTarget.h"
+
 #if defined (_WIN32)
 #include "WIN32_Thread.h"
 #else
@@ -13,6 +15,8 @@ namespace Argon
 	public:
 		Thread();
 		~Thread();
+
+		void SetTarget(ThreadTarget *NewTarget);
 
 		// Begins thread execution
 		void Start();
@@ -41,4 +45,9 @@ namespace Argon
 		// Returns true if thread is finished, false on timeout
 		bool Join(unsigned long Milliseconds);
 	};
+
+	inline void Argon::Thread::SetTarget(ThreadTarget *NewTarget)
+	{
+		m_RunnableObject = NewTarget;
+	}
 }
