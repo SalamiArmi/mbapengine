@@ -5,12 +5,11 @@
 class lol : public Argon::ThreadTarget
 {
 public:
-	int i;
 	void Method()
 	{
 		for (int i = 0; i < 10000000; ++i)
 		{
-			printf("@#124\n");
+			printf("%X", rand());
 		}
 	}
 };
@@ -19,10 +18,15 @@ int main()
 {
 	lol rofl;
 	Argon::Thread a;
-	a.SetTarget(&rofl);
-	a.Start();
+	a.Start(&rofl);
 
-	Sleep(100);
+	for (int i = 0; i < 10; ++i)
+	{
+		Sleep(500);
+		a.Pause();
+		Sleep(500);
+		a.Resume();
+	}
 
 	return 0;
 }
