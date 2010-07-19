@@ -12,34 +12,51 @@ namespace Argon
 {
 	class ThreadImpl
 	{
-		typedef HANDLE usableThread;
-
 	protected:
+		ThreadImpl();
+		virtual ~ThreadImpl();
+
 		void StartImpl();
 		void StopImpl();
 
 		void PauseImpl();
 		void ResumeImpl();
 
-		usableThread m_handleToThread;
+		static unsigned __stdcall EntryPoint(void* pThread);
+		void AquireThreadFromID();
 
+		HANDLE m_handleToThread;
 		unsigned int m_ThreadID;
-
 		ThreadTarget *m_RunnableObject;
-
-		static unsigned __stdcall callableEntry(void* pThread);
 	};
 
-	inline unsigned __stdcall ThreadImpl::callableEntry(void* pThread)
+	inline ThreadImpl::ThreadImpl()
+	:
+	m_ThreadID(0),
+	m_RunnableObject(0),
+	m_handleToThread(0)
 	{
-		ThreadImpl *a = reinterpret_cast<ThreadImpl*>(pThread);
-		a->m_RunnableObject->Method();
+	}
+
+	inline ThreadImpl::~ThreadImpl()
+	{
+	}
+
+	inline unsigned __stdcall ThreadImpl::EntryPoint(void* pThread)
+	{
+		reinterpret_cast<ThreadTarget *>(pThread)->Method();
 		return 0;
+	}
+
+	inline void ThreadImpl::AquireThreadFromID()
+	{
+		m_handleToThread = OpenThread(THREAD_SUSPEND_RESUME, false, m_ThreadID);
 	}
 
 	inline void ThreadImpl::StartImpl()
 	{
-		_beginthreadex(0, 0, callableEntry, m_RunnableObject, 0, &m_ThreadID);
+		_beginthreadex(0, 0, EntryPoint, (void *)m_RunnableObject, 0, &m_ThreadID);
+		AquireThreadFromID();
 	}
 
 	inline void ThreadImpl::StopImpl()
@@ -50,31 +67,21 @@ namespace Argon
 
 	inline void ThreadImpl::PauseImpl()
 	{
-		if (SuspendThread(m_handleToThread) == -1)
+		if (m_handleToThread == 0)
 		{
-			// Make sure we aren't causing any leaks
-			if (m_handleToThread != 0)
-			{
-				CloseHandle(m_handleToThread);
-			}
-
-			// Fetch a handle that can be used to resume and suspend, and suspend the thread (with error checking this time)
-			SuspendThread(m_handleToThread = OpenThread(THREAD_SUSPEND_RESUME, false, m_ThreadID));
+			AquireThreadFromID();
 		}
+
+		SuspendThread(m_handleToThread);
 	}
 
 	inline void ThreadImpl::ResumeImpl()
 	{
-		if (ResumeThread(m_handleToThread) == -1)
+		if (m_handleToThread == 0)
 		{
-			// Make sure we aren't causing any leaks
-			if (m_handleToThread != 0)
-			{
-				CloseHandle(m_handleToThread);
-			}
-
-			// Fetch a handle that can be used to resume and suspend, and resume the thread (with error checking this time)
-			ResumeThread(m_handleToThread = OpenThread(THREAD_SUSPEND_RESUME, false, m_ThreadID));
+			AquireThreadFromID();
 		}
+
+		ResumeThread(m_handleToThread);
 	}
 }

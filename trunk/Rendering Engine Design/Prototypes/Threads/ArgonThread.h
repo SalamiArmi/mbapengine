@@ -16,10 +16,13 @@ namespace Argon
 		Thread();
 		~Thread();
 
+		// Allows the user to set an object to begin the new thread with prior to execution
 		void SetTarget(ThreadTarget *NewTarget);
 
 		// Begins thread execution
 		void Start();
+
+		void Start(ThreadTarget *NewTarget);
 
 		// Stops thread execution
 		void Stop();

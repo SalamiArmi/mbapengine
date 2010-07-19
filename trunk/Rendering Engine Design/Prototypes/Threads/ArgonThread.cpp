@@ -13,6 +13,12 @@ void Argon::Thread::Start()
 	StartImpl();
 }
 
+void Argon::Thread::Start(ThreadTarget *NewTarget)
+{
+	m_RunnableObject = NewTarget;
+	StartImpl();
+}
+
 void Argon::Thread::Stop()
 {
 	StopImpl();
