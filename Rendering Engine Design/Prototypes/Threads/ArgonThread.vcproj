@@ -162,6 +162,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\ArgonMutex.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ArgonThread.cpp"
 				>
 			</File>
@@ -180,6 +184,14 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\ArgonMutex.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ArgonMutexWin32.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ArgonThread.h"
 				>
 			</File>
@@ -188,7 +200,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\WIN32_Thread.h"
+				RelativePath=".\ArgonThreadWin32.h"
 				>
 			</File>
 		</Filter>
