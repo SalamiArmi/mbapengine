@@ -3,7 +3,7 @@
 #include "ArgonThreadTarget.h"
 
 #if defined (_WIN32)
-#include "WIN32_Thread.h"
+#include "ArgonThreadWin32.h"
 #else
 // You're screwed lol
 #endif
