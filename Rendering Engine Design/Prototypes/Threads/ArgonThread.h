@@ -8,6 +8,11 @@
 // You're screwed lol
 #endif
 
+// Disable legacy windows thing
+#ifdef Yield
+#undef Yield
+#endif
+
 namespace Argon
 {
 	class Thread : private ThreadImpl
@@ -34,9 +39,9 @@ namespace Argon
 		void Resume();
 
 		// Stops working on this thread for a moment
-		void Yield();
+		static void Yield();
 		// Stops working on this thread for a user defined amount of time
-		void Yield(unsigned long Milliseconds);
+		static void Yield(unsigned long Milliseconds);
 
 		// Returns true if the thread is running, otherwise false
 		bool Running();
@@ -52,5 +57,15 @@ namespace Argon
 	inline void Argon::Thread::SetTarget(ThreadTarget *NewTarget)
 	{
 		m_RunnableObject = NewTarget;
+	}
+
+	inline void Argon::Thread::Yield()
+	{
+		YieldImpl(0);
+	}
+
+	inline void Argon::Thread::Yield(unsigned long Milliseconds)
+	{
+		YieldImpl(Milliseconds);
 	}
 }

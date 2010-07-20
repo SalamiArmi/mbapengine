@@ -8,7 +8,7 @@ Argon::Mutex GlobalMutex;
 void printSomething(unsigned long input)
 {
 	GlobalMutex.Lock();
-	printf("%d", input);
+	printf("%c", input);
 	GlobalMutex.Unlock();
 }
 
@@ -17,7 +17,7 @@ class testThread : public Argon::ThreadTarget
 public:
 	void Method()
 	{
-		for (int i = 0; i < 10000000; ++i)
+		for (int i = 0; i < 10000; ++i)
 		{
 			printSomething(rand());
 		}
@@ -37,10 +37,14 @@ int main()
 	a.Start(&thread1);
 	b.Start(&thread2);
 
-	for (int i = 0; i < 10000000; ++i)
+	while (a.Running() || b.Running())
 	{
-		printSomething(rand());
+		Argon::Thread::Yield();
+		printSomething('\n');
 	}
+
+	a.Stop();
+	b.Stop();
 
 	return 0;
 }

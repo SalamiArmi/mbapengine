@@ -3,11 +3,6 @@
 #include <windows.h>
 #include <process.h>
 
-// Disable legacy windows thing
-#ifdef Yield
-#undef Yield
-#endif
-
 namespace Argon
 {
 	class ThreadImpl
@@ -21,6 +16,9 @@ namespace Argon
 
 		void PauseImpl();
 		void ResumeImpl();
+
+		bool RunningImpl();
+		static void YieldImpl(unsigned long Milliseconds);
 
 		static unsigned __stdcall EntryPoint(void* pThread);
 		void AquireThreadFromID();
@@ -50,7 +48,7 @@ namespace Argon
 
 	inline void ThreadImpl::AquireThreadFromID()
 	{
-		m_handleToThread = OpenThread(THREAD_SUSPEND_RESUME, false, m_ThreadID);
+		m_handleToThread = OpenThread(STANDARD_RIGHTS_ALL, false, m_ThreadID);
 	}
 
 	inline void ThreadImpl::StartImpl()
@@ -61,27 +59,36 @@ namespace Argon
 
 	inline void ThreadImpl::StopImpl()
 	{
+		if (RunningImpl())
+		{
+			_endthreadex(m_ThreadID);
+		}
 		CloseHandle(m_handleToThread);
-		_endthreadex(m_ThreadID);
 	}
 
 	inline void ThreadImpl::PauseImpl()
 	{
-		if (m_handleToThread == 0)
+		if (RunningImpl())
 		{
-			AquireThreadFromID();
+			SuspendThread(m_handleToThread);
 		}
-
-		SuspendThread(m_handleToThread);
 	}
 
 	inline void ThreadImpl::ResumeImpl()
 	{
-		if (m_handleToThread == 0)
+		if (RunningImpl())
 		{
-			AquireThreadFromID();
+			ResumeThread(m_handleToThread);
 		}
+	}
 
-		ResumeThread(m_handleToThread);
+	inline bool ThreadImpl::RunningImpl()
+	{
+		return (WAIT_OBJECT_0 != WaitForSingleObject(m_handleToThread, 0));
+	}
+
+	inline void ThreadImpl::YieldImpl(unsigned long Milliseconds)
+	{
+		Sleep(Milliseconds);
 	}
 }
