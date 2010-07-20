@@ -34,17 +34,9 @@ void Argon::Thread::Resume()
 	ResumeImpl();
 }
 
-void Argon::Thread::Yield()
-{
-}
-
-void Argon::Thread::Yield(unsigned long Milliseconds)
-{
-}
-
 bool Argon::Thread::Running()
 {
-	return false;
+	return RunningImpl();
 }
 
 void Argon::Thread::Join()
