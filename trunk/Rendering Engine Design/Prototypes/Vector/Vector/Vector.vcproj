@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="ArgonString"
-	ProjectGUID="{EE0E662B-B27F-4225-B22C-0CE444126146}"
-	RootNamespace="ArgonString"
+	Name="Vector"
+	ProjectGUID="{7E5EF23E-2E0E-4D43-BAC4-CDEF17254E7A}"
+	RootNamespace="Vector"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -166,23 +166,15 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\Algorithms.h"
-			>
-		</File>
-		<File
 			RelativePath=".\main.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\QString.h"
+			RelativePath=".\Vector.cpp"
 			>
 		</File>
 		<File
-			RelativePath=".\String.h"
-			>
-		</File>
-		<File
-			RelativePath=".\String.inl"
+			RelativePath=".\Vector.h"
 			>
 		</File>
 	</Files>

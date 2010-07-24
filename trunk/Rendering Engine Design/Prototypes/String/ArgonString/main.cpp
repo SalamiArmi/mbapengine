@@ -2,7 +2,10 @@
 
 int main()
 {
-	wchar_t myString2[] = L"0000";
-	int a  = sizeof ( myString2);
+	char* a = "a";
+
+	int b = (int)*a;
+
+		
 	return 0;
 }
