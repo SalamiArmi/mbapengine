@@ -50,16 +50,64 @@ namespace Argon
 			}
 		}
 
-		void		Pop_Back();
-		void		Clear();
+		void		Pop_Back()
+		{
+			if(m_Size > 0)
+				--m_Size;
+		}
+
+		void		Clear()
+		{
+			if(m_Size > 0 && m_AllocatedSize > 0)
+			{
+				delete[] m_Data;
+				m_AllocatedSize = m_Size = m_Data = 0x0;
+			}
+		}
+
 		void		Reverse();
-		void		Resize(size_t NewSize);
+
+		void		Resize(size_t NewSize)
+		{
+			m_Size = m_AllocatedSize = NewSize;
+			T* Data = new void[m_Size]; //Create a new buffer
+			if(m_Size > 0)
+			{
+				T* OldData = m_Data;
+				for(size_t Index = 0; Index < m_Size; ++Data, ++OldData, ++Index) //Copy the old data into the new buffer
+				{
+					*Data = *OldData;
+				}
+			}
+			delete[] m_Data;
+			m_Data = Data; 
+		}
+
 		void		EraseObject(const T& Object);
 
-		T&			Front();
-		T&			Back();
-		T&			At(size_t Index);
-		const T&	At(size_t Index) const;
+		T&			Front()
+		{
+			return m_Data[0];
+		}
+
+		T&			Back()
+		{
+			return m_Data[m_Size - 1];
+		}
+
+		T&			At(size_t Index)
+		{
+			if(m_Size > 0)
+				return m_Data[Index];
+			return NULL;
+		}
+
+		const T&	At(size_t Index) const
+		{
+			if(m_Size > 0)
+				return m_Data[Index];
+			return NULL;
+		}
 
 
 		/////////////////////////////////////////////////////
