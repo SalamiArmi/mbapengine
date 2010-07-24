@@ -1,8 +1,6 @@
 #ifndef _MAP_HEADER_
 #define _MAP_HEADER_
 
-//#include "stdafx.h"
-
 namespace Argon
 {
 	template < typename _Key, typename _Data >
@@ -12,30 +10,31 @@ namespace Argon
 		class ContainerT
 		{
 			friend Map <_Key, _Data>;
+
 		public:
-			inline const bool isValid() const
+			inline const bool IsValid() const
 			{
-				return !(!parent && colour);
+				return !(!m_Parent && colour);
 			}
 
 			void operator = (const ContainerT &copy)
 			{
-				key = copy.key;
-				children[0] = copy.children[0];
-				children[1] = copy.children[1];
-				data = copy.data;
-				parent = copy.parent;
+				m_Key = copy.m_Key;
+				m_Children[0] = copy.m_Children[0];
+				m_Children[1] = copy.m_Children[1];
+				m_Data = copy.m_Data;
+				m_Parent = copy.m_Parent;
 				colour = copy.colour;
 			}
 
 			inline const bool operator == (const ContainerT &copy) const
 			{
-				return key == copy.key;
+				return m_Key == copy.m_Key;
 			}
 
 			inline const bool operator != (const ContainerT &copy) const
 			{
-				return key != copy.key;
+				return m_Key != copy.m_Key;
 			}
 
 			inline void operator ++ ()
@@ -63,77 +62,77 @@ namespace Argon
 			{
 			}
 
-			void increment()
+			void Increment()
 			{
 				ContainerT *iterator = this;
 
-				if (iterator->children[1])
+				if (iterator->m_Children[1])
 				{
-					iterator = iterator->children[1];
+					iterator = iterator->m_Children[1];
 				}
-				else if (iterator->parent->children[0])
+				else if (iterator->m_Parent->m_Children[0])
 				{
-					_Key comparisonValue = iterator->data;
+					_Key comparisonValue = iterator->m_Data;
 					do
 					{
-						iterator = iterator->parent;
-					} while (iterator->data < comparisonValue);
+						iterator = iterator->m_Parent;
+					} while (iterator->m_Data < comparisonValue);
 				}
 				else
 				{
 					do
 					{
-						iterator = iterator->parent;
-					} while (!iterator->children[1]);
+						iterator = iterator->m_Parent;
+					} while (!iterator->m_Children[1]);
 				}
 
-				while (iterator->children[0])
+				while (iterator->m_Children[0])
 				{
-					iterator = iterator->children[0];
+					iterator = iterator->m_Children[0];
 				}
 
 				*this = *iterator;
 			}
 
-			void deincrement()
+			void Deincrement()
 			{
 				ContainerT *iterator = this;
 
-				if (iterator->children[0])
+				if (iterator->m_Children[0])
 				{
-					iterator = iterator->children[0];
+					iterator = iterator->m_Children[0];
 				}
-				else if (iterator->parent->children[1])
+				else if (iterator->m_Parent->m_Children[1])
 				{
-					_Key comparisonValue = iterator->data;
+					_Key comparisonValue = iterator->m_Data;
 					do
 					{
-						iterator = iterator->parent;
-					} while (iterator->data < comparisonValue);
+						iterator = iterator->m_Parent;
+					} while (iterator->m_Data < comparisonValue);
 				}
 				else
 				{
 					do
 					{
-						iterator = iterator->parent;
-					} while (!iterator->children[0]);
+						iterator = iterator->m_Parent;
+					} while (!iterator->m_Children[0]);
 				}
 
-				while (iterator->children[1])
+				while (iterator->m_Children[1])
 				{
-					iterator = iterator->children[1];
+					iterator = iterator->m_Children[1];
 				}
 
 				*this = *iterator;
 			}
 
 		public:
-			_Key key;
-			_Data data;
+			_Key m_Key;
+			_Data m_Data;
 
 		protected:
-			ContainerT *children[2];
-			ContainerT *parent;
+			ContainerT *m_Children[2];
+			ContainerT *m_Parent;
 			bool colour;
 		};
 
@@ -148,63 +147,63 @@ namespace Argon
 		{
 		}
 
-		void insert(_Key newKey, _Data newData)
+		void Insert(_Key newKey, _Data newData)
 		{
 			container
 				*__restrict newContainer = new container(),
 				*__restrict iterator = m_root;
 
-			newContainer->data = newData;
-			newContainer->key = newKey;
+			newContainer->m_Data = newData;
+			newContainer->m_Key = newKey;
 			newContainer->colour = true;
-			newContainer->children[0] = 0;
-			newContainer->children[1] = 0;
+			newContainer->m_Children[0] = 0;
+			newContainer->m_Children[1] = 0;
 
 			if (!iterator)
 			{
 				iterator = newContainer;
-				iterator->parent = 0;
+				iterator->m_Parent = 0;
 			}
 			else
 			{
-				while (iterator->children[newContainer->key > iterator->key])
+				while (iterator->m_Children[newContainer->m_Key > iterator->m_Key])
 				{
-					iterator = iterator->children[newContainer->key > iterator->key];
+					iterator = iterator->m_Children[newContainer->m_Key > iterator->m_Key];
 				}
 
-				iterator->children[newContainer->key > iterator->key] = newContainer;
-				iterator->children[newContainer->key > iterator->key]->parent = iterator;
+				iterator->m_Children[newContainer->m_Key > iterator->m_Key] = newContainer;
+				iterator->m_Children[newContainer->m_Key > iterator->m_Key]->m_Parent = iterator;
 			}
 
 			insertHelper(iterator);
 		}
 
-		void erase(container *__restrict erasableNode)
+		void Erase(container *__restrict erasableNode)
 		{
 			// Are our pointers different?
-			if (erasableNode->children[0] != erasableNode->children[1])
+			if (erasableNode->m_Children[0] != erasableNode->m_Children[1])
 			{
-				container *__restrict child = erasableNode->children[!erasableNode->children[0]];
+				container *__restrict child = erasableNode->m_Children[!erasableNode->m_Children[0]];
 
-				if (erasableNode->children[0] && erasableNode->children[1])
+				if (erasableNode->m_Children[0] && erasableNode->m_Children[1])
 				{
 					// Both pointers are valid
-					while (child->children[1])
+					while (child->m_Children[1])
 					{
-						child = child->children[1];
+						child = child->m_Children[1];
 					}
 
-					erasableNode->key = child->key;
-					erasableNode->data = child->data;
+					erasableNode->m_Key = child->m_Key;
+					erasableNode->m_Data = child->m_Data;
 					erasableNode = child;
 				}
 				else
 				{
 					// Only one pointer is valid
-					child->parent = erasableNode->parent;
-					if (child->parent)
+					child->m_Parent = erasableNode->m_Parent;
+					if (child->m_Parent)
 					{
-						child->parent->children[erasableNode->parent->children[1] == erasableNode] = child;
+						child->m_Parent->m_Children[erasableNode->m_Parent->m_Children[1] == erasableNode] = child;
 					}
 					else
 					{
@@ -219,9 +218,9 @@ namespace Argon
 			}
 			else
 			{
-				if (erasableNode->parent)
+				if (erasableNode->m_Parent)
 				{
-					erasableNode->parent->children[erasableNode->parent->children[1] == erasableNode] = 0;
+					erasableNode->m_Parent->m_Children[erasableNode->m_Parent->m_Children[1] == erasableNode] = 0;
 				}
 				else
 				{
@@ -232,113 +231,113 @@ namespace Argon
 			delete erasableNode;
 		}
 
-		container *find(_Key request) const
+		container *Find(_Key request) const
 		{
 			container *__restrict iterator = m_root;
-			while (request != iterator->key)
+			while (request != iterator->m_Key)
 			{
-				iterator = iterator->children[request > iterator->key];
+				iterator = iterator->m_Children[request > iterator->m_Key];
 			}
 			return iterator;
 		}
 
-		container *findLower(_Key request) const
+		container *FindLower(_Key request) const
 		{
 			container *__restrict iterator = m_root;
-			while (request != iterator->key && iterator->children[request > iterator->key])
+			while (request != iterator->m_Key && iterator->m_Children[request > iterator->m_Key])
 			{
-				iterator = iterator->children[request > iterator->key];
+				iterator = iterator->m_Children[request > iterator->m_Key];
 			}
-			if (iterator->key > request)
+			if (iterator->m_Key > request)
 			{
-				--(*ret);
-			}
-			return ret;
-		}
-
-		container *findHigher(_Key request) const
-		{
-			container *__restrict iterator = m_root;
-			while (request != iterator->key && iterator->children[request > iterator->key])
-			{
-				iterator = iterator->children[request > iterator->key];
-			}
-			if (iterator->key < request)
-			{
-				--(*ret);
-			}
-			return ret;
-		}
-
-		container *first() const
-		{
-			container *__restrict iterator = m_root;
-			while (iterator->children[0])
-			{
-				iterator = iterator->children[0];
+				--(*iterator);
 			}
 			return iterator;
 		}
 
-		container *last() const
+		container *FindHigher(_Key request) const
 		{
 			container *__restrict iterator = m_root;
-			while (iterator->children[1])
+			while (request != iterator->m_Key && iterator->m_Children[request > iterator->m_Key])
 			{
-				iterator = iterator->children[1];
+				iterator = iterator->m_Children[request > iterator->m_Key];
+			}
+			if (iterator->m_Key < request)
+			{
+				--(*iterator);
 			}
 			return iterator;
 		}
 
-		const bool empty() const
+		container *First() const
+		{
+			container *__restrict iterator = m_root;
+			while (iterator->m_Children[0])
+			{
+				iterator = iterator->m_Children[0];
+			}
+			return iterator;
+		}
+
+		container *Last() const
+		{
+			container *__restrict iterator = m_root;
+			while (iterator->m_Children[1])
+			{
+				iterator = iterator->m_Children[1];
+			}
+			return iterator;
+		}
+
+		const bool IsEmpty() const
 		{
 			return !m_root;
 		}
 
 	private:
-		inline void insertHelper(container *__restrict target)
+		inline void InsertHelper(container *__restrict target)
 		{
 			while (true)
 			{
-				if (!target->parent)
+				if (!target->m_Parent)
 				{
 					target->colour = false;
 					m_root = target;
 				}
-				else if (target->parent->colour)
+				else if (target->m_Parent->colour)
 				{
 					container
-						*__restrict grandparent = target && target->parent ? target->parent->parent : 0,
-						*__restrict uncle = grandparent ? grandparent->children[target->parent == grandparent->children[0]] : 0;
+						*__restrict grandparent = target && target->m_Parent ? target->m_Parent->m_Parent : 0,
+						*__restrict uncle = grandparent ? grandparent->m_Children[target->m_Parent == grandparent->m_Children[0]] : 0;
 
 					if (uncle && uncle->colour)
 					{
-						target->parent->colour = uncle->colour = false;
+						target->m_Parent->colour = uncle->colour = false;
 						grandparent->colour = true;
 						target = grandparent;
 						continue;
 					}
 					else
 					{
-						if (target == target->parent->children[1] && target->parent == grandparent->children[0])
+						if (target == target->m_Parent->m_Children[1] && target->m_Parent == grandparent->m_Children[0])
 						{
 							rotateTree(target, false);
-							target = target->children[0];
+							target = target->m_Children[0];
 						}
-						else if (target == target->parent->children[0] && target->parent == grandparent->children[1])
+						else if (target == target->m_Parent->m_Children[0] && target->m_Parent == grandparent->m_Children[1])
 						{
 							rotateTree(target, true);
-							target = target->children[1];
+							target = target->m_Children[1];
 						}
 
-						target->parent->colour = false;
+						target->m_Parent->colour = false;
 						grandparent->colour = true;
 
-						rotateTree(target->parent, target == target->parent->children[0] && target->parent == grandparent->children[0]);
+						rotateTree(target->m_Parent, target == target->m_Parent->m_Children[0] && target->m_Parent == grandparent->m_Children[0]);
 
-						while (m_root->parent)
+						while (m_root->m_Parent)
 						{
-							m_root = m_root->parent;
+							m_root = m_root->m_Parent;
 						}
 					}
 				}
@@ -346,72 +345,72 @@ namespace Argon
 			}
 		}
 
-		inline void eraseHelper(container *__restrict target)
+		inline void EraseHelper(container *__restrict target)
 		{
 			while (true)
 			{
-				if (target->parent)
+				if (target->m_Parent)
 				{
-					container *__restrict sibling = target->parent->children[target == target->parent->children[0]];
+					container *__restrict sibling = target->m_Parent->m_Children[target == target->m_Parent->m_Children[0]];
 
 					if (sibling->colour == true)
 					{
-						target->parent->colour = true;
+						target->m_Parent->colour = true;
 						sibling->colour = false;
-						rotateTree(target, target == target->parent->children[0]);
+						rotateTree(target, target == target->m_Parent->m_Children[0]);
 					}
-					else if ((sibling->colour == false) && (sibling->children[0]->colour == false) && (sibling->children[1]->colour == false))
+					else if ((sibling->colour == false) && (sibling->m_Children[0]->colour == false) && (sibling->m_Children[1]->colour == false))
 					{
 						sibling->colour = true;
-						if (target->parent->colour)
+						if (target->m_Parent->colour)
 						{
-							target->parent->colour = false;
+							target->m_Parent->colour = false;
 						}
 						else
 						{
-							target = target->parent;
+							target = target->m_Parent;
 							continue;
 						}
 					}
 					else
 					{
-						sibling->colour = target->parent->colour;
-						target->parent->colour = false;
+						sibling->colour = target->m_Parent->colour;
+						target->m_Parent->colour = false;
 
-						sibling->children[target == target->parent->children[0]]->colour = false;
-						rotateTree(target, target == target->parent->children[0]);
+						sibling->m_Children[target == target->m_Parent->m_Children[0]]->colour = false;
+						rotateTree(target, target == target->m_Parent->m_Children[0]);
 					}
 
-					while (m_root->parent)
+					while (m_root->m_Parent)
 					{
-						m_root = m_root->parent;
+						m_root = m_root->m_Parent;
 					}
 				}
 				break;
 			}
 		}
 
-		static inline void rotateTree(container *__restrict target, const bool direction)
+		static inline void RotateTree(container *__restrict target, const bool direction)
 		{
 			container
-				*__restrict parent = target->parent,
-				*__restrict grandparent = target->parent->parent,
-				*__restrict middleChild = target->children[direction];
+				*__restrict m_Parent = target->m_Parent,
+				*__restrict grandparent = target->m_Parent->m_Parent,
+				*__restrict middleChild = target->m_Children[direction];
 
-			parent->children[!direction] = middleChild;
+			m_Parent->m_Children[!direction] = middleChild;
 			if (middleChild)
 			{
-				middleChild->parent = parent;
+				middleChild->m_Parent = m_Parent;
 			}
 
-			target->parent = grandparent;
+			target->m_Parent = grandparent;
 			if (grandparent)
 			{
-				grandparent->children[grandparent->children[1] == parent] = target;
+				grandparent->m_Children[grandparent->m_Children[1] == m_Parent] = target;
 			}
 
-			target->children[direction] = parent;
-			parent->parent = target;
+			target->m_Children[direction] = m_Parent;
+			m_Parent->m_Parent = target;
 		}
 
 		container *m_root;
