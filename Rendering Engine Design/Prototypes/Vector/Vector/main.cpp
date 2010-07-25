@@ -13,7 +13,7 @@ int main()
 	}
 
 	for(Argon::Vector< int >::Iterator it = pp.Begin(); it != pp.End(); ++it)
-		std::cout << it;
+		std::cout << *it << std::endl;
 
 	return 0;
 }
