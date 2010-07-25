@@ -38,11 +38,9 @@ namespace Argon
 				if(m_Size > 0 && m_Data)
 				{
 					T* OldData = m_Data;
-					for(size_t Index = 0; Index < m_Size; ++Data, ++OldData, ++Index) //Copy the old data into the new buffer
-					{
-						*Data = *OldData;
-					}
-					delete[] m_Data; m_Data = 0x0;
+					memcpy(Data, OldData, m_Size * sizeof(T)); //Copy the old data into the new buffer
+					delete[] m_Data;
+					m_Data = 0x0;
 				}
 				m_Data = Data; 
 			}
