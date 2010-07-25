@@ -41,9 +41,10 @@ bool Argon::Thread::Running()
 
 void Argon::Thread::Join()
 {
+	JoinImpl(0);
 }
 
 bool Argon::Thread::Join(unsigned long Milliseconds)
 {
-	return false;
+	return JoinImpl(Milliseconds);
 }
