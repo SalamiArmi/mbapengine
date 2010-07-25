@@ -1,9 +1,13 @@
 #include "ArgonThread.h"
 #include "ArgonMutex.h"
+#include "ArgonEvent.h"
 
 #include "stdio.h"
+#include "math.h"
+#include "time.h"
 
 Argon::Mutex GlobalMutex;
+Argon::Event GlobalEvent;
 
 void printSomething(unsigned long input)
 {
@@ -19,32 +23,35 @@ public:
 	{
 		for (int i = 0; i < 10000; ++i)
 		{
+			GlobalEvent.Wait(rand()%50);
 			printSomething(rand());
 		}
 	}
 };
 
+static const unsigned int number = 16;
+
 int main()
 {
-	testThread
-		thread1,
-		thread2;
+	testThread threadObjects[number];
+	Argon::Thread threads[number];
 
-	Argon::Thread
-		a,
-		b;
-
-	a.Start(&thread1);
-	b.Start(&thread2);
-
-	while (a.Running() || b.Running())
+	for (int i = 0; i < number; ++i)
 	{
-		Argon::Thread::Yield();
-		printSomething('\n');
+		threads[i].Start(&threadObjects[i]);
 	}
 
-	a.Stop();
-	b.Stop();
+	while (threads[0].Running())
+	{
+		GlobalEvent.Set();
+		Sleep(1);
+		GlobalEvent.Reset();
+	}
+
+	for (int i = 0; i < number; ++i)
+	{
+		threads[i].Stop();
+	}
 
 	return 0;
 }
