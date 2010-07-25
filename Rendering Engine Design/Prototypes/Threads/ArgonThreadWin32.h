@@ -20,6 +20,8 @@ namespace Argon
 		bool RunningImpl();
 		static void YieldImpl(unsigned long Milliseconds);
 
+		bool JoinImpl(unsigned long Milliseconds);
+
 		static unsigned __stdcall EntryPoint(void* pThread);
 		void AquireThreadFromID();
 
@@ -84,11 +86,16 @@ namespace Argon
 
 	inline bool ThreadImpl::RunningImpl()
 	{
-		return (WAIT_OBJECT_0 != WaitForSingleObject(m_handleToThread, 0));
+		return m_handleToThread && WAIT_OBJECT_0 != WaitForSingleObject(m_handleToThread, 0);
 	}
 
 	inline void ThreadImpl::YieldImpl(unsigned long Milliseconds)
 	{
 		Sleep(Milliseconds);
+	}
+
+	inline bool ThreadImpl::JoinImpl(unsigned long Milliseconds)
+	{
+		return (WaitForSingleObject(m_handleToThread, Milliseconds) != WAIT_TIMEOUT);
 	}
 }
