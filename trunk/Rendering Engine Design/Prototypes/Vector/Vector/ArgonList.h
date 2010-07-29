@@ -83,6 +83,57 @@ namespace Argon
 			return 0x0;
 		}
 
+		void Push_Front(T Item)
+		{
+			T Data = new T[++m_Size];
+			T OldData = m_Data;
+
+			Data[0] = Item;
+
+			for(size_t nIndex = 1; nIndex < m_Size; ++nIndex)
+				Data[nIndex] = OldData[nIndex-1];
+
+			delete[] m_Data;
+			m_Data = Data;
+		}
+
+		void Push_Back(T Item)
+		{
+			T Data = new T[++m_Size]
+			T OldData = m_Data;
+
+			for(size_t nIndex = 1; nIndex < m_Size; ++nIndex)
+				Data[nIndex] = OldData[nIndex];
+
+			delete[] m_Data;
+			m_Data = Data
+		}
+
+		void Pop_Front()
+		{
+			T Data = new T[m_Size-1];
+			T OldData = m_Data;
+
+			for(size_t nIndex = 1; nIndex < m_Size; ++nIndex)
+				Data[nIndex-1] = OldData[nIndex];
+
+			--m_Size;
+			delete[] m_Data;
+			m_Data = Data;
+		}
+
+		void Pop_Back()
+		{
+			T Data = new T[--m_Size];
+			T OldData = m_Data;
+
+			for(size_t nIndex = 0; nIndex < m_Size; ++nIndex)
+				Data[nIndex-1] = OldData[nIndex];
+
+			delete[] m_Data;
+			m_Data = Data;
+		}
+
 		List< T >& operator = (List< T > &RightHand)
 		{
 			if(RightHand.m_Size > 0)
