@@ -102,7 +102,7 @@ namespace Argon
 			return 0x0;
 		}
 
-		inline void Push_Front(T Item)
+		inline void Push_Front(const T &Item)
 		{
 			T* Data = new T[++m_Size];
 			T* OldData = m_Data;
@@ -118,22 +118,25 @@ namespace Argon
 			m_Data = Data;
 		}
 
-		inline void Push_Back(T Item)
+		inline void Push_Back(const T &Item)
 		{
-			T Data = new T[++m_Size]
-			T OldData = m_Data;
+			T* Data = new T[++m_Size];
+			T* OldData = m_Data;
 
-			for(size_t nIndex = 1; nIndex < m_Size; ++nIndex)
+			for(size_t nIndex = 0; nIndex < m_Size-1; ++nIndex)
 				Data[nIndex] = OldData[nIndex];
 
-			delete[] m_Data;
-			m_Data = Data
+			Data[m_Size-1] = Item;
+
+			if( m_Data )
+				delete[] m_Data;
+			m_Data = Data;
 		}
 
 		inline void Pop_Front()
 		{
-			T Data = new T[m_Size-1];
-			T OldData = m_Data;
+			T* Data = new T[m_Size-1];
+			T* OldData = m_Data;
 
 			for(size_t nIndex = 1; nIndex < m_Size; ++nIndex)
 				Data[nIndex-1] = OldData[nIndex];
@@ -146,8 +149,8 @@ namespace Argon
 
 		inline void Pop_Back()
 		{
-			T Data = new T[--m_Size];
-			T OldData = m_Data;
+			T* Data = new T[--m_Size];
+			T* OldData = m_Data;
 
 			for(size_t nIndex = 0; nIndex < m_Size; ++nIndex)
 				Data[nIndex-1] = OldData[nIndex];

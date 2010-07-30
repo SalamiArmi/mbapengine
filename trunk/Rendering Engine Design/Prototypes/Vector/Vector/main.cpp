@@ -12,7 +12,7 @@ int main()
 	for(int i = 0; i < 500; ++i)
 	{
 		pp.Push_Back(i);
-		ll.Push_Front( i );
+		ll.Push_Back( i );
 	}
 
 	for(Argon::Vector< int >::Iterator it = pp.Begin(); it != pp.End(); ++it)
