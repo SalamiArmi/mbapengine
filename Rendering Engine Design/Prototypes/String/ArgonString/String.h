@@ -1,6 +1,8 @@
 #ifndef _STRING_HEADER_
 #define _STRING_HEADER_
 
+#include "ArgonStringAllocator.h"
+
 #ifdef _W64
 	typedef __w64 unsigned long ulong;
 #else 
@@ -9,7 +11,7 @@
 
 namespace Argon
 {
-	template< typename T > class StringT
+	template< typename T, typename AllocatorT > class StringT
 	{
 	public:
 		///Constructor(VOID)
@@ -17,21 +19,45 @@ namespace Argon
 		///Create a new string with the defined template type
 		///
 		///No Params:
-		StringT();
+		StringT() : m_Allocator(new AllocatorT()), m_String(0x0)
+		{
+		}
 
 		///Constructor(VOID)
 		///
 		///Create a new string with the defined template type
 		///
 		///Param T: The type of string to create
-		StringT( const T aString );
+		StringT( const T aString ) : m_Allocator( new AllocatorT() )
+		{
+			m_String = aString;
+		}
 
 		///Constructor(VOID)
 		///
 		///Create a String using a Bool
 		///
 		///Param aBool: The value to create the string from
-		StringT( bool aBool );
+		StringT( bool aBool )
+		{
+			if(aBool)
+			{
+				m_String = m_Allocator->Allocate(4);
+				m_String[0] = "T";
+				m_String[1] = "r";
+				m_String[2] = "u";
+				m_String[3] = "e";
+			}
+			else
+			{
+				m_String = m_Allocator->Allocate(5);
+				m_String[0] = "F";
+				m_String[1] = "a";
+				m_String[2] = "l";
+				m_String[3] = "s";
+				m_String[3] = "e";
+			}
+		}
 
 		///Constructor(VOID)
 		///
@@ -101,21 +127,30 @@ namespace Argon
 		///Destroy the string
 		///
 		///No Params:
-		~StringT();
+		~StringT()
+		{
+			delete m_String;
+		}
 
 		///LENGTH(ULONG)
 		///
 		///Get the length of the String
 		///
 		///No Params:
-		ulong Length() const;
+		ulong Length() const
+		{
+			return m_Allocator->Length();
+		}
 
 		///C_STR(LPCHAR)
 		///
 		///Get a C style pointer to the string
 		///
 		///No Params:
-		char* c_str() const;
+		char* c_str() const
+		{
+			return m_String;
+		}
 
 		///FINDSTRING(ulong)
 		///
@@ -171,7 +206,13 @@ namespace Argon
 		bool     operator!=( const T cstr ) const;
 
 	private:
-		T m_String;
+		T				m_String;
+		size_t			m_Size;
+		AllocatorT*		m_Allocator;
 	};
+
+	
+	typedef StringT< char*, CharAllocator > String;
+
 }
 #endif //_STRING_HEADER_
