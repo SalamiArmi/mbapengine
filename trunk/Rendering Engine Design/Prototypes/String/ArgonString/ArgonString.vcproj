@@ -170,6 +170,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\ArgonStringAllocator.h"
+			>
+		</File>
+		<File
 			RelativePath=".\main.cpp"
 			>
 		</File>

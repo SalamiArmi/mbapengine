@@ -2,10 +2,7 @@
 
 int main()
 {
-	char* a = "a";
-
-	int b = (int)*a;
-
+	Argon::String s = "";
 		
 	return 0;
 }
