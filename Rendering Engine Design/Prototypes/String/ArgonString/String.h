@@ -139,7 +139,7 @@ namespace Argon
 		///No Params:
 		ulong Length() const
 		{
-			return m_Allocator->Length();
+			return m_Allocator->Length(m_String);
 		}
 
 		///C_STR(LPCHAR)
@@ -152,12 +152,30 @@ namespace Argon
 			return m_String;
 		}
 
+		bool Empty()
+		{
+			bool empty = (m_Allocator->Length() == 0) ? true : false;
+			return empty;
+
+		}
+
 		///FINDSTRING(ulong)
 		///
 		/// Looks for the substring inside the current string
 		///
 		///Param str: The string to attempt to find within this string
-		ulong FindString( const T &str ) const;
+		ulong FindString( const StringT<T, AllocatorT> &str ) const
+		{
+			char *ptr = strstr(m_pString, str.m_pString);
+
+			if(ptr == NULL) 
+				return -1; // The substring was not found
+
+			// The substring was found, return an index to the first character of it
+			// inside the larger string
+			return (int) (ptr - m_pString); 
+		}
+
 
 		///TOUPPER(VOID)
 		///
@@ -178,32 +196,69 @@ namespace Argon
 		///
 		/// The + operator appends strings in place.
 		///
-		StringT operator+( const StringT &str ) const;
-		StringT operator+( const T cstr ) const;
+		StringT operator+( const StringT<T, AllocatorT> &str ) const
+		{
+			String joinedStr(*this);
 
-		///
-		/// += concatenates strings together
-		///
-		StringT & operator+=( const StringT &str );
+			joinedStr += str;
+
+			return joinedStr;
+
+		}
+
+		StringT operator+( const T str ) const;
+
+		StringT & operator+=( const StringT<T, AllocatorT> &str )
+		{
+			ulong TotalLength = m_Allocator->Length(m_String) + str.Length() + 1;
+
+			T String = m_Allocator->Allocate(TotalLength);
+			String[TotalLength-1] = '\0'; //Null Terminate
+
+			for(ulong Index = 0; Index < m_Allocator->Length(m_String); ++Index)
+				String[Index] = m_String[Index];
+
+			for(ulong Index = 0; Index < str.Length(); ++Index)
+				String[m_Allocator->Length(m_String) + Index] = str.m_String[Index];
+
+			//delete m_String;
+			m_String = String;
+
+			return *this;
+		}
+
 		StringT & operator+=( const T cstr );
 
 		///
 		/// = operator assigns a string to the value of another string or character array
 		///
-		StringT & operator= ( const StringT &str );
+		StringT & operator= ( const StringT<T, AllocatorT> &str );
 		StringT & operator= ( const T cstr );
 
 		///
 		/// == compares strings for equality
 		///
-		bool     operator==( const StringT &str ) const;
+		bool     operator==( const StringT<T, AllocatorT> &str ) const;
 		bool     operator==( const T cstr ) const;
 
 		///
 		/// != compares strings for inequality
 		///
-		bool     operator!=( const StringT &str ) const;
+		bool     operator!=( const StringT<T, AllocatorT> &str ) const;
 		bool     operator!=( const T cstr ) const;
+
+	private:
+
+		bool FindCharacter(char character, StringT<T, AllocatorT> inString)
+		{
+			for(ulong Index = 0; Index < inString.Length(); ++Index)
+			{
+				if(inString.m_pString[Index] == character)
+					return true;
+			}
+			return false;
+		}
+
 
 	private:
 		T				m_String;

@@ -2,7 +2,11 @@
 
 int main()
 {
-	Argon::String s = "";
+	Argon::String s = "aa";
+
+	Argon::String t = "bb";
+
+	s+=t;
 		
 	return 0;
 }
