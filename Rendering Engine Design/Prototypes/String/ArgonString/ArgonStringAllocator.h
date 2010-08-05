@@ -8,7 +8,10 @@ namespace Argon
 	template< typename T > class Allocator
 	{
 	public:
-		~Allocator();
+		virtual ~Allocator()
+		{
+
+		}
 
 		virtual T Allocate(size_t Size) const = 0;
 		virtual ulong Length(T String) const = 0;
@@ -33,6 +36,35 @@ namespace Argon
 		}
 
 		ulong Length(char* String) const
+		{
+			ulong Len;
+			for(Len = 0; String[Len] != 0; ++Len);
+			return Len;
+		}
+
+	protected:
+
+	};
+
+	class WideCharacterAllocator : Allocator<wchar_t*>
+	{
+	public:
+		WideCharacterAllocator()
+		{
+		}
+
+		~WideCharacterAllocator()
+		{
+		}
+
+		wchar_t* Allocate(size_t Size) const
+		{
+			wchar_t* Return = new wchar_t[Size+1];
+			Return[Size+1] = '\0'; //Null terminate String
+			return Return;
+		}
+
+		ulong Length(wchar_t* String) const
 		{
 			ulong Len;
 			for(Len = 0; String[Len] != 0; ++Len);
