@@ -4,9 +4,9 @@
 #include "ArgonStringAllocator.h"
 
 #ifdef _W64
-	typedef __w64 unsigned long ulong;
+typedef __w64 unsigned long ulong;
 #else 
-	typedef unsigned long ulong;
+typedef unsigned long ulong;
 #endif
 
 namespace Argon
@@ -14,6 +14,9 @@ namespace Argon
 	template< typename T, typename AllocatorT > class StringT
 	{
 	public:
+
+		typedef T		Iterator;
+
 		///Constructor(VOID)
 		///
 		///Create a new string with the defined template type
@@ -129,7 +132,8 @@ namespace Argon
 		///No Params:
 		~StringT()
 		{
-			delete m_String;
+			//delete m_Allocator;
+			//delete m_String;
 		}
 
 		///LENGTH(ULONG)
@@ -149,14 +153,33 @@ namespace Argon
 		///No Params:
 		char* c_str() const
 		{
-			return m_String;
+			char* Return = new char[ m_Allocator->Length(m_String) + 1 ];
+			Return[m_Allocator->Length(m_String)] = '\0';
+
+			for(ulong Index = 0; Index < m_Allocator->Length(m_String); ++Index)
+			{
+				Return[Index] = m_String[Index];
+			}
+			return Return;
 		}
+
+		wchar_t* cwide_str() const
+		{
+			wchar_t* Return = new wchar_t[ m_Allocator->Length(m_String) + 1 ];
+			Return[m_Allocator->Length(m_String)] = '\0';
+
+			for(ulong Index = 0; Index < m_Allocator->Length(m_String); ++Index)
+			{
+				Return[Index] = m_String[Index];
+			}
+			return Return;
+		}
+
 
 		bool Empty()
 		{
-			bool empty = (m_Allocator->Length() == 0) ? true : false;
+			bool empty = (m_Allocator->Length(m_String) == 0) ? true : false;
 			return empty;
-
 		}
 
 		///FINDSTRING(ulong)
@@ -193,20 +216,39 @@ namespace Argon
 		///Param Start: The stating point to change to LowerCase
 		void ToLower( ulong count = 0, ulong start = 0 );
 
+		T& At(ulong Index)
+		{
+			if(Index < Length())
+				return m_String[Index];
+			return "";
+		}
+
+		Iterator Begin()
+		{
+			return m_String[0];
+		}
+
+		Iterator End()
+		{
+			return m_String[Length()-1];
+		}
+
 		///
 		/// The + operator appends strings in place.
 		///
 		StringT operator+( const StringT<T, AllocatorT> &str ) const
 		{
-			String joinedStr(*this);
-
-			joinedStr += str;
-
-			return joinedStr;
-
+			String NewString(*this);
+			NewString += str;
+			return NewString;
 		}
 
-		StringT operator+( const T str ) const;
+		StringT operator+( const T str ) const
+		{
+			String NewString(*this);
+			NewString += str;
+			return NewString;
+		}
 
 		StringT & operator+=( const StringT<T, AllocatorT> &str )
 		{
@@ -227,25 +269,124 @@ namespace Argon
 			return *this;
 		}
 
-		StringT & operator+=( const T cstr );
+		StringT &operator+=( const T Str )
+		{
+			ulong TotalLength = m_Allocator->Length(Str) + m_Allocator->Length(m_String) + 1;
+
+			T String = m_Allocator->Allocate(TotalLength);
+			String[TotalLength-1] = '\0'; //Null Terminate
+
+			for(ulong Index = 0; Index < m_Allocator->Length(m_String); ++Index)
+				String[Index] = m_String[Index];
+
+			for(ulong Index = 0; Index < m_Allocator->Length(Str); ++Index)
+				String[m_Allocator->Length(m_String) + Index] = Str[Index];
+
+			//delete m_String;
+			m_String = String;
+
+			return *this;
+		}
 
 		///
-		/// = operator assigns a string to the value of another string or character array
+		/// = operator assigns a string to the value of another string
 		///
-		StringT & operator= ( const StringT<T, AllocatorT> &str );
-		StringT & operator= ( const T cstr );
+		StringT & operator= ( const StringT<T, AllocatorT> &str )
+		{
+			ulong TotalLength = str.Length() + 1;
+
+			T String = m_Allocator->Allocate(TotalLength);
+			String[TotalLength-1] = '\0'; //Null Terminate
+
+			for(ulong Index = 0; Index < TotalLength-1; ++Index)
+				String[Index] = m_String[Index];
+
+			//delete m_String;
+			m_String = String;
+
+			return *this;
+		}
+
+		StringT & operator= ( const T Str )
+		{
+			ulong TotalLength = m_Allocator->Length(Str) + 1;
+
+			T String = m_Allocator->Allocate(TotalLength);
+			String[TotalLength-1] = '\0'; //Null Terminate
+
+			for(ulong Index = 0; Index < TotalLength-1; ++Index)
+				String[Index] = Str[Index];
+
+			//delete m_String;
+			m_String = String;
+
+			return *this;
+		}
 
 		///
 		/// == compares strings for equality
 		///
-		bool     operator==( const StringT<T, AllocatorT> &str ) const;
-		bool     operator==( const T cstr ) const;
+		bool     operator==( const StringT<T, AllocatorT> &Str ) const
+		{
+			if(Str.Length() != Length())
+				return false;
+
+			//Length is the same try digits
+			for(ulong Index = 0; Index < Length(); ++Index)
+				if( m_String[Index] == Str.m_String[Index] )
+					return true;
+
+			return false;
+		}
+
+		bool     operator==( const T Str ) const
+		{
+			if(m_Allocator->Length(Str) != Length())
+				return false;
+
+			//Length is the same try digits
+			for(ulong Index = 0; Index < Length(); ++Index)
+				if( m_String[Index] == Str[Index] )
+					return true;
+
+			return false;
+		}
 
 		///
 		/// != compares strings for inequality
 		///
-		bool     operator!=( const StringT<T, AllocatorT> &str ) const;
-		bool     operator!=( const T cstr ) const;
+		bool     operator!=( const StringT<T, AllocatorT> &Str ) const
+		{
+			if(Str.Length() != Length())
+				return true;
+
+			//Length is the same try digits
+			for(ulong Index = 0; Index < Length(); ++Index)
+				if( m_String[Index] == Str.m_String[Index] )
+					return false;
+
+			return true;
+		}
+
+		bool     operator!=( const T Str ) const
+		{
+			if(m_Allocator->Length(Str) != Length())
+				return true;
+
+			//Length is the same try digits
+			for(ulong Index = 0; Index < Length(); ++Index)
+				if( m_String[Index] == Str[Index] )
+					return false;
+
+			return true;
+		}
+
+		T& operator [] (ulong Index)
+		{
+			if(Index < Length())
+				return m_String[Index];
+			return "";
+		}
 
 	private:
 
@@ -262,12 +403,10 @@ namespace Argon
 
 	private:
 		T				m_String;
-		size_t			m_Size;
 		AllocatorT*		m_Allocator;
 	};
 
-	
 	typedef StringT< char*, CharAllocator > String;
-
+	typedef StringT< wchar_t*, WideCharacterAllocator > wString;
 }
 #endif //_STRING_HEADER_
