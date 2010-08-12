@@ -37,9 +37,7 @@ namespace Argon
 
 		ulong Length(char* String) const
 		{
-			ulong Len;
-			for(Len = 0; String[Len] != 0; ++Len);
-			return Len;
+			return strlen(String);
 		}
 
 	protected:

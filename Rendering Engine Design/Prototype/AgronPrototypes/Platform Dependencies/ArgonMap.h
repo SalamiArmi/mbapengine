@@ -3,7 +3,16 @@
 
 namespace Argon
 {
-	template < typename _Key, typename _Data >
+	template < typename _Type >
+	class Less
+	{
+		bool operator()(const _Type &left, const _Type &right) const
+		{
+			return (left < right);
+		}
+	};
+
+	template < typename _Key, typename _Data, typename _Compare = Less<_Key> >
 	class Map
 	{
 		template < typename _Key, typename _Data >
@@ -175,7 +184,7 @@ namespace Argon
 				iterator->m_Children[newContainer->m_Key > iterator->m_Key]->m_Parent = iterator;
 			}
 
-			insertHelper(iterator);
+			InsertHelper(iterator);
 		}
 
 		void Erase(container *__restrict erasableNode)
@@ -212,7 +221,7 @@ namespace Argon
 
 					if (erasableNode->colour == false)
 					{
-						child->colour ? child->colour = false : eraseHelper(child);
+						child->colour ? child->colour = false : EraseHelper(child);
 					}
 				}
 			}
@@ -321,19 +330,19 @@ namespace Argon
 					{
 						if (target == target->m_Parent->m_Children[1] && target->m_Parent == grandparent->m_Children[0])
 						{
-							rotateTree(target, false);
+							RotateTree(target, false);
 							target = target->m_Children[0];
 						}
 						else if (target == target->m_Parent->m_Children[0] && target->m_Parent == grandparent->m_Children[1])
 						{
-							rotateTree(target, true);
+							RotateTree(target, true);
 							target = target->m_Children[1];
 						}
 
 						target->m_Parent->colour = false;
 						grandparent->colour = true;
 
-						rotateTree(target->m_Parent, target == target->m_Parent->m_Children[0] && target->m_Parent == grandparent->m_Children[0]);
+						RotateTree(target->m_Parent, target == target->m_Parent->m_Children[0] && target->m_Parent == grandparent->m_Children[0]);
 
 						while (m_root->m_Parent)
 						{

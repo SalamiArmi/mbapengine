@@ -12,15 +12,7 @@
 #include <string>
 #include <iostream>
 
-Argon::Mutex GlobalMutex;
 Argon::Event GlobalEvent;
-
-void printSomething()
-{
-	GlobalMutex.Lock();
-
-	GlobalMutex.Unlock();
-}
 
 class StdThread : public Argon::ThreadTarget
 {
@@ -28,7 +20,7 @@ public:
 	void Method()
 	{
 		GlobalEvent.Wait();
-		for (int i = 0; i < 10000; ++i)
+		for (int i = 0; i < 100000; ++i)
 		{
 			std::string aaaa;	
 			aaaa = "TESTING STRING";
@@ -49,11 +41,11 @@ public:
 	void Method()
 	{
 		GlobalEvent.Wait();
-		for (int i = 0; i < 10000; ++i)
+		for (int i = 0; i < 100000; ++i)
 		{
 			Argon::String aaaa;	
 			aaaa = "TESTING STRING";
-			char* a = aaaa.At(0);
+			char a = aaaa.At(0);
 
 			for(Argon::String::Iterator it = aaaa.Begin(); it != aaaa.End(); ++it)
 			{
@@ -64,8 +56,6 @@ public:
 	}
 };
 
-static const unsigned int number = 16;
-
 int main()
 {
 	StdThread TargetA;
@@ -75,10 +65,12 @@ int main()
 
 	threads[0].Start(&TargetA);
 	threads[1].Start(&TargetB);
+	Argon::Thread::Yield(1000);
+	std::cout << "Starting!" << std::endl;
 	GlobalEvent.Set();
 	while (threads[0].Running() || threads[1].Running())
 	{
-		Sleep(1);
+		Sleep(0);
 	}
 
 	threads[0].Stop();
