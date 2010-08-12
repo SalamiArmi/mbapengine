@@ -1,6 +1,8 @@
 #ifndef _VECTOR_HEADER_
 #define _VECTOR_HEADER_
 
+#include "Windows.h"
+
 namespace Argon
 {
 
@@ -34,7 +36,7 @@ namespace Argon
 			return m_Size;
 		}
 
-		void		Push_Back(const T& Add)
+		void Push_Back(const T& Add)
 		{
 			if(m_Size == m_AllocatedSize)
 			{
@@ -152,7 +154,7 @@ namespace Argon
 
 				for(size_t Index = 0; Index < m_Size; ++Data, ++OldData, ++Index) //Copy the old data into the new buffer
 				{
-					if(*Data != Where)
+					if(Data != Where)
 						*Data = *OldData; //Copy Data across
 				}
 				++Data = Where;
@@ -161,7 +163,7 @@ namespace Argon
 				m_Data = Data;
 				--m_Size; //Remove the last element
 			}
-
+			return --Where;
 		}
 
 		Iterator		Insert(Iterator Where, const T& Insert)
