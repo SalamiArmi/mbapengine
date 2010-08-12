@@ -13,11 +13,11 @@ namespace Argon
 
 		}
 
-		virtual T Allocate(size_t Size) const = 0;
-		virtual ulong Length(T String) const = 0;
+		virtual T* Allocate(size_t Size) const = 0;
+		virtual ulong Length(T* String) const = 0;
 	};
 
-	class CharAllocator : Allocator<char*>
+	class CharAllocator : Allocator<char>
 	{
 	public:
 		CharAllocator()
@@ -46,7 +46,7 @@ namespace Argon
 
 	};
 
-	class WideCharacterAllocator : Allocator<wchar_t*>
+	class WideCharacterAllocator : Allocator<wchar_t>
 	{
 	public:
 		WideCharacterAllocator()

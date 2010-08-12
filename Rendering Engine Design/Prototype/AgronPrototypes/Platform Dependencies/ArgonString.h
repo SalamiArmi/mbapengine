@@ -26,7 +26,7 @@ namespace Argon
 		///Create a new string with the defined template type
 		///
 		///Param T: The type of string to create
-		StringT( const T aString ) : m_Allocator( new AllocatorT() )
+		StringT( T* aString ) : m_Allocator( new AllocatorT() )
 		{
 			m_String = aString;
 		}
@@ -98,13 +98,6 @@ namespace Argon
 		///
 		///Param UnsignedLong: The value to create the string from
 		StringT( ulong UnsignedLong );
-
-		///Constructor(VOID)
-		///
-		///Create a String using char
-		///
-		///Param aChar: The value to create the string from
-		StringT( char aChar );
 
 		///Constructor(VOID)
 		///
@@ -199,17 +192,17 @@ namespace Argon
 		{
 			if(Index < Length())
 				return (T)m_String[Index];
-			return "";
+			//return "";
 		}
 
 		Iterator Begin()
 		{
-			return (T)m_String[0];
+			return m_String[0];
 		}
 
 		Iterator End()
 		{
-			return (T)m_String[Length()-1];
+			return m_String[Length()-1];
 		}
 
 		///
@@ -222,7 +215,7 @@ namespace Argon
 			return NewString;
 		}
 
-		StringT operator+( const T str ) const
+		StringT operator+( const T* str ) const
 		{
 			String NewString(*this);
 			NewString += str;
@@ -233,7 +226,7 @@ namespace Argon
 		{
 			ulong TotalLength = m_Allocator->Length(m_String) + str.Length() + 1;
 
-			T String = m_Allocator->Allocate(TotalLength);
+			T* String = m_Allocator->Allocate(TotalLength);
 			String[TotalLength-1] = '\0'; //Null Terminate
 
 			for(ulong Index = 0; Index < m_Allocator->Length(m_String); ++Index)
@@ -248,11 +241,11 @@ namespace Argon
 			return *this;
 		}
 
-		StringT &operator+=( const T Str )
+		StringT &operator+=( const T* Str )
 		{
 			ulong TotalLength = m_Allocator->Length(Str) + m_Allocator->Length(m_String) + 1;
 
-			T String = m_Allocator->Allocate(TotalLength);
+			T* String = m_Allocator->Allocate(TotalLength);
 			String[TotalLength-1] = '\0'; //Null Terminate
 
 			for(ulong Index = 0; Index < m_Allocator->Length(m_String); ++Index)
@@ -274,7 +267,7 @@ namespace Argon
 		{
 			ulong TotalLength = str.Length() + 1;
 
-			T String = m_Allocator->Allocate(TotalLength);
+			T* String = m_Allocator->Allocate(TotalLength);
 			String[TotalLength-1] = '\0'; //Null Terminate
 
 			for(ulong Index = 0; Index < TotalLength-1; ++Index)
@@ -286,11 +279,11 @@ namespace Argon
 			return *this;
 		}
 
-		StringT &operator= ( const T Str )
+		StringT &operator= ( T* Str )
 		{
 			ulong TotalLength = m_Allocator->Length(Str) + 1;
 
-			T String = m_Allocator->Allocate(TotalLength);
+			T* String = m_Allocator->Allocate(TotalLength);
 			String[TotalLength-1] = '\0'; //Null Terminate
 
 			for(ulong Index = 0; Index < TotalLength-1; ++Index)
@@ -318,7 +311,7 @@ namespace Argon
 			return false;
 		}
 
-		bool operator==( const T Str ) const
+		bool operator==( const T* Str ) const
 		{
 			if(m_Allocator->Length(Str) != Length())
 				return false;
@@ -347,7 +340,7 @@ namespace Argon
 			return true;
 		}
 
-		bool operator!=( const T Str ) const
+		bool operator!=( const T* Str ) const
 		{
 			if(m_Allocator->Length(Str) != Length())
 				return true;
@@ -381,11 +374,11 @@ namespace Argon
 
 
 	private:
-		T				m_String;
+		T*				m_String;
 		AllocatorT*		m_Allocator;
 	};
 
-	typedef StringT< char*, CharAllocator > String;
-	typedef StringT< wchar_t*, WideCharacterAllocator > wString;
+	typedef StringT< char, CharAllocator > String;
+	typedef StringT< wchar_t, WideCharacterAllocator > wString;
 }
 #endif //_ARGONSTRING_HEADER_
