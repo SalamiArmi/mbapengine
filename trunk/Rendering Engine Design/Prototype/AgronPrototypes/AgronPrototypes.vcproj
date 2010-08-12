@@ -115,6 +115,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="./Platform Dependencies"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -170,11 +171,35 @@
 			Name="Platform Dependencies"
 			>
 			<File
+				RelativePath=".\Platform Dependencies\ArgonEvent.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonEvent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonEventWin32.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Platform Dependencies\ArgonList.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Platform Dependencies\ArgonMap.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonMutex.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonMutex.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonMutexWin32.h"
 				>
 			</File>
 			<File
@@ -198,54 +223,30 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Platform Dependencies\ArgonThread.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonThread.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonThreadTarget.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonThreadTarget.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonThreadWin32.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Platform Dependencies\ArgonVector.h"
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\ArgonThreading\ArgonEvent.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\ArgonThreading\ArgonEvent.h"
-			>
-		</File>
-		<File
-			RelativePath="..\ArgonThreading\ArgonEventWin32.h"
-			>
-		</File>
-		<File
-			RelativePath="..\ArgonThreading\ArgonMutex.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\ArgonThreading\ArgonMutex.h"
-			>
-		</File>
-		<File
-			RelativePath="..\ArgonThreading\ArgonMutexWin32.h"
-			>
-		</File>
-		<File
-			RelativePath="..\ArgonThreading\ArgonThread.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\ArgonThreading\ArgonThread.h"
-			>
-		</File>
-		<File
-			RelativePath="..\ArgonThreading\ArgonThreadTarget.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\ArgonThreading\ArgonThreadTarget.h"
-			>
-		</File>
-		<File
-			RelativePath="..\ArgonThreading\ArgonThreadWin32.h"
-			>
-		</File>
 		<File
 			RelativePath=".\Main.cpp"
 			>

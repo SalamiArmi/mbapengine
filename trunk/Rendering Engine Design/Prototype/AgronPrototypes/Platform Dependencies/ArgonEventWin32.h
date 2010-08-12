@@ -19,7 +19,7 @@ namespace Argon
 
 	inline EventImpl::EventImpl()
 	{
-		m_EventObject = CreateEvent(0, false, false, 0);
+		m_EventObject = CreateEvent(0, true, false, 0);
 	}
 
 	inline EventImpl::~EventImpl()
