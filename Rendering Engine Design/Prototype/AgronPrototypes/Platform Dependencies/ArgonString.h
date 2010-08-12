@@ -195,21 +195,21 @@ namespace Argon
 		}
 
 
-		T& At(ulong Index)
+		T At(ulong Index)
 		{
 			if(Index < Length())
-				return m_String[Index];
+				return (T)m_String[Index];
 			return "";
 		}
 
 		Iterator Begin()
 		{
-			return m_String[0];
+			return (T)m_String[0];
 		}
 
 		Iterator End()
 		{
-			return m_String[Length()-1];
+			return (T)m_String[Length()-1];
 		}
 
 		///

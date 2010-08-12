@@ -133,7 +133,6 @@ namespace Argon
 			T StoreString = m_Allocator->Allocate(m_Allocator->Length(String));
 			for(size_t Index = 0; Index < m_Allocator->Length(String); ++Index)
 				StoreString[Index] = String[Index];
-			StoreString[m_Allocator->Length(String)+1] = '\0';
 			//m_Referances.Insert(StoreString, StoreVector);
 
 			return StoreString;
