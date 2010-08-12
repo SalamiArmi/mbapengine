@@ -4,6 +4,8 @@
 #include "ArgonPlatform.h"
 #include "ArgonStringAllocator.h"
 
+#include "String.h"
+
 namespace Argon
 {
 	template< typename T, typename AllocatorT > class StringT
@@ -29,6 +31,7 @@ namespace Argon
 		StringT( T* aString ) : m_Allocator( new AllocatorT() )
 		{
 			m_String = aString;
+			m_Size = m_Allocator->Length(aString);
 		}
 
 		///Constructor(VOID)
@@ -55,6 +58,7 @@ namespace Argon
 				m_String[3] = "s";
 				m_String[3] = "e";
 			}
+			m_Size = 5;
 		}
 
 		///Constructor(VOID)
@@ -141,10 +145,10 @@ namespace Argon
 		///No Params:
 		char* c_str() const
 		{
-			char* Return = new char[ m_Allocator->Length(m_String) + 1 ];
+			char* Return = new char[ m_Size + 1 ];
 			Return[m_Allocator->Length(m_String)] = '\0';
 
-			for(ulong Index = 0; Index < m_Allocator->Length(m_String); ++Index)
+			for(ulong Index = 0; Index < m_Size; ++Index)
 			{
 				Return[Index] = m_String[Index];
 			}
@@ -153,10 +157,10 @@ namespace Argon
 
 		wchar_t* cwide_str() const
 		{
-			wchar_t* Return = new wchar_t[ m_Allocator->Length(m_String) + 1 ];
+			wchar_t* Return = new wchar_t[ m_Size + 1 ];
 			Return[m_Allocator->Length(m_String)] = '\0';
 
-			for(ulong Index = 0; Index < m_Allocator->Length(m_String); ++Index)
+			for(ulong Index = 0; Index < m_Size; ++Index)
 			{
 				Return[Index] = m_String[Index];
 			}
@@ -166,7 +170,7 @@ namespace Argon
 
 		bool Empty()
 		{
-			bool empty = (m_Allocator->Length(m_String) == 0) ? true : false;
+			bool empty = (m_Size == 0) ? true : false;
 			return empty;
 		}
 
@@ -177,21 +181,21 @@ namespace Argon
 		///Param str: The string to attempt to find within this string
 		ulong FindString( const StringT<T, AllocatorT> &str ) const
 		{
-			char *ptr = strstr(m_pString, str.m_pString);
+			char *ptr = strstr(m_String, str.m_String);
 
 			if(ptr == NULL) 
 				return -1; // The substring was not found
 
 			// The substring was found, return an index to the first character of it
 			// inside the larger string
-			return (int) (ptr - m_pString); 
+			return (int) (ptr - m_String); 
 		}
 
 
 		T At(ulong Index)
 		{
 			if(Index < Length())
-				return (T)m_String[Index];
+				return m_String[Index];
 			//return "";
 		}
 
@@ -202,7 +206,7 @@ namespace Argon
 
 		Iterator End()
 		{
-			return m_String[Length()-1];
+			return m_String[m_Size];
 		}
 
 		///
@@ -229,14 +233,15 @@ namespace Argon
 			T* String = m_Allocator->Allocate(TotalLength);
 			String[TotalLength-1] = '\0'; //Null Terminate
 
-			for(ulong Index = 0; Index < m_Allocator->Length(m_String); ++Index)
+			for(ulong Index = 0; Index < m_Size; ++Index)
 				String[Index] = m_String[Index];
 
-			for(ulong Index = 0; Index < str.Length(); ++Index)
+			for(ulong Index = 0; Index < str.m_Size; ++Index)
 				String[m_Allocator->Length(m_String) + Index] = str.m_String[Index];
 
 			//delete m_String;
 			m_String = String;
+			m_Size = TotalLength-1;
 
 			return *this;
 		}
@@ -248,14 +253,15 @@ namespace Argon
 			T* String = m_Allocator->Allocate(TotalLength);
 			String[TotalLength-1] = '\0'; //Null Terminate
 
-			for(ulong Index = 0; Index < m_Allocator->Length(m_String); ++Index)
+			for(ulong Index = 0; Index < m_Size; ++Index)
 				String[Index] = m_String[Index];
 
-			for(ulong Index = 0; Index < m_Allocator->Length(Str); ++Index)
+			for(ulong Index = 0; Index < Str.m_Size; ++Index)
 				String[m_Allocator->Length(m_String) + Index] = Str[Index];
 
 			//delete m_String;
 			m_String = String;
+			m_Size = TotalLength;
 
 			return *this;
 		}
@@ -275,18 +281,19 @@ namespace Argon
 
 			//delete m_String;
 			m_String = String;
+			m_Size = TotalLength-2;
 
 			return *this;
 		}
 
 		StringT &operator= ( T* Str )
 		{
-			ulong TotalLength = m_Allocator->Length(Str) + 1;
+			m_Size = m_Allocator->Length(Str);
 
-			T* String = m_Allocator->Allocate(TotalLength);
-			String[TotalLength-1] = '\0'; //Null Terminate
+			T* String = m_Allocator->Allocate(m_Size+1);
+			String[m_Size] = '\0'; //Null Terminate
 
-			for(ulong Index = 0; Index < TotalLength-1; ++Index)
+			for(ulong Index = 0; Index < m_Size; ++Index)
 				String[Index] = Str[Index];
 
 			//delete m_String;
@@ -300,11 +307,11 @@ namespace Argon
 		///
 		bool operator==( const StringT<T, AllocatorT> &Str ) const
 		{
-			if(Str.Length() != Length())
+			if(Str.m_Size != m_Size)
 				return false;
 
 			//Length is the same try digits
-			for(ulong Index = 0; Index < Length(); ++Index)
+			for(ulong Index = 0; Index < m_Size; ++Index)
 				if( m_String[Index] == Str.m_String[Index] )
 					return true;
 
@@ -313,11 +320,11 @@ namespace Argon
 
 		bool operator==( const T* Str ) const
 		{
-			if(m_Allocator->Length(Str) != Length())
+			if(Str.m_Size != m_Size)
 				return false;
 
 			//Length is the same try digits
-			for(ulong Index = 0; Index < Length(); ++Index)
+			for(ulong Index = 0; Index < m_Size; ++Index)
 				if( m_String[Index] == Str[Index] )
 					return true;
 
@@ -329,11 +336,11 @@ namespace Argon
 		///
 		bool operator!=( const StringT<T, AllocatorT> &Str ) const
 		{
-			if(Str.Length() != Length())
+			if(Str.m_Size != m_Size)
 				return true;
 
 			//Length is the same try digits
-			for(ulong Index = 0; Index < Length(); ++Index)
+			for(ulong Index = 0; Index < m_Size; ++Index)
 				if( m_String[Index] == Str.m_String[Index] )
 					return false;
 
@@ -342,11 +349,11 @@ namespace Argon
 
 		bool operator!=( const T* Str ) const
 		{
-			if(m_Allocator->Length(Str) != Length())
+			if(m_Allocator->Length(Str) != m_Size)
 				return true;
 
 			//Length is the same try digits
-			for(ulong Index = 0; Index < Length(); ++Index)
+			for(ulong Index = 0; Index < m_Size; ++Index)
 				if( m_String[Index] == Str[Index] )
 					return false;
 
@@ -355,7 +362,7 @@ namespace Argon
 
 		T& operator[] (ulong Index)
 		{
-			if(Index < Length())
+			if(Index < m_Size)
 				return m_String[Index];
 			return "";
 		}
@@ -376,6 +383,7 @@ namespace Argon
 	private:
 		T*				m_String;
 		AllocatorT*		m_Allocator;
+		ulong			m_Size;
 	};
 
 	typedef StringT< char, CharAllocator > String;
