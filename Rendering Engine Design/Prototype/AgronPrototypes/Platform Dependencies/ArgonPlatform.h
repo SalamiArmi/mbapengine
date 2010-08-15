@@ -7,6 +7,8 @@
 	typedef unsigned long ulong;
 #endif
 
+#define ulong_Max 0xffffffffUL;
+
 #if defined ArgonExport
 #endif
 

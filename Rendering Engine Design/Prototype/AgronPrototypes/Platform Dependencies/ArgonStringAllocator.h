@@ -13,8 +13,8 @@ namespace Argon
 
 		}
 
-		virtual T* Allocate(size_t Size) const = 0;
-		virtual ulong Length(T* String) const = 0;
+		virtual T* Allocate(const size_t Size) const = 0;
+		virtual ulong Length(const T* String) const = 0;
 	};
 
 	class CharAllocator : Allocator<char>
@@ -28,14 +28,14 @@ namespace Argon
 		{
 		}
 
-		char* Allocate(size_t Size) const
+		char* Allocate(const size_t Size) const
 		{
 			char* Return = new char[Size+1];
 			Return[Size+1] = '\0'; //Null terminate String
 			return Return;
 		}
 
-		ulong Length(char* String) const
+		ulong Length(const char* String) const
 		{
 			return strlen(String);
 		}
@@ -55,14 +55,14 @@ namespace Argon
 		{
 		}
 
-		wchar_t* Allocate(size_t Size) const
+		wchar_t* Allocate(const size_t Size) const
 		{
 			wchar_t* Return = new wchar_t[Size+1];
 			Return[Size+1] = '\0'; //Null terminate String
 			return Return;
 		}
 
-		ulong Length(wchar_t* String) const
+		ulong Length(const wchar_t* String) const
 		{
 			ulong Len;
 			for(Len = 0; String[Len] != 0; ++Len);

@@ -66,7 +66,12 @@ namespace Argon
 		///Create a String using a short
 		///
 		///Param aShort: The value to create the string from
-		StringT( short aShort );
+		StringT( short aShort ) : m_Allocator(new AllocatorT()), m_String(0x0)
+		{
+			m_String = m_Allocator->Allocate(sizeof(aShort));
+			char* From = (char*)(&aShort);		
+			memcpy(m_String, From, sizeof(aShort));
+		}
 
 		///Constructor(VOID)
 		///
@@ -124,8 +129,8 @@ namespace Argon
 		///No Params:
 		~StringT()
 		{
-			//delete m_Allocator;
-			//delete m_String;
+			delete m_Allocator;
+			//delete[] m_String;
 		}
 
 		///LENGTH(ULONG)
@@ -168,9 +173,9 @@ namespace Argon
 		}
 
 
-		bool Empty()
+		bool Empty() const
 		{
-			bool empty = (m_Size == 0) ? true : false;
+			const bool empty = (m_Size == 0) ? true : false;
 			return empty;
 		}
 
@@ -179,16 +184,10 @@ namespace Argon
 		/// Looks for the substring inside the current string
 		///
 		///Param str: The string to attempt to find within this string
-		ulong FindString( const StringT<T, AllocatorT> &str ) const
+		bool FindString( StringT<T, AllocatorT> str )
 		{
-			char *ptr = strstr(m_String, str.m_String);
-
-			if(ptr == NULL) 
-				return -1; // The substring was not found
-
-			// The substring was found, return an index to the first character of it
-			// inside the larger string
-			return (int) (ptr - m_String); 
+			const bool Found = FindStringInString(str.m_String, m_String); 
+			return Found;
 		}
 
 
@@ -209,9 +208,6 @@ namespace Argon
 			return m_String[m_Size];
 		}
 
-		///
-		/// The + operator appends strings in place.
-		///
 		StringT operator+( const StringT<T, AllocatorT> &str ) const
 		{
 			String NewString(*this);
@@ -226,15 +222,14 @@ namespace Argon
 			return NewString;
 		}
 
-		StringT &operator+=( const StringT<T, AllocatorT> &str )
+		StringT &operator+=(const StringT<T, AllocatorT> &str)
 		{
-			ulong TotalLength = m_Allocator->Length(m_String) + str.Length() + 1;
+			const ulong TotalLength = m_Allocator->Length(m_String) + str.Length() + 1;
 
 			T* String = m_Allocator->Allocate(TotalLength);
 			String[TotalLength-1] = '\0'; //Null Terminate
 
-			for(ulong Index = 0; Index < m_Size; ++Index)
-				String[Index] = m_String[Index];
+			memcpy(String, m_String, m_Size);
 
 			for(ulong Index = 0; Index < str.m_Size; ++Index)
 				String[m_Allocator->Length(m_String) + Index] = str.m_String[Index];
@@ -246,18 +241,18 @@ namespace Argon
 			return *this;
 		}
 
-		StringT &operator+=( const T* Str )
+		StringT &operator+=(const T* Str)
 		{
-			ulong TotalLength = m_Allocator->Length(Str) + m_Allocator->Length(m_String) + 1;
+			const size_t StrLength = m_Allocator->Length(Str);
+			const ulong TotalLength = StrLength + m_Size + 1;
 
 			T* String = m_Allocator->Allocate(TotalLength);
 			String[TotalLength-1] = '\0'; //Null Terminate
 
-			for(ulong Index = 0; Index < m_Size; ++Index)
-				String[Index] = m_String[Index];
+			memcpy(String, m_String, m_Size);
 
-			for(ulong Index = 0; Index < Str.m_Size; ++Index)
-				String[m_Allocator->Length(m_String) + Index] = Str[Index];
+			for(ulong Index = 0; Index < StrLength; ++Index)
+				String[m_Size + Index] = Str[Index];
 
 			//delete m_String;
 			m_String = String;
@@ -266,18 +261,14 @@ namespace Argon
 			return *this;
 		}
 
-		///
-		/// = operator assigns a string to the value of another string
-		///
-		StringT &operator= ( const StringT<T, AllocatorT> &str )
+		StringT &operator= (const StringT<T, AllocatorT> &Str)
 		{
-			ulong TotalLength = str.Length() + 1;
+			ulong TotalLength = Str.Length() + 1;
 
 			T* String = m_Allocator->Allocate(TotalLength);
 			String[TotalLength-1] = '\0'; //Null Terminate
 
-			for(ulong Index = 0; Index < TotalLength-1; ++Index)
-				String[Index] = m_String[Index];
+			memcpy(String, Str.m_String, m_Size);
 
 			//delete m_String;
 			m_String = String;
@@ -286,15 +277,13 @@ namespace Argon
 			return *this;
 		}
 
-		StringT &operator= ( T* Str )
+		StringT &operator= (const T* Str)
 		{
 			m_Size = m_Allocator->Length(Str);
 
 			T* String = m_Allocator->Allocate(m_Size+1);
 			String[m_Size] = '\0'; //Null Terminate
-
-			for(ulong Index = 0; Index < m_Size; ++Index)
-				String[Index] = Str[Index];
+			memcpy(String, Str, m_Size+1);
 
 			//delete m_String;
 			m_String = String;
@@ -302,60 +291,36 @@ namespace Argon
 			return *this;
 		}
 
-		///
-		/// == compares strings for equality
-		///
 		bool operator==( const StringT<T, AllocatorT> &Str ) const
 		{
-			if(Str.m_Size != m_Size)
-				return false;
-
-			//Length is the same try digits
-			for(ulong Index = 0; Index < m_Size; ++Index)
-				if( m_String[Index] == Str.m_String[Index] )
-					return true;
-
-			return false;
-		}
-
-		bool operator==( const T* Str ) const
-		{
-			if(Str.m_Size != m_Size)
-				return false;
-
-			//Length is the same try digits
-			for(ulong Index = 0; Index < m_Size; ++Index)
-				if( m_String[Index] == Str[Index] )
-					return true;
-
-			return false;
-		}
-
-		///
-		/// != compares strings for inequality
-		///
-		bool operator!=( const StringT<T, AllocatorT> &Str ) const
-		{
-			if(Str.m_Size != m_Size)
+			if ( memcmp(m_String, Str, m_Size > Str.m_Size ? m_Size : Str.m_Size) == 0 )
 				return true;
 
-			//Length is the same try digits
-			for(ulong Index = 0; Index < m_Size; ++Index)
-				if( m_String[Index] == Str.m_String[Index] )
-					return false;
+			return false;
+		}
+
+		bool operator==( T* Str ) const
+		{
+			size_t StrLength = m_Allocator->Length(Str);
+			if ( memcmp(m_String, Str, m_Size > StrLength ? m_Size : StrLength) == 0 )
+				return true;
+
+			return false;
+		}
+
+		bool operator!=( const StringT<T, AllocatorT> &Str ) const
+		{
+			if (memcmp(m_String, Str, m_Size > Str.m_Size ? m_Size : Str.m_Size) == 0)
+				return false;
 
 			return true;
 		}
 
 		bool operator!=( const T* Str ) const
 		{
-			if(m_Allocator->Length(Str) != m_Size)
-				return true;
-
-			//Length is the same try digits
-			for(ulong Index = 0; Index < m_Size; ++Index)
-				if( m_String[Index] == Str[Index] )
-					return false;
+			size_t StrLength = m_Allocator->Length(Str);
+			if (memcmp(m_String, Str, m_Size > StrLength ? m_Size : StrLength) == 0)
+				return false;
 
 			return true;
 		}
@@ -369,14 +334,36 @@ namespace Argon
 
 	private:
 
-		bool FindCharacter(char character, StringT<T, AllocatorT> inString)
+		bool FindStringInString(T* String, T* inString, ulong Start = 0)
 		{
-			for(ulong Index = 0; Index < inString.Length(); ++Index)
+			ulong Index = Start;
+			while(Index < m_Size)
 			{
-				if(inString.m_pString[Index] == character)
-					return true;
+				if(FindCharacter(inString[Index], m_String) < m_Size)
+				{
+					++Index;
+					return FindStringInString(String, inString, Index);
+				}
+				else
+				{
+					return false;
+				}
 			}
 			return false;
+		}
+
+		ulong FindCharacter(T character, T* inString)
+		{
+			ulong n = m_Size;
+			if (n != 0) {
+				const char *p = inString;
+
+				do {
+					if (*p++ == character)
+						return (inString - (p - 1)) + 1;
+				} while (--n != 0);
+			}
+			return ulong_Max;
 		}
 
 
