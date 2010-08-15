@@ -25,7 +25,11 @@ public:
 			std::string aaaa;	
 			aaaa = "TESTING STRING";
 			char a = aaaa.at(0);
-			
+			aaaa += "AAA";
+			bool t = aaaa == "TESTING STRING";
+			t = aaaa != "TESTING STRING";
+			aaaa += aaaa;
+
 			for(std::string::iterator it = aaaa.begin(); it != aaaa.end(); ++it)
 			{
 				int i = 0;
@@ -46,6 +50,16 @@ public:
 			Argon::String aaaa;	
 			aaaa = "TESTING STRING";
 			char a = aaaa.At(0);
+			aaaa += "AAA";
+			bool t = aaaa == "TESTING STRING";
+			t = aaaa != "TESTING STRING";
+			aaaa += aaaa;
+			short ab = 25;
+			aaaa = Argon::String(ab);
+
+			std::cout << aaaa.c_str() << std::endl;
+
+			t = aaaa.FindString( Argon::String("TESTING") );
 
 			for(Argon::String::Iterator it = aaaa.Begin(); it != aaaa.End(); ++it)
 			{
