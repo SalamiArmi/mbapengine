@@ -35,7 +35,7 @@ namespace Argon
 			return Return;
 		}
 
-		ulong Length(const char* String) const
+		inline ulong Length(const char* String) const
 		{
 			return strlen(String);
 		}
@@ -55,14 +55,14 @@ namespace Argon
 		{
 		}
 
-		wchar_t* Allocate(const size_t Size) const
+		inline wchar_t* Allocate(const size_t Size) const
 		{
 			wchar_t* Return = new wchar_t[Size+1];
 			Return[Size+1] = '\0'; //Null terminate String
 			return Return;
 		}
 
-		ulong Length(const wchar_t* String) const
+		inline ulong Length(const wchar_t* String) const
 		{
 			ulong Len;
 			for(Len = 0; String[Len] != 0; ++Len);
