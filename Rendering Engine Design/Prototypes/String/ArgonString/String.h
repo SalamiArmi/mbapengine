@@ -200,22 +200,6 @@ namespace Argon
 		}
 
 
-		///TOUPPER(VOID)
-		///
-		///Converts a section of the string to UpperCase
-		///
-		///Param Count: The amount to change to Uppercase
-		///Param Start: The stating point to change to Uppercase
-		void ToUpper( ulong Count = 0, ulong Start = 0 );
-
-		///TOLOWER(VOID)
-		///
-		///Converts a section of the string to LowerCase
-		///
-		///Param Count: The amount to change to LowerCase
-		///Param Start: The stating point to change to LowerCase
-		void ToLower( ulong count = 0, ulong start = 0 );
-
 		T& At(ulong Index)
 		{
 			if(Index < Length())
@@ -250,7 +234,7 @@ namespace Argon
 			return NewString;
 		}
 
-		StringT & operator+=( const StringT<T, AllocatorT> &str )
+		StringT &operator+=( const StringT<T, AllocatorT> &str )
 		{
 			ulong TotalLength = m_Allocator->Length(m_String) + str.Length() + 1;
 
@@ -291,7 +275,7 @@ namespace Argon
 		///
 		/// = operator assigns a string to the value of another string
 		///
-		StringT & operator= ( const StringT<T, AllocatorT> &str )
+		StringT &operator= ( const StringT<T, AllocatorT> &str )
 		{
 			ulong TotalLength = str.Length() + 1;
 
@@ -307,7 +291,7 @@ namespace Argon
 			return *this;
 		}
 
-		StringT & operator= ( const T Str )
+		StringT &operator= ( const T Str )
 		{
 			ulong TotalLength = m_Allocator->Length(Str) + 1;
 
@@ -326,7 +310,7 @@ namespace Argon
 		///
 		/// == compares strings for equality
 		///
-		bool     operator==( const StringT<T, AllocatorT> &Str ) const
+		bool operator==( const StringT<T, AllocatorT> &Str ) const
 		{
 			if(Str.Length() != Length())
 				return false;
@@ -339,7 +323,7 @@ namespace Argon
 			return false;
 		}
 
-		bool     operator==( const T Str ) const
+		bool operator==( const T Str ) const
 		{
 			if(m_Allocator->Length(Str) != Length())
 				return false;
@@ -355,7 +339,7 @@ namespace Argon
 		///
 		/// != compares strings for inequality
 		///
-		bool     operator!=( const StringT<T, AllocatorT> &Str ) const
+		bool operator!=( const StringT<T, AllocatorT> &Str ) const
 		{
 			if(Str.Length() != Length())
 				return true;
@@ -368,7 +352,7 @@ namespace Argon
 			return true;
 		}
 
-		bool     operator!=( const T Str ) const
+		bool operator!=( const T Str ) const
 		{
 			if(m_Allocator->Length(Str) != Length())
 				return true;
@@ -381,7 +365,7 @@ namespace Argon
 			return true;
 		}
 
-		T& operator [] (ulong Index)
+		T& operator[] (ulong Index)
 		{
 			if(Index < Length())
 				return m_String[Index];

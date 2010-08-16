@@ -1,35 +1,54 @@
 #ifndef _ARGONQSTRING_HEADER
 #define _ARGONQSTRING_HEADER
 
+#include "String.h"
+
 namespace Argon
 {
-	class String;
+	//class String;
 	class Map;
-	class Singleton;
+	//class Singleton;
 
-	class QStringCreator : Singleton<QStringCreator>
+	template< typename T >class QStringCreator // : Singleton<QStringCreator>
 	{
 	public:
 		QStringCreator();
 		~QStringCreator();
 
-		const char* CreateString( const char* String ) const; //Create a new string and if already exists add a referance to the list
+		T CreateString(T String) const; //Create a new string and if already exists add a referance to the list
+		T DestroyString(T String, QString< T > Referance);
 
 	protected:
 
 	private:
 		bool DoesStringExist(QString String);
-		Map< const char*, Vector > m_Referances; //All referances that the char*
+		Map< const T, Vector > m_Referances; //All referances that the char*
 
-	class QString
+	template< typename T > class QStringT
 	{
 	public:
-		QString(const char* String); //Calls QStringCreator to check if string exists
-		QString(String aString);
-		~QString();
+		QStringT(const T String); //Calls QStringCreator to check if string exists
+		{
+			//m_String = QStringCreator< T >::GetSingleton()->CreateString( String );
+		}
+
+		QStringT(T String)
+		{
+
+		}
+
+		QStringT(String aString)
+		{
+
+		}
+
+		~QStringT()
+		{
+
+		}
 
 	protected:
-		char* m_String;
+		T m_String;
 	};
 }
 
