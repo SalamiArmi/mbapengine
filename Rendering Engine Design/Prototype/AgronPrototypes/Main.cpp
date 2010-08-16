@@ -57,9 +57,9 @@ public:
 			short ab = 25;
 			aaaa = Argon::String(ab);
 
-			std::cout << aaaa.c_str() << std::endl;
+			//std::cout << aaaa.c_str() << std::endl;
 
-			t = aaaa.FindString( Argon::String("TESTING") );
+			//t = aaaa.FindString( Argon::String("TESTING") );
 
 			for(Argon::String::Iterator it = aaaa.Begin(); it != aaaa.End(); ++it)
 			{
