@@ -1,3 +1,13 @@
+////////////////////////////////////////////////////////////////
+//
+//	ArgonSingleton.h :
+//
+//	Copyright ©2010 Argon. All rights reserved.
+//	Removal of this copyright notice is not permitted.
+//
+///////////////////////////////////////////////////////////////
+
+
 #ifndef _ARGONSINGLETON_HEADER_
 #define _ARGONSINGLETON_HEADER_
 

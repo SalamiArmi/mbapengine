@@ -12,6 +12,8 @@
 #include <string>
 #include <iostream>
 
+#include <ArgonMemory.h>
+
 Argon::Event GlobalEvent;
 
 class StdThread : public Argon::ThreadTarget
@@ -19,23 +21,9 @@ class StdThread : public Argon::ThreadTarget
 public:
 	void Method()
 	{
-		GlobalEvent.Wait();
-		for (int i = 0; i < 100000; ++i)
-		{
-			std::string aaaa;	
-			aaaa = "TESTING STRING";
-			char a = aaaa.at(0);
-			aaaa += "AAA";
-			bool t = aaaa == "TESTING STRING";
-			t = aaaa != "TESTING STRING";
-			aaaa += aaaa;
+		Argon::AutoPtr< Argon::CharAllocator > pp;
 
-			for(std::string::iterator it = aaaa.begin(); it != aaaa.end(); ++it)
-			{
-				int i = 0;
-			}
-		}
-		std::cout << "Std String Done" << std::endl;
+		char* AllocatedStr = pp->Allocate(5);
 	}
 };
 
@@ -66,6 +54,8 @@ public:
 				int i = 0;
 			}
 		}
+
+
 		std::cout << "Argon String Done" << std::endl;
 	}
 };

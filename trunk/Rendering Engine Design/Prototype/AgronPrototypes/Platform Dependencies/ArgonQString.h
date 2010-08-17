@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////
+//
+//	ArgonQString.h :
+//
+//	Copyright ©2010 Argon. All rights reserved.
+//	Removal of this copyright notice is not permitted.
+//
+///////////////////////////////////////////////////////////////
+
 #ifndef _ARGONQSTRINGCREATOR_HEADER_
 #define _ARGONQSTRINGCREATOR_HEADER_
 

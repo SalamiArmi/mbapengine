@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Platform Dependencies\ArgonMemory.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Platform Dependencies\ArgonMutex.cpp"
 				>
 			</File>

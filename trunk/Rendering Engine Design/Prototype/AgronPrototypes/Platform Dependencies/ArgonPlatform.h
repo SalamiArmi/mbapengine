@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////
+//
+//	ArgonMutex.h :
+//
+//	Copyright ©2010 Argon. All rights reserved.
+//	Removal of this copyright notice is not permitted.
+//
+///////////////////////////////////////////////////////////////
+
 #ifndef _ARGONPLATFORM_HEADER_
 #define _ARGONPLATFORM_HEADER_
 

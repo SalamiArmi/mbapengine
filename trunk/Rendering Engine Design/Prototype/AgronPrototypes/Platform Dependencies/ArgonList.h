@@ -1,3 +1,13 @@
+////////////////////////////////////////////////////////////////
+//
+//	ArgonList.h : Argon List Container
+//
+//	Copyright ©2010 Argon. All rights reserved.
+//	Removal of this copyright notice is not permitted.
+//
+///////////////////////////////////////////////////////////////
+
+
 #ifndef _ARGONLIST_HEADER_
 #define _ARGONLIST_HEADER_
 
