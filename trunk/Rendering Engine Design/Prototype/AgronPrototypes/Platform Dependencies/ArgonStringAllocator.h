@@ -31,7 +31,7 @@ namespace Argon
 		char* Allocate(const size_t Size) const
 		{
 			char* Return = new char[Size+1];
-			Return[Size+1] = '\0'; //Null terminate String
+			Return[Size] = '\0'; //Null terminate String
 			return Return;
 		}
 
@@ -58,7 +58,7 @@ namespace Argon
 		inline wchar_t* Allocate(const size_t Size) const
 		{
 			wchar_t* Return = new wchar_t[Size+1];
-			Return[Size+1] = '\0'; //Null terminate String
+			Return[Size] = '\0'; //Null terminate String
 			return Return;
 		}
 
