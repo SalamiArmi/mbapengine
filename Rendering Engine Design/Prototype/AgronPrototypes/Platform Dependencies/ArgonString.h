@@ -63,36 +63,10 @@ namespace Argon
 
 		///Constructor(VOID)
 		///
-		///Create a String using a short
-		///
-		///Param aShort: The value to create the string from
-		StringT( short aShort ) : m_Allocator(new AllocatorT()), m_String(0x0)
-		{
-			m_String = m_Allocator->Allocate(sizeof(aShort));
-			char* From = (char*)(&aShort);		
-			memcpy(m_String, From, sizeof(aShort));
-		}
-
-		///Constructor(VOID)
-		///
-		///Create a String using unsigned short
-		///
-		///Param UnsignedShort: The value to create the string from
-		StringT( unsigned short UnsignedShort );
-
-		///Constructor(VOID)
-		///
 		///Create a String using int
 		///
 		///Param aInt: The value to create the string from
 		StringT( int aInt );
-
-		///Constructor(VOID)
-		///
-		///Create a String using unsigned int
-		///
-		///Param UnsignedInt: The value to create the string from
-		StringT( unsigned int UnsignedInt );
 
 		///Constructor(VOID)
 		///
@@ -138,7 +112,7 @@ namespace Argon
 		///Get the length of the String
 		///
 		///No Params:
-		inline ulong Length() const
+		ulong Length() const
 		{
 			return m_Allocator->Length(m_String);
 		}
@@ -160,7 +134,7 @@ namespace Argon
 			return Return;
 		}
 
-		inline wchar_t* cwide_str() const
+		wchar_t* cwide_str() const
 		{
 			wchar_t* Return = new wchar_t[ m_Size + 1 ];
 			Return[m_Allocator->Length(m_String)] = '\0';
@@ -173,7 +147,7 @@ namespace Argon
 		}
 
 
-		inline bool Empty() const
+		bool Empty() const
 		{
 			const bool empty = (m_Size == 0) ? true : false;
 			return empty;
@@ -184,50 +158,47 @@ namespace Argon
 		/// Looks for the substring inside the current string
 		///
 		///Param str: The string to attempt to find within this string
-		inline bool FindString( StringT<T, AllocatorT> str )
+		bool FindString( StringT<T, AllocatorT> str )
 		{
 			const bool Found = FindStringInString(str.m_String, m_String); 
 			return Found;
 		}
 
 
-		inline T At(ulong Index)
+		T At(ulong Index)
 		{
-			if(Index < Length())
-				return m_String[Index];
-			//return "";
+			return m_String[Index];
 		}
 
-		inline Iterator Begin()
+		Iterator Begin()
 		{
 			return m_String[0];
 		}
 
-		inline Iterator End()
+		Iterator End()
 		{
 			return m_String[m_Size];
 		}
 
-		inline StringT operator+( const StringT<T, AllocatorT> &str ) const
+		StringT operator+( const StringT<T, AllocatorT> &str ) const
 		{
 			String NewString(*this);
 			NewString += str;
 			return NewString;
 		}
 
-		inline StringT operator+( const T* str ) const
+		StringT operator+( const T* str ) const
 		{
 			String NewString(*this);
 			NewString += str;
 			return NewString;
 		}
 
-		inline StringT &operator+=(const StringT<T, AllocatorT> &str)
+		StringT &operator+=(const StringT<T, AllocatorT> &str)
 		{
-			const ulong TotalLength = m_Allocator->Length(m_String) + str.Length() + 1;
+			const ulong TotalLength = m_Allocator->Length(m_String) + str.Length();
 
 			T* String = m_Allocator->Allocate(TotalLength);
-			String[TotalLength-1] = '\0'; //Null Terminate
 
 			memcpy(String, m_String, m_Size);
 
@@ -241,18 +212,16 @@ namespace Argon
 			return *this;
 		}
 
-		inline StringT &operator+=(const T* Str)
+		StringT &operator+=(const T* Str)
 		{
 			const size_t StrLength = m_Allocator->Length(Str);
-			const ulong TotalLength = StrLength + m_Size + 1;
+			const ulong TotalLength = StrLength + m_Size; //Total length of the 2 strings
 
 			T* String = m_Allocator->Allocate(TotalLength);
-			String[TotalLength-1] = '\0'; //Null Terminate
-
-			memcpy(String, m_String, m_Size);
+			memcpy(String, m_String, m_Size); //Copy this string across
 
 			for(ulong Index = 0; Index < StrLength; ++Index)
-				String[m_Size + Index] = Str[Index];
+				String[m_Size + Index] = Str[Index]; //Move adding string accros
 
 			//delete m_String;
 			m_String = String;
@@ -261,29 +230,25 @@ namespace Argon
 			return *this;
 		}
 
-		inline StringT &operator= (const StringT<T, AllocatorT> &Str)
+		StringT &operator= (const StringT<T, AllocatorT> &Str)
 		{
-			ulong TotalLength = Str.Length() + 1;
+			T* String = m_Allocator->Allocate(Str.m_Size);
 
-			T* String = m_Allocator->Allocate(TotalLength);
-			String[TotalLength-1] = '\0'; //Null Terminate
-
-			memcpy(String, Str.m_String, m_Size);
+			memcpy(String, Str.m_String, Str.m_Size);
 
 			//delete m_String;
 			m_String = String;
-			m_Size = TotalLength-2;
+			m_Size = Str.m_Size;
 
 			return *this;
 		}
 
-		inline StringT &operator= (const T* Str)
+		StringT &operator= (const T* Str)
 		{
 			m_Size = m_Allocator->Length(Str);
 
-			T* String = m_Allocator->Allocate(m_Size+1);
-			String[m_Size] = '\0'; //Null Terminate
-			memcpy(String, Str, m_Size+1);
+			T* String = m_Allocator->Allocate(m_Size);
+			memcpy(String, Str, m_Size);
 
 			//delete m_String;
 			m_String = String;
@@ -291,7 +256,7 @@ namespace Argon
 			return *this;
 		}
 
-		inline bool operator==( const StringT<T, AllocatorT> &Str ) const
+		bool operator==( const StringT<T, AllocatorT> &Str ) const
 		{
 			if ( memcmp(m_String, Str, m_Size > Str.m_Size ? m_Size : Str.m_Size) == 0 )
 				return true;
@@ -299,7 +264,7 @@ namespace Argon
 			return false;
 		}
 
-		inline bool operator==( T* Str ) const
+		bool operator==( T* Str ) const
 		{
 			size_t StrLength = m_Allocator->Length(Str);
 			if ( memcmp(m_String, Str, m_Size > StrLength ? m_Size : StrLength) == 0 )
@@ -308,7 +273,7 @@ namespace Argon
 			return false;
 		}
 
-		inline bool operator!=( const StringT<T, AllocatorT> &Str ) const
+		bool operator!=( const StringT<T, AllocatorT> &Str ) const
 		{
 			if (memcmp(m_String, Str, m_Size > Str.m_Size ? m_Size : Str.m_Size) == 0)
 				return false;
@@ -316,7 +281,7 @@ namespace Argon
 			return true;
 		}
 
-		inline bool operator!=( const T* Str ) const
+		bool operator!=( const T* Str ) const
 		{
 			size_t StrLength = m_Allocator->Length(Str);
 			if (memcmp(m_String, Str, m_Size > StrLength ? m_Size : StrLength) == 0)
@@ -325,7 +290,7 @@ namespace Argon
 			return true;
 		}
 
-		inline T& operator[] (ulong Index)
+		T& operator[] (ulong Index)
 		{
 			if(Index < m_Size)
 				return m_String[Index];

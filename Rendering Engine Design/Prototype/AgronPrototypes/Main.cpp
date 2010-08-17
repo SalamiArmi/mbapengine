@@ -54,8 +54,8 @@ public:
 			bool t = aaaa == "TESTING STRING";
 			t = aaaa != "TESTING STRING";
 			aaaa += aaaa;
-			short ab = 25;
-			aaaa = Argon::String(ab);
+			//short ab = 25;
+			//aaaa = Argon::String(ab);
 
 			//std::cout << aaaa.c_str() << std::endl;
 
