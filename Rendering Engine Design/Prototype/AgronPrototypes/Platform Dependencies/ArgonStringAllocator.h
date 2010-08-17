@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////
+//
+//	ArgonStringAllocator.h : String Allocators
+//
+//	Copyright ©2010 Argon. All rights reserved.
+//	Removal of this copyright notice is not permitted.
+//
+///////////////////////////////////////////////////////////////
+
 #ifndef _ARGONSTRINGALLOCATOR_HEADER_
 #define _ARGONSTRINGALLOCATOR_HEADER_
 

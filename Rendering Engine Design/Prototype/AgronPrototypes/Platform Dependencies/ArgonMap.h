@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////
+//
+//	ArgonMap.h : Argon Map Container
+//
+//	Copyright ©2010 Argon. All rights reserved.
+//	Removal of this copyright notice is not permitted.
+//
+///////////////////////////////////////////////////////////////
+
 #ifndef _MAP_HEADER_
 #define _MAP_HEADER_
 

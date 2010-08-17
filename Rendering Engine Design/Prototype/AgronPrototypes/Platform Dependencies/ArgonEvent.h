@@ -1,3 +1,13 @@
+////////////////////////////////////////////////////////////////
+//
+//	ArgonEvent.h : Argon Threading Event
+//
+//	Copyright ©2010 Argon. All rights reserved.
+//	Removal of this copyright notice is not permitted.
+//
+///////////////////////////////////////////////////////////////
+
+
 #pragma once
 
 #if defined (_WIN32)

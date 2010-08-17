@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////
+//
+//	ArgonString.h :
+//
+//	Copyright ©2010 Argon. All rights reserved.
+//	Removal of this copyright notice is not permitted.
+//
+///////////////////////////////////////////////////////////////
+
 #ifndef _ARGONSTRING_HEADER_
 #define _ARGONSTRING_HEADER_
 
