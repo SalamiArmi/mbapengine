@@ -11,6 +11,7 @@
 
 #include <string>
 #include <iostream>
+#include <map>
 
 #include <ArgonMemory.h>
 
@@ -42,12 +43,6 @@ public:
 			bool t = aaaa == "TESTING STRING";
 			t = aaaa != "TESTING STRING";
 			aaaa += aaaa;
-			//short ab = 25;
-			//aaaa = Argon::String(ab);
-
-			//std::cout << aaaa.c_str() << std::endl;
-
-			//t = aaaa.FindString( Argon::String("TESTING") );
 
 			for(Argon::String::Iterator it = aaaa.Begin(); it != aaaa.End(); ++it)
 			{
@@ -62,6 +57,13 @@ public:
 
 int main()
 {
+	Argon::Map<int, int> mm;
+	std::cout << sizeof(Argon::Map<int, int>) << std::endl;
+	for (int i = 0; i < 1000000; ++i)
+	{
+		mm.Insert(i,i);
+	}
+
 	StdThread TargetA;
 	ArgonStringThread TargetB;
 
@@ -74,7 +76,7 @@ int main()
 	GlobalEvent.Set();
 	while (threads[0].Running() || threads[1].Running())
 	{
-		Sleep(0);
+		Sleep(1);
 	}
 
 	threads[0].Stop();

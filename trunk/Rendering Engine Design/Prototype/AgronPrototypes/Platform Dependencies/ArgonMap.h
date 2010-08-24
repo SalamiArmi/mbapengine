@@ -13,19 +13,25 @@
 namespace Argon
 {
 	template < typename _Type >
-	class Less
+	class Comparator
 	{
-		bool operator()(const _Type &left, const _Type &right) const
+	public:
+		bool Less(const _Type &left, const _Type &right) const
 		{
 			return (left < right);
 		}
+
+		bool More(const _Type &left, const _Type &right) const
+		{
+			return (left > right);
+		}
 	};
 
-	template < typename _Key, typename _Data, typename _Compare = Less<_Key> >
-	class Map
+	template < typename _Key, typename _Data, typename _Compare = Comparator<_Key> >
+	class Map : private _Compare
 	{
-		template < typename _Key, typename _Data >
-		class ContainerT
+		template < typename _Key, typename _Data, typename _Compare = Comparator<_Key> >
+		class ContainerT : private _Compare
 		{
 			friend Map <_Key, _Data>;
 
@@ -57,22 +63,22 @@ namespace Argon
 
 			inline void operator ++ ()
 			{
-				increment();
+				Increment();
 			}
 
 			inline void operator ++ (int)
 			{
-				increment();
+				Increment();
 			}
 
 			inline void operator -- ()
 			{
-				deincrement();
+				Deincrement();
 			}
 
 			inline void operator -- (int)
 			{
-				deincrement();
+				Deincrement();
 			}
 
 		protected:
@@ -94,7 +100,7 @@ namespace Argon
 					do
 					{
 						iterator = iterator->m_Parent;
-					} while (iterator->m_Data < comparisonValue);
+					} while (_Compare::Less(iterator->m_Data, comparisonValue));
 				}
 				else
 				{
@@ -126,7 +132,7 @@ namespace Argon
 					do
 					{
 						iterator = iterator->m_Parent;
-					} while (iterator->m_Data < comparisonValue);
+					} while (_Compare::Less(iterator->m_Data, comparisonValue));
 				}
 				else
 				{
@@ -163,6 +169,10 @@ namespace Argon
 
 		inline ~Map()
 		{
+			while (m_root)
+			{
+				Erase(m_root);
+			}
 		}
 
 		void Insert(_Key newKey, _Data newData)
@@ -184,16 +194,63 @@ namespace Argon
 			}
 			else
 			{
-				while (iterator->m_Children[newContainer->m_Key > iterator->m_Key])
+				while (iterator->m_Children[_Compare::More(newContainer->m_Key, iterator->m_Key)])
 				{
-					iterator = iterator->m_Children[newContainer->m_Key > iterator->m_Key];
+					iterator = iterator->m_Children[_Compare::More(newContainer->m_Key, iterator->m_Key)];
 				}
 
-				iterator->m_Children[newContainer->m_Key > iterator->m_Key] = newContainer;
-				iterator->m_Children[newContainer->m_Key > iterator->m_Key]->m_Parent = iterator;
+				iterator->m_Children[_Compare::More(newContainer->m_Key, iterator->m_Key)] = newContainer;
+				iterator->m_Children[_Compare::More(newContainer->m_Key, iterator->m_Key)]->m_Parent = iterator;
 			}
 
-			InsertHelper(iterator);
+			container *target = iterator;
+
+			while (true)
+			{
+				if (!target->m_Parent)
+				{
+					target->colour = false;
+					m_root = target;
+				}
+				else if (target->m_Parent->colour)
+				{
+					container
+						*__restrict grandparent = target && target->m_Parent ? target->m_Parent->m_Parent : 0,
+						*__restrict uncle = grandparent ? grandparent->m_Children[target->m_Parent == grandparent->m_Children[0]] : 0;
+
+					if (uncle && uncle->colour)
+					{
+						target->m_Parent->colour = uncle->colour = false;
+						grandparent->colour = true;
+						target = grandparent;
+						continue;
+					}
+					else
+					{
+						if (target == target->m_Parent->m_Children[1] && target->m_Parent == grandparent->m_Children[0])
+						{
+							RotateTree(target, false);
+							target = target->m_Children[0];
+						}
+						else if (target == target->m_Parent->m_Children[0] && target->m_Parent == grandparent->m_Children[1])
+						{
+							RotateTree(target, true);
+							target = target->m_Children[1];
+						}
+
+						target->m_Parent->colour = false;
+						grandparent->colour = true;
+
+						RotateTree(target->m_Parent, target == target->m_Parent->m_Children[0] && target->m_Parent == grandparent->m_Children[0]);
+
+						while (m_root->m_Parent)
+						{
+							m_root = m_root->m_Parent;
+						}
+					}
+				}
+				break;
+			}
 		}
 
 		void Erase(container *__restrict erasableNode)
@@ -254,35 +311,7 @@ namespace Argon
 			container *__restrict iterator = m_root;
 			while (request != iterator->m_Key)
 			{
-				iterator = iterator->m_Children[request > iterator->m_Key];
-			}
-			return iterator;
-		}
-
-		container *FindLower(_Key request) const
-		{
-			container *__restrict iterator = m_root;
-			while (request != iterator->m_Key && iterator->m_Children[request > iterator->m_Key])
-			{
-				iterator = iterator->m_Children[request > iterator->m_Key];
-			}
-			if (iterator->m_Key > request)
-			{
-				--(*iterator);
-			}
-			return iterator;
-		}
-
-		container *FindHigher(_Key request) const
-		{
-			container *__restrict iterator = m_root;
-			while (request != iterator->m_Key && iterator->m_Children[request > iterator->m_Key])
-			{
-				iterator = iterator->m_Children[request > iterator->m_Key];
-			}
-			if (iterator->m_Key < request)
-			{
-				--(*iterator);
+				iterator = iterator->m_Children[_Compare::More(request, iterator->m_Key)];
 			}
 			return iterator;
 		}
@@ -313,56 +342,6 @@ namespace Argon
 		}
 
 	private:
-		inline void InsertHelper(container *__restrict target)
-		{
-			while (true)
-			{
-				if (!target->m_Parent)
-				{
-					target->colour = false;
-					m_root = target;
-				}
-				else if (target->m_Parent->colour)
-				{
-					container
-						*__restrict grandparent = target && target->m_Parent ? target->m_Parent->m_Parent : 0,
-						*__restrict uncle = grandparent ? grandparent->m_Children[target->m_Parent == grandparent->m_Children[0]] : 0;
-
-					if (uncle && uncle->colour)
-					{
-						target->m_Parent->colour = uncle->colour = false;
-						grandparent->colour = true;
-						target = grandparent;
-						continue;
-					}
-					else
-					{
-						if (target == target->m_Parent->m_Children[1] && target->m_Parent == grandparent->m_Children[0])
-						{
-							RotateTree(target, false);
-							target = target->m_Children[0];
-						}
-						else if (target == target->m_Parent->m_Children[0] && target->m_Parent == grandparent->m_Children[1])
-						{
-							RotateTree(target, true);
-							target = target->m_Children[1];
-						}
-
-						target->m_Parent->colour = false;
-						grandparent->colour = true;
-
-						RotateTree(target->m_Parent, target == target->m_Parent->m_Children[0] && target->m_Parent == grandparent->m_Children[0]);
-
-						while (m_root->m_Parent)
-						{
-							m_root = m_root->m_Parent;
-						}
-					}
-				}
-				break;
-			}
-		}
-
 		inline void EraseHelper(container *__restrict target)
 		{
 			while (true)
@@ -375,7 +354,7 @@ namespace Argon
 					{
 						target->m_Parent->colour = true;
 						sibling->colour = false;
-						rotateTree(target, target == target->m_Parent->m_Children[0]);
+						RotateTree(target, target == target->m_Parent->m_Children[0]);
 					}
 					else if ((sibling->colour == false) && (sibling->m_Children[0]->colour == false) && (sibling->m_Children[1]->colour == false))
 					{
@@ -396,7 +375,7 @@ namespace Argon
 						target->m_Parent->colour = false;
 
 						sibling->m_Children[target == target->m_Parent->m_Children[0]]->colour = false;
-						rotateTree(target, target == target->m_Parent->m_Children[0]);
+						RotateTree(target, target == target->m_Parent->m_Children[0]);
 					}
 
 					while (m_root->m_Parent)

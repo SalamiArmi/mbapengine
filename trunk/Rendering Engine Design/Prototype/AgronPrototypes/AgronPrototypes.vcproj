@@ -191,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Platform Dependencies\ArgonMatrix4.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Platform Dependencies\ArgonMemory.h"
 				>
 			</File>
@@ -248,6 +252,42 @@
 			</File>
 			<File
 				RelativePath=".\Platform Dependencies\ArgonVector.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonVector2.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonVector2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonVector3.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonVector3.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\DynamicDll.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\DynamicDll.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="My Inspector Results"
+			>
+			<File
+				RelativePath=".\My Inspector Results\r000mi1\r000mi1.insp"
+				>
+			</File>
+			<File
+				RelativePath=".\My Inspector Results\r001mi1\r001mi1.insp"
 				>
 			</File>
 		</Filter>
