@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="AgronPrototypes"
+	Name="ArgonPrototypes"
 	ProjectGUID="{6CB7559A-BF69-475A-AB0B-0FBE85C2C175}"
 	RootNamespace="AgronPrototypes"
 	Keyword="Win32Proj"
@@ -276,18 +276,6 @@
 			</File>
 			<File
 				RelativePath=".\Platform Dependencies\DynamicDll.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="My Inspector Results"
-			>
-			<File
-				RelativePath=".\My Inspector Results\r000mi1\r000mi1.insp"
-				>
-			</File>
-			<File
-				RelativePath=".\My Inspector Results\r001mi1\r001mi1.insp"
 				>
 			</File>
 		</Filter>
