@@ -11,7 +11,6 @@
 
 #include <string>
 #include <iostream>
-#include <map>
 
 #include <ArgonMemory.h>
 
@@ -43,11 +42,16 @@ public:
 			bool t = aaaa == "TESTING STRING";
 			t = aaaa != "TESTING STRING";
 			aaaa += aaaa;
+			//short ab = 25;
+			//aaaa = Argon::String(ab);
+
+			//std::cout << aaaa.c_str() << std::endl;
+
+			//t = aaaa.FindString( Argon::String("TESTING") );
 
 			for(Argon::String::Iterator it = aaaa.Begin(); it != aaaa.End(); ++it)
 			{
 				int i = 0;
-				std::stringstream
 			}
 		}
 
@@ -58,14 +62,7 @@ public:
 
 int main()
 {
-	Argon::Map<int, int> mm;
-	std::cout << sizeof(Argon::Map<int, int>) << std::endl;
-	for (int i = 0; i < 1000000; ++i)
-	{
-		mm.Insert(i,i);
-	}
-
-	StdThread TargetA;
+	/*StdThread TargetA;
 	ArgonStringThread TargetB;
 
 	Argon::Thread threads[2];
@@ -77,10 +74,22 @@ int main()
 	GlobalEvent.Set();
 	while (threads[0].Running() || threads[1].Running())
 	{
-		Sleep(1);
+		Sleep(0);
 	}
 
 	threads[0].Stop();
-	threads[1].Stop();
+	threads[1].Stop();*/
+
+	Argon::RefPtr< int* >* pp = new Argon::RefPtr< int* >();
+	Argon::RefPtr< int* >* tt;
+
+	tt = pp->Get();
+
+	tt->RemoveRef();
+	pp->RemoveRef();
+
+	Argon::ValuePtr< Argon::String > xv = new Argon::String();
+	
+
 	return 0;
 }

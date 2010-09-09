@@ -134,14 +134,16 @@ namespace Argon
 
 	template< typename Type, typename Allocater = MemoryAllocator<Type> > class ValuePtr 
 	{
-	public:
+	protected:
 
-		ValuePtr()
+		class InternalAllocBase
 		{
+		public:
+			virtual Type* Clone( Type const* ) const = 0;
+			virtual void UnLoad( Type* ) const = 0; 
+		};
 
-		}
-
-		template< typename Derived > class InternalAllocater
+		template< typename Derived > class InternalAllocater : InternalAllocBase
 		{
 		public:
 
@@ -183,6 +185,30 @@ namespace Argon
 			static typename Allocater::template Rebind<Derived>::Other allocator;
 		};
 
+	public:
+
+		template<typename Derived> ValuePtr(Derived* Ptr)
+		{
+			Load();
+			Reset(Ptr);
+		}
+
+		ValuePtr(Type* Ptr = 0x0)
+		{
+			Load();
+			Reset(Ptr);
+		}
+
+		ValuePtr(ValuePtr const &Rhs)
+		{
+			Load();
+			Reset(Rhs);
+		}
+
+		template<typename Derived> ValuePtr& Reset(Derived* Ptr)
+		{
+			return InternalReset(Ptr, &InternalAllocator<Derived>::Global);
+		}
 
 		virtual ~ValuePtr()
 		{	
@@ -197,17 +223,27 @@ namespace Argon
 			m_InternalAllocater = &InternalAllocater::Global;
 		}
 
+		ValuePtr& InternalReset(Type* Ptr, InternalAllocBase* Alloc)
+		{
+			
+		}
+
 	private:
 		Type* m_Ptr;
 		InternalAllocater* m_InternalAllocater;
 	};
 
-	template<typename Type, typename Allocater> template<typename Derived> typename ValuePtr<Type, Allocater>::template InternalAllocater<Derived> ValuePtr<Type, Allocater>::InternalAllocator<Derived>::Global = 
-		typename ValuePtr<Type, Allocater>::template InternalAllocater<Derived>();
+	template < typename Type, typename Allocator > 
+	template < typename Derived > 
+	typename ValuePtr< Type, Allocator >::template InternalAllocater< Derived >
+		ValuePtr< Type, Allocator >::InternalAllocator< Derived >::Global 
+		= typename ValuePtr< Type, Allocator >::template InternalAllocator< Derived >( ); 	
 
-	template < typename Type, typename Allocator > template < typename Derived > template Allocater::template Rebind<Derived>::Other ValuePtr<Type, Allocater>::InternalAllocater<Derived>::Allocater = 
-		typename Allocater::template Rebind<Derived>::Other();
-
+	template < typename Type, typename Allocator > 
+	template < typename Derived > 
+	typename Allocator::template Rebind< Derived >::Other 
+		ValuePtr< Type, Allocator >::InternalAllocater< Derived >::Allocater	
+		= typename Allocator::template Rebind< Derived >::other( );
 }
 
 #endif //_REFERENCEPOINTER_HEADER_
