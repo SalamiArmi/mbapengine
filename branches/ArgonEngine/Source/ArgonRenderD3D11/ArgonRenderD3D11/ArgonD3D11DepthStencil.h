@@ -2,6 +2,9 @@
 #define _ARGOND3D11DEPTHSTENCIL_HEADER_
 
 #include <Interface/ISurface.h>
+#include <Interface/IArgonUnknownImp.h>
+
+#include "ArgonD3D11Device.h"
 
 namespace Argon
 {
@@ -44,7 +47,7 @@ namespace Argon
 		///Get the type of pool this item was created on
 		///
 		///No Params:
-		MemoryPool GetPoolType();
+		ISurface::MemoryPool GetPoolType();
 
 	protected:
 		~D3D11DepthStencil();

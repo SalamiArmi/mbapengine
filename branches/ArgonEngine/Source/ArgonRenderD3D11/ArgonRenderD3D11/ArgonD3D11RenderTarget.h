@@ -63,11 +63,11 @@ namespace Argon
 		///Get the DirectX Texture RenderTarget
 		///
 		///No Params:
-		ID3D10Texture2D* GetTexture();
+		ID3D11RenderTargetView* GetTexture();
 
 	protected:
 		~D3D11RenderTarget();
-		ID3D10Texture2D*				m_RenderTexture;
+		ID3D11RenderTargetView*			m_RenderTarget;
 
 		uint							m_Height;
 		uint							m_Width;

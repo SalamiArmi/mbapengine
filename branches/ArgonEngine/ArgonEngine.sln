@@ -139,8 +139,8 @@ Global
 		{127CBC0D-A66D-4854-A319-612023715C18}.Debug Dynamic Lib|Any CPU.ActiveCfg = Debug Dynamic Lib|x64
 		{127CBC0D-A66D-4854-A319-612023715C18}.Debug Dynamic Lib|Mixed Platforms.ActiveCfg = Debug Dynamic Lib|x64
 		{127CBC0D-A66D-4854-A319-612023715C18}.Debug Dynamic Lib|Mixed Platforms.Build.0 = Debug Dynamic Lib|x64
-		{127CBC0D-A66D-4854-A319-612023715C18}.Debug Dynamic Lib|Win32.ActiveCfg = Debug Static Lib|Win32
-		{127CBC0D-A66D-4854-A319-612023715C18}.Debug Dynamic Lib|Win32.Build.0 = Debug Static Lib|Win32
+		{127CBC0D-A66D-4854-A319-612023715C18}.Debug Dynamic Lib|Win32.ActiveCfg = Debug Dynamic Lib|Win32
+		{127CBC0D-A66D-4854-A319-612023715C18}.Debug Dynamic Lib|Win32.Build.0 = Debug Dynamic Lib|Win32
 		{127CBC0D-A66D-4854-A319-612023715C18}.Debug Dynamic Lib|x64.ActiveCfg = Debug Dynamic Lib|x64
 		{127CBC0D-A66D-4854-A319-612023715C18}.Debug Dynamic Lib|x64.Build.0 = Debug Dynamic Lib|x64
 		{127CBC0D-A66D-4854-A319-612023715C18}.Debug Static Lib|Any CPU.ActiveCfg = Debug Static Lib|x64

@@ -29,6 +29,7 @@ namespace Argon
 		bool		CreateDevice(uint DriverIndex, uint VideoModeIndex, void* Window);
 		void		RenderMesh(IMesh* Mesh);
 		ISurface*	CreateRenderTarget(uint Width, uint Height, ISurface::Format Format);
+		ISurface* CreateDepthStencil(uint Width, uint Height, ISurface::Format Format);
 
 		//////////////////////////////////////////////////////////////////////////////////
 		// Wrapper for RenderSystem type mainly used in engine or internally
@@ -39,6 +40,8 @@ namespace Argon
 		void 		SetRenderTarget(ISurface* RenderTarget);
 		void 		SetViewport(IViewport* Viewport);
 		void 		SetVertexDeclaration(IMesh::VertexDeclaration VertexDecl);
+		void		SetDepthStencil(ISurface* DepthStencil);
+
 
 		///GETDEVICE(D3D11DEVICE)
 		///

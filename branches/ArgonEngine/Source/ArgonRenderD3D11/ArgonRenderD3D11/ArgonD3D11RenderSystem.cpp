@@ -1,6 +1,7 @@
 #include "ArgonD3D11RenderSystem.h"
 #include "ArgonD3D11RenderTarget.h"
 #include "ArgonD3D11Buffer.h"
+#include "ArgonD3D11DepthStencil.h"
 
 #include "ArgonD3D11RenderSystemExport.h"
 
@@ -67,6 +68,11 @@ namespace Argon
 		return new D3D11RenderTarget(Width, Height, Format);
 	}
 
+	ISurface* D3D11RenderSystem::CreateDepthStencil(uint Width, uint Height, ISurface::Format Format)
+	{
+		return new D3D11DepthStencil(Width, Height, Format);
+	}
+
 	bool D3D11RenderSystem::BeginFrame()
 	{
 		m_Device->GetDeviceContext()->Begin(NULL); 
@@ -88,6 +94,10 @@ namespace Argon
 	}
 
 	void D3D11RenderSystem::SetRenderTarget(ISurface* RenderTarget)
+	{
+	}
+
+	void D3D11RenderSystem::SetDepthStencil(ISurface* DepthStencil)
 	{
 	}
 

@@ -18,7 +18,7 @@ namespace Argon
 	{
 		ID3D10Texture2D* BackBuffer;
 		D3D11RenderSystem::instance()->GetDevice()->GetSwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&BackBuffer);
-		D3D11RenderSystem::instance()->GetDevice()->GetDevice()->CreateRenderTargetView(BackBuffer, 0, &m_RenderTexture);
+	//	D3D11RenderSystem::instance()->GetDevice()->GetDevice()->CreateRenderTargetView(BackBuffer, 0, &m_RenderTarget);
 		
 		//Release the backbuffer, we no longer have a reference
 		BackBuffer->Release();
@@ -28,7 +28,7 @@ namespace Argon
 
 	bool D3D11RenderTarget::UnLoad()
 	{
-		if(m_RenderTexture->Release() == 0)
+		if(m_RenderTarget->Release() == 0)
 		{
 			return true;
 		}
@@ -58,9 +58,9 @@ namespace Argon
 
 	}
 
-	ID3D10Texture2D* D3D11RenderTarget::GetTexture()
+	ID3D11RenderTargetView* D3D11RenderTarget::GetTexture()
 	{
-		return m_RenderTexture;
+		return m_RenderTarget;
 	}
 
 } //Namespace

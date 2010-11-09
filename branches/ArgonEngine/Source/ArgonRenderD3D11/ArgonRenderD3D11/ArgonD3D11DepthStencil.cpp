@@ -11,6 +11,10 @@ namespace Argon
 	{
 	}
 
+	D3D11DepthStencil::~D3D11DepthStencil()
+	{
+	}
+
 	bool D3D11DepthStencil::Load()
 	{
 		D3D11_TEXTURE2D_DESC Desc;
@@ -38,9 +42,30 @@ namespace Argon
 		Desc.CPUAccessFlags = 0;
 		Desc.MiscFlags = 0;
 
-		//D3D11RenderSystem::GetDevice()->
+		D3D11RenderSystem::instance()->GetDevice()->GetDevice()->CreateTexture2D(&Desc, 0, &m_Buffer);
+		D3D11RenderSystem::instance()->GetDevice()->GetDevice()->CreateDepthStencilView(m_Buffer, 0, &m_DepthStencil);
 
-		return false;
+		return true;
+	}
+
+	bool D3D11DepthStencil::UnLoad()
+	{
+		return true;
+	}
+
+	uint D3D11DepthStencil::GetHeight()
+	{
+		return m_Height;
+	}
+
+	uint D3D11DepthStencil::GetWidth()
+	{
+		return m_Width;
+	}
+
+	ISurface::MemoryPool D3D11DepthStencil::GetPoolType()
+	{
+		return ISurface::POOL_Default;
 	}
 
 } //Namespace
