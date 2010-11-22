@@ -11,6 +11,10 @@
 
 namespace Argon
 {
+	//Predefines
+	class D3D11RenderTarget;
+	class D3D11DepthStencil;
+		
 	class D3D11RenderSystem : ArgonImplements IArgonUnknownImp2<IRenderSystem, GUID_IRenderSystem, IComponent, GUID_IComponent>, public singleton<D3D11RenderSystem>
 	{
 		friend singleton;
@@ -29,7 +33,8 @@ namespace Argon
 		bool		CreateDevice(uint DriverIndex, uint VideoModeIndex, void* Window);
 		void		RenderMesh(IMesh* Mesh);
 		ISurface*	CreateRenderTarget(uint Width, uint Height, ISurface::Format Format);
-		ISurface* CreateDepthStencil(uint Width, uint Height, ISurface::Format Format);
+		ISurface*	CreateDepthStencil(uint Width, uint Height, ISurface::Format Format);
+		void		SetClearColor(float A, float R, float G, float B);
 
 		//////////////////////////////////////////////////////////////////////////////////
 		// Wrapper for RenderSystem type mainly used in engine or internally
@@ -54,8 +59,14 @@ namespace Argon
 		virtual ~D3D11RenderSystem();
 		D3D11RenderSystem();
 
+		uint				m_Width;
+		uint				m_Height;
+		float				m_ClearColor[4];
+
 	private:
-		D3D11Device* m_Device;
+		D3D11Device*		m_Device;
+		D3D11RenderTarget*	m_BackBuffer;
+		D3D11DepthStencil*	m_DepthStencil;
 	};
 
 } //Namespace

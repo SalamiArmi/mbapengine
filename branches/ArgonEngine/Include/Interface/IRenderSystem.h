@@ -108,6 +108,16 @@ namespace Argon
 		///Param DepthStencil: The surface that will be used
 		void SetDepthStencil(ISurface* DepthStencil);
 
+		///SETCLEARCOLOR(VOID)
+		///
+		///Set the Device Clear color when starting a new frame
+		///
+		///Param A: Aplha
+		///Param R: Red
+		///Param G: Green
+		///Param B: Blue
+		void SetClearColor(float A, float R, float G, float B);
+
 		///CREATERENDERTARGET(ISURFACE)
 		///
 		///Create a new render target and return it

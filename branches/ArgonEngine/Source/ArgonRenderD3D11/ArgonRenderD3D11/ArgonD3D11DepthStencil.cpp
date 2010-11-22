@@ -68,4 +68,9 @@ namespace Argon
 		return ISurface::POOL_Default;
 	}
 
+	ID3D11DepthStencilView* D3D11DepthStencil::GetTexture()
+	{
+		return m_DepthStencil;
+	}
+
 } //Namespace

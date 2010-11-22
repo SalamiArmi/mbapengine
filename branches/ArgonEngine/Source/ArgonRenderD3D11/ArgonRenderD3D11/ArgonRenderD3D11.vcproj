@@ -512,6 +512,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\ArgonD3D11Utils.cpp"
+			>
+		</File>
+		<File
 			RelativePath=".\ArgonD3D11Utils.h"
 			>
 		</File>

@@ -14,6 +14,7 @@ namespace Argon
 	{
 	public:
 		D3D11RenderTarget(uint Width, uint Height, ISurface::Format Format);
+		D3D11RenderTarget(ID3D11RenderTargetView* DesiredTarget);
 		
 		///LOAD(BOOL)
 		///
@@ -72,6 +73,7 @@ namespace Argon
 		uint							m_Height;
 		uint							m_Width;
 		ISurface::MemoryPool			m_Pool;
+		ISurface::Format				m_Format;
 	};
 
 } //Namespace

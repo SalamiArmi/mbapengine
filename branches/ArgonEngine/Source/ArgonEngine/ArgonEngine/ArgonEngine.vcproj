@@ -1117,12 +1117,28 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Root"
+			>
+			<File
+				RelativePath=".\Root\ArgonRoot.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Root\ArgonRoot.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ArgonEngine.cpp"
 			>
 		</File>
 		<File
 			RelativePath=".\ArgonEngine.h"
+			>
+		</File>
+		<File
+			RelativePath=".\ArgonExport.cpp"
 			>
 		</File>
 	</Files>

@@ -1,12 +1,26 @@
 #include "ArgonD3D11RenderTarget.h"
 #include <Interface/ISurface.h>
 #include "ArgonD3D11RenderSystem.h"
+#include "ArgonD3D11Utils.h"
+
+#include "D3D11.h"
+#include "D3DX11.h"
+#include "DXGI.h"
 
 namespace Argon
 {
 	D3D11RenderTarget::D3D11RenderTarget(uint Width, uint Height, ISurface::Format Format)
+		: m_Width(Width),
+		m_Height(Height),
+		m_Pool(ISurface::POOL_Managed),
+		m_Format(Format)
 	{
 
+	}
+
+	D3D11RenderTarget::D3D11RenderTarget(ID3D11RenderTargetView* DesiredTarget)
+		: m_RenderTarget(DesiredTarget) 
+	{
 	}
 
 	D3D11RenderTarget::~D3D11RenderTarget()
@@ -16,13 +30,13 @@ namespace Argon
 
 	bool D3D11RenderTarget::Load()
 	{
-		ID3D10Texture2D* BackBuffer;
-		D3D11RenderSystem::instance()->GetDevice()->GetSwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&BackBuffer);
-	//	D3D11RenderSystem::instance()->GetDevice()->GetDevice()->CreateRenderTargetView(BackBuffer, 0, &m_RenderTarget);
-		
-		//Release the backbuffer, we no longer have a reference
-		BackBuffer->Release();
+		D3D11_RENDER_TARGET_VIEW_DESC Desc;
+		Desc.Texture2D.MipSlice = 1;
+		Desc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+		Desc.Format = ArgonFormatToD3D11(m_Format);
+	
 
+		D3D11RenderSystem::instance()->GetDevice()->GetDevice()->CreateRenderTargetView(NULL, &Desc, &m_RenderTarget);
 		return true;
 	}
 

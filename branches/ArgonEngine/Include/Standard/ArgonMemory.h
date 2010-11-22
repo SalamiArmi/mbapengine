@@ -10,58 +10,21 @@
 #ifndef _REFERENCEPOINTER_HEADER_
 #define _REFERENCEPOINTER_HEADER_
 
+#include <limits>
+#include "ArgonSingleton.h"
+
 namespace Argon
 {
-	template< typename Type > class AutoPtr
+	class MemoryAllocator : public singleton<MemoryAllocator>
 	{
+		friend singleton;
 	public:
+		typedef size_t				SizeType;
+		typedef _w64 int			DifferenceType;
 
-		explicit AutoPtr()
+		template<typename OtherAllocator> struct Rebind
 		{
-			m_StoredPtr = new Type();
-		}
-
-		~AutoPtr()
-		{
-			delete m_StoredPtr;
-		}
-
-		Type& operator*() const
-		{
-			return *m_StoredPtr;
-		}
-
-		Type* operator =(Type* Rhs) const
-		{
-			Rhs = m_StoredPtr;
-			return this;
-		}
-
-		Type* operator->() const
-		{
-			return m_StoredPtr;
-		}
-
-	protected:
-
-	private:
-		Type*	m_StoredPtr;
-	};
-
-	template< typename AllocatorType > class MemoryAllocator
-	{
-	public:
-		typedef AllocatorType ValueType;
-		typedef ValueType* Pointer;
-		typedef const ValueType* ConstPointer;
-		typedef ValueType& Reference;
-		typedef const ValueType& ConstReference;
-		typedef size_t SizeType;
-		typedef _w64 int DifferenceType;
-
-		template< typename OtherAllocator > struct Rebind
-		{
-			typedef Allocator< AllocatorType > Other;
+			typedef MemoryAllocator Other;
 		};
 
 		inline explicit MemoryAllocator()
@@ -74,48 +37,94 @@ namespace Argon
 
 		}
 
-		inline explicit MemoryAllocator(Allocator const&)
+		inline explicit MemoryAllocator(MemoryAllocator const&)
 		{
 
 		}
 
-		template<typename U>
-		inline explicit MemoryAllocator(Allocator<U> const&) 
-		{
-
-		}
-
-		inline Pointer Address(Reference Ref)
+		template<typename T> inline T* Address(T& Ref)
 		{ 
 			return &Ref; 
 		}
 
-		inline ConstPointer Address(ConstReference Ref)
+		template<typename T> inline const T* Address(const T& Ref)
 		{ 
 			return &Ref;
 		}
 
-		inline Pointer Allocate(SizeType Count)
+		template<typename T> inline T* Allocate(size_t Size)
 		{ 
-				return reinterpret_cast<Pointer>(::operator new(Count * sizeof (AllocatorType))); 
+			return malloc(Size); 
 		}
 
-		inline void DeAllocate(Pointer Ptr, SizeType) 
-		{ 
-			::operator delete(Ptr); 
+		struct HeapHandle
+		{
+			size_t ElementCount;	
+		};
+
+		template<typename T> inline T* AllocateArray(size_t ElementCount, const char* Description)
+		{
+			size_t TotalSize = sizeof(HeapHandle) + ElementCount * sizeof(T);	//Find the Total Size
+			char* DataBlock = (char*)(malloc(TotalSize));						//Allocate the many Bits
+			if(DataBlock)
+			{
+				T* Block = (T*)(DataBlock + sizeof(HeapHandle)); //Get the Data after the Heap Handle
+
+				*((size_t*) DataBlock) = ElementCount; //Record the elements
+
+				//Create each position by calling the constructor
+				T* Elements = Block;
+				for(size_t Index = 0; Index < ElementCount; ++Index)
+				{
+					(void) new (static_cast<void*>(Elements + Index)) T;
+				}
+
+				m_CurrentMemory += TotalSize;
+				return Block;
+			}
+			return NULL;
 		}
 
-		inline SizeType MaxSize() const 
+		template<typename T>inline void DeAllocate(T* Ptr, size_t Size) 
 		{ 
-			return std::numeric_limits<SizeType>::max() / sizeof(AllocatorType);
+			free(Ptr);
+			m_CurrentMemory -= Size;
 		}
 
-		inline void Construct(Pointer Ptr, const AllocatorType& Type)
-		{ 
-			new(Ptr) AllocatorType(Type); 
+		template<typename T> inline void DeAllocateArray(T*& DataBlock, const char* Description)
+		{
+			if(DataBlock)
+			{
+				HeapHandle* HeapHandle = (HeapHandle*)(((char*)DataBlock) - sizeof(HeapHandle));
+
+				if(HeapHandle)
+				{
+					//Get the Elements
+					T* Elements = DataBlock;
+
+					if(Elements)
+					{
+						m_CurrentMemory -= sizeof(HeapHandle) + HeapHandle->ElementCount * sizeof(T);
+						
+						//Deallocate each T
+						for(size_t Index = 0; Index < HeapHandle->ElementCount; ++Index)
+						{
+							(Elements + Index)->~T;
+						}
+
+						DeAllocate(HeapHandle);
+						DataBlock = NULL;
+					}
+				}
+			}
 		}
 
-		inline void Destroy(Pointer Ptr)
+		template<typename T> inline size_t MaxSize() const 
+		{ 
+			return std::numeric_limits<size_t>::max() / sizeof(T);
+		}
+
+		template<typename T>inline void Destroy(T* Ptr)
 		{ 
 			Ptr->~AllocatorType();
 		}
@@ -130,9 +139,12 @@ namespace Argon
 			return !operator==(Object);
 		}
 
+	private:
+		size_t	m_PeakMemory;
+		size_t	m_CurrentMemory;
 	};
 
-	template< typename Type, typename Allocater = MemoryAllocator<Type> > class ValuePtr 
+	template<typename Type> class ValuePtr 
 	{
 	protected:
 
@@ -154,7 +166,7 @@ namespace Argon
 				Derived* Value = Allocater.Allocate(1);
 				try
 				{
-					Allocater.Construct( Value, *static_cast<Derived const*>(Ptr));
+					Allocater.Construct(Value, *static_cast<Derived const*>(Ptr));
 				}
 				catch(...)
 				{
@@ -182,7 +194,6 @@ namespace Argon
 			}
 
 			static InternalAllocater Global;
-			static typename Allocater::template Rebind<Derived>::Other allocator;
 		};
 
 	public:
@@ -230,31 +241,71 @@ namespace Argon
 
 	private:
 		Type* m_Ptr;
-		InternalAllocater* m_InternalAllocater;
+		InternalAllocBase* m_InternalAllocater;
 	};
 
-	template <typename Type, typename Allocator> 
-	template <typename Derived> 
-	typename ValuePtr<Type, Allocator>::template InternalAllocater< Derived >
-		ValuePtr<Type, Allocator>::InternalAllocator<Derived>::Global 
-		= typename ValuePtr<Type, Allocator>::template InternalAllocator<Derived>(); 	
-
-	template < typename Type, typename Allocator > 
-	template < typename Derived > 
-	typename Allocator::template Rebind< Derived >::Other 
-		ValuePtr< Type, Allocator >::InternalAllocater< Derived >::Allocater	
-		= typename Allocator::template Rebind< Derived >::other();
-
-
-	class MemoryManager : public singleton<MemoryManager>
+	template< typename Type > class AutoPtr
 	{
-		friend singleton;
 	public:
-		
+
+		explicit AutoPtr()
+		{
+			m_StoredPtr = new Type();
+		}
+
+		~AutoPtr()
+		{
+			delete m_StoredPtr;
+		}
+
+		Type& operator*() const
+		{
+			return *m_StoredPtr;
+		}
+
+		Type* operator =(Type* Rhs) const
+		{
+			Rhs = m_StoredPtr;
+			return this;
+		}
+
+		Type* operator->() const
+		{
+			return m_StoredPtr;
+		}
+
+	protected:
+
 	private:
-		MemoryManager();
-		~MemoryManager();
+		Type*	m_StoredPtr;
 	};
+}
+
+inline void* operator new(size_t sBlockSize, const char* pDescription)
+{
+    return Argon::MemoryAllocator::instance() ? Argon::MemoryAllocator::instance()->Allocate<void>(sBlockSize) : malloc(sBlockSize);
+}
+
+
+inline void operator delete(void* pBlock, const char* Description)
+{
+    if (pBlock)
+    {
+		if (Argon::MemoryAllocator::instance())
+			Argon::MemoryAllocator::instance()->DeAllocate(pBlock, sizeof(pBlock));
+        else
+            free(pBlock);
+    }
+}
+
+template<typename T> inline T* ArgonNewArray(size_t ElementCount, const char* Description)
+{
+	return Argon::MemoryAllocator::instance() ? Argon::MemoryAllocator::instance()->AllocateArray<T>(ElementCount, Description) : 0x0;
+}
+
+template<typename T> inline void ArgonDeleteArray(T*& pBlock, const char* Description)
+{
+	Argon::MemoryAllocator::instance()->DeAllocateArray<T>(pBlock, Description)
 }
 
 #endif //_REFERENCEPOINTER_HEADER_

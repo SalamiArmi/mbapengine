@@ -5,10 +5,17 @@
 
 #include "ArgonD3D11RenderSystemExport.h"
 
+#include "ArgonD3D11Driver.h"
+#include "ArgonD3D11VideoMode.h"
+
 namespace Argon
 {
 	D3D11RenderSystem::D3D11RenderSystem() 
-		: m_Device(NULL)
+		: m_Device(NULL),
+		m_BackBuffer(NULL),
+		m_DepthStencil(NULL),
+		m_Width(0),
+		m_Height(0)
 	{
 	}
 
@@ -20,6 +27,20 @@ namespace Argon
 	{
 		m_Device = new D3D11Device();
 		m_Device->Load();
+
+		//Create the BackBuffer render target
+		ID3D11Texture2D* BackBuffer = NULL;
+		ID3D11RenderTargetView* RenderTarget;
+		m_Device->GetSwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&BackBuffer);
+		m_Device->GetDevice()->CreateRenderTargetView(BackBuffer, NULL, &RenderTarget);
+
+		m_BackBuffer = new ("D3D11RenderTarget") D3D11RenderTarget(RenderTarget);
+
+		BackBuffer->Release();
+
+		//Create the Depth Stencil
+		m_DepthStencil = new ("D3D11DepthStencil") D3D11DepthStencil(m_Width, m_Height, ISurface::FORMAT_Depth24);
+		m_DepthStencil->Load();
 
 		return false;
 	}
@@ -46,6 +67,16 @@ namespace Argon
 
 	bool D3D11RenderSystem::CreateDevice(size_t DriverIndex, uint ModeIndex, void* Window)
 	{
+		//First store the width and height of the render targets to be created
+		D3D11Driver* Driver = (D3D11Driver* )m_Device->GetDriver(DriverIndex);
+
+		if(Driver)
+		{
+			D3D11VideoMode* VideoMode = (D3D11VideoMode* )Driver->GetVideoMode(ModeIndex);
+			m_Width = VideoMode->GetWidth();
+			m_Height = VideoMode->GetHeight();
+		}
+
 		return m_Device->CreateDevice(DriverIndex, ModeIndex, Window);
 	}
 
@@ -65,17 +96,28 @@ namespace Argon
 
 	ISurface* D3D11RenderSystem::CreateRenderTarget(uint Width, uint Height, ISurface::Format Format)
 	{
-		return new D3D11RenderTarget(Width, Height, Format);
+		return new ("D3D11RenderTarget") D3D11RenderTarget(Width, Height, Format);
 	}
 
 	ISurface* D3D11RenderSystem::CreateDepthStencil(uint Width, uint Height, ISurface::Format Format)
 	{
-		return new D3D11DepthStencil(Width, Height, Format);
+		return new ("D3D11DepthStencil") D3D11DepthStencil(Width, Height, Format);
 	}
 
 	bool D3D11RenderSystem::BeginFrame()
 	{
+		//Clear Buffers
+		ID3D11RenderTargetView* RenderTarget = m_BackBuffer->GetTexture();
+		float Color[] = { 0, 0, 0, 0 };
+		m_Device->GetDeviceContext()->ClearRenderTargetView(RenderTarget, Color);
+
+
+		ID3D11DepthStencilView* DepthStencil = m_DepthStencil->GetTexture();
+		m_Device->GetDeviceContext()->ClearDepthStencilView(DepthStencil, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+		//Begin the new frame
 		m_Device->GetDeviceContext()->Begin(NULL); 
+		
 		return true;
 	}
 
@@ -107,6 +149,14 @@ namespace Argon
 
 	void D3D11RenderSystem::SetVertexDeclaration(IMesh::VertexDeclaration VertexDecl)
 	{
+	}
+	
+	void D3D11RenderSystem::SetClearColor(float A, float R, float G, float B)
+	{
+		m_ClearColor[0] = A;
+		m_ClearColor[1] = R;
+		m_ClearColor[2] = G;
+		m_ClearColor[3] = B;
 	}
 
 	D3D11Device* D3D11RenderSystem::GetDevice()

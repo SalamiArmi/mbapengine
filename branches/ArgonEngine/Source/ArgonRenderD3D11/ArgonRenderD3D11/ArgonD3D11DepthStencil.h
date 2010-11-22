@@ -49,6 +49,13 @@ namespace Argon
 		///No Params:
 		ISurface::MemoryPool GetPoolType();
 
+		///(OD3D11DEPTHSTENCILVIEW)
+		///
+		///	Get the Depth Stencil
+		///
+		///No Params:
+		ID3D11DepthStencilView* GetTexture();
+
 	protected:
 		~D3D11DepthStencil();
 

@@ -84,7 +84,7 @@ namespace Argon
 			}
 
 			//Success create new driver
-			D3D11Driver* Driver = new D3D11Driver(this, Index, Adapter);
+			D3D11Driver* Driver = new ("D3D11Driver") D3D11Driver(this, Index, Adapter);
 			m_Drivers.Push_Back(Driver);
 		}
 		return true;
@@ -180,6 +180,10 @@ namespace Argon
 				{
 					//Log Internal error
 					return false;
+				}
+				else
+				{
+					//Set the Width and Height of the render system
 				}
 			}
 			else
