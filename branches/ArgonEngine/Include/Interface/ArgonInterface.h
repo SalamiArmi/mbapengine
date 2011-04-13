@@ -15,16 +15,18 @@ namespace Argon
 	enum GUID
 	{
 		GUID_IArgonUnknown = 0,
-		GUID_IRenderSystem,
-		GUID_IPlatform,
-		GUID_IComponent,
-		GUID_IFrameListner,
-		GUID_IBuffer,
-		GUID_IDriver,
-		GUID_IMesh,
-		GUID_ISurface,
-		GUID_IVideoMode,
-		GUID_IMessageBoardReader,
+		GUID_IRenderSystem,			//The Render System for the Application
+		GUID_IPlatform,				//What Platform the Application is Running
+		GUID_IComponent,			//External and Internal Components
+		GUID_IFrameListner,			//FrameListers will render or update
+		GUID_ISeneManager,			//Scenemanager will create all Mesh and Renderable objects
+		GUID_IBuffer,				//Device and System Buffers
+		GUID_IDriver,				//Device Drivers
+		GUID_IMesh,					//Mesh objects
+		GUID_ISurface,				//Render Surface
+		GUID_IVideoMode,			//Driver Video Information
+		GUID_IMessageBoardReader,	//MessageBoard readers will recieve messages
+		GUID_IRoot,					//Root creates and Initalises the Rendering Engine also shuts it down
 	};
 } //Namespace
  

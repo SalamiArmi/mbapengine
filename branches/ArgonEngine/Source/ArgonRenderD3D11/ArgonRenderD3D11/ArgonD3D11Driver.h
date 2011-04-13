@@ -13,6 +13,8 @@ namespace Argon
 	public:
 		D3D11Driver(D3D11Device* Device, uint AdapterIndex, IDXGIAdapter1* Adapter);
 
+		bool Load();
+
 		///GETNAME(STRING)
 		///
 		///Get the drivers name

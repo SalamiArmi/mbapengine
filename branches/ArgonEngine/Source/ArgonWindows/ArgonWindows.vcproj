@@ -219,8 +219,8 @@
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|Win32"
-			OutputDirectory="$(SolutionDir)Build\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)Build\"
+			OutputDirectory="$(SolutionDir)Build"
+			IntermediateDirectory="$(SolutionDir)Build\$(ProjectName)"
 			ConfigurationType="4"
 			>
 			<Tool
@@ -253,6 +253,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalDependencies="ArgonStandard_x86.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_x86.lib"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)Build&quot;"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -288,10 +291,6 @@
 		</File>
 		<File
 			RelativePath=".\ArgonWindowsDll.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\Include\Platform\CreateArgonWindows.h"
 			>
 		</File>
 	</Files>

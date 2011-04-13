@@ -4,7 +4,8 @@
 #include <Standard/ArgonStandard.h>
 #include <Standard/ArgonSingleton.h>
 
-#include "Root/ArgonRoot.h"
+#include <Interface\IRoot.h>
+#include <Interface\IPlatform.h>
 
 namespace Argon
 {
@@ -34,12 +35,20 @@ namespace Argon
 		///Get the root if the engine it contains all the engine components and render systems
 		///
 		///No Params:
-		Root*				GetRoot() const;
+		IRoot*				GetRoot() const;
+
+		///GETPLATFORM(IPLATFORM)
+		///
+		/// Get the Main platform that is being used
+		///
+		///No Params:
+		IPlatform*			GetPlatform() const;
 
 	protected:
 
 	private:
-		Root*	m_Root; //The Root is used to hide all Platforms and Render Systems		
+		IPlatform*		m_Platform;		//The platform that will be used throughout the life of the application
+		IRoot*			m_Root;			//The Root is used to hide all Render Systems		
 	};
 } //Namespace
 

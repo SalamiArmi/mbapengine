@@ -1,19 +1,20 @@
 #include "ArgonRoot.h"
 #include <Standard/ArgonLog.h>
-#include "SceneManager.h"
+#include "ArgonSceneManager.h"
 #include <Standard/ArgonTimer.h>
-
-#if defined WIN32
-#	include <Platform\CreateArgonWindows.h>
-#endif
 
 namespace Argon
 {
-	Root::Root()
-		: m_Platform(NULL),
+	void ArgonCreateRoot(IRoot** Root, IPlatform* Platform)
+	{
+		*Root = new Argon::Root(Platform);
+	}
+
+	Root::Root(IPlatform* Platform)
+		: m_Platform(Platform),
 		m_Timer(new Timer())
 	{
-		
+		m_Platform->AddRef();
 	}
 
 	Root::~Root()
@@ -22,8 +23,6 @@ namespace Argon
 
 	bool Root::Load()
 	{
-		CreatePlatform(&m_Platform);	//Load the Engine Platform
-
 		FindSupportedComponents();		//Find all Supported Components
 		ImportRenderSystems();			//Import and prepare the render systems
 
@@ -33,15 +32,15 @@ namespace Argon
 
 	bool Root::Unload()
 	{
-		if(!m_Platform->UnLoad())
-		{
-			//LOG ERROR
-		}
+		m_Platform->UnLoad();
+		delete m_Timer;
+
+	
 
 		return true;
 	}
 
-	bool Root::RenderOneFrame()
+	bool Root::DrawOneFrame()
 	{
 		//Get DeltaT
 		float DeltaT = (float)m_Timer->GetMilliseconds();
@@ -58,6 +57,8 @@ namespace Argon
 		RenderListners(IFrameListner::RENDERPASS_Normal);
 
 		//Render Post Pass
+
+		return false;
 	}
 
 	size_t Root::GetRenderSystemCount()
@@ -70,14 +71,14 @@ namespace Argon
 		return m_LoadedRenderSystems.At(Index);
 	}
 
-	SceneManager* Root::CreateSceneManager(QString Name)
+	ISceneManager* Root::CreateSceneManager(QString Name)
 	{
 		SceneManager* Manager = new SceneManager(Name, this);
 		m_Components.Push_Back(Manager);
 		return Manager;
 	}
 
-	void Root::UnLoadSceneManager(SceneManager* Manager)
+	void Root::UnLoadSceneManager(ISceneManager* Manager)
 	{
 		for(Vector<SceneManager*>::Iterator it = m_SceneManagers.Begin(); it != m_SceneManagers.End(); ++it)
 		{
@@ -95,14 +96,14 @@ namespace Argon
 		Manager->UnLoad();
 	}
 
-	SceneManager* Root::GetCurrentSceneManager() const
+	ISceneManager* Root::GetCurrentSceneManager() const
 	{
 		return m_ActiveSceneManager;
 	}
 
-	void Root::SetCurrentSceneManager(const SceneManager* Manager)
+	void Root::SetCurrentSceneManager(ISceneManager* Manager)
 	{
-		m_ActiveSceneManager = Manager;
+		m_ActiveSceneManager = (SceneManager*)Manager;
 	}
 
 	void Root::AddFrameListner(IFrameListner *FrameListner)
@@ -200,7 +201,7 @@ namespace Argon
 		{
 			if((*it)->SupportsPass(Pass))
 			{
-				(*it)->RenderFrame(Pass);
+				(*it)->FrameDraw(Pass);
 			}
 		}
 	}

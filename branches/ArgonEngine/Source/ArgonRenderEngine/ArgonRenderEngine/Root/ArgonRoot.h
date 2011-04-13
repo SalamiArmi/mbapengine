@@ -3,10 +3,12 @@
 
 #include <Standard/ArgonStandard.h>
 #include <Standard/ArgonVector.h>
+#include <Interface/IArgonUnknownImp.h>
 #include <Interface/IRenderSystem.h>
 #include <Interface/IPlatform.h>
 #include <Interface/IComponent.h>
 #include <Interface/IFrameListner.h>
+#include <Interface/IRoot.h>
 
 #include <Standard/ArgonSingleton.h>
 
@@ -16,11 +18,11 @@ namespace Argon
 	class SceneManager;
 	class Timer;
 
-	class ArgonAPI Root : public singleton<Root>
+	ArgonAPI class Root : public singleton<Root>, public IArgonUnknownImp<IRoot, GUID_IRoot>
 	{
 		friend singleton;
 	public:
-		Root();
+		Root(IPlatform* Platform);
 		~Root();
 
 		///LOAD(BOOL)
@@ -37,12 +39,12 @@ namespace Argon
 		///No Params:
 		bool				Unload();
 
-		///RENDERONEFRAME(BOOL)
+		///DRAWONEFRAME(BOOL)
 		///
 		/// Render a single fame
 		///
 		///No Params:
-		bool				RenderOneFrame();
+		bool				DrawOneFrame();
 
 		///GETRENDERSYSTEMCOUNT(SIZE_T)
 		///
@@ -58,33 +60,33 @@ namespace Argon
 		///Param Index: Which render system to get
 		IRenderSystem*		GetRenderSystem(size_t Index) const;
 
-		///(VOID)
+		///CREATESCENEMANAGER(SCENEMANAGER)
 		///
 		/// Create a new SceneManager
 		///
 		///No Params:
-		SceneManager*		CreateSceneManager(QString Name);
+		ISceneManager*		CreateSceneManager(QString Name);
 
 		///UNLOADSCENEMANAGER(VOID)
 		///
 		///Unload a desired SceneManager
 		///
 		///Param Manager: The SceneManager that will be Destroyed or removed from existance
-		void				UnLoadSceneManager(SceneManager* Manager);
+		void				UnLoadSceneManager(ISceneManager* Manager);
 
 		///GETCURRENTSCENEMANAGER(SCENEMANAGER)
 		///
 		/// Get the Current SceneManager that is being used to render the frames
 		///
 		///No Params:
-		SceneManager*		GetCurrentSceneManager() const;
+		ISceneManager*		GetCurrentSceneManager() const;
 
 		///SETCURRENTSCENEMANAGER(VOID)
 		///
 		/// Set the Current SceneManager
 		///
 		///No Params:
-		void				SetCurrentSceneManager(const SceneManager* Manager);
+		void				SetCurrentSceneManager(ISceneManager* Manager);
 
 		///ADDFRAMELISTNER(VOID)
 		///
@@ -136,6 +138,7 @@ namespace Argon
 		//Active Object
 		IRenderSystem*			m_ActiveRenderSystem;
 		SceneManager*			m_ActiveSceneManager;
+		IPlatform*				m_Platform;
 		Timer*					m_Timer;
 
 		Vector<IFrameListner*>	m_FrameListners;
@@ -143,7 +146,6 @@ namespace Argon
 		Vector<IComponent*>		m_Components;
 		Vector<IRenderSystem*>	m_LoadedRenderSystems;
 		Vector<String>			m_FoundComponents;
-		IPlatform*				m_Platform;
 	};
 
 } //Namespace

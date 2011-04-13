@@ -17,6 +17,8 @@ namespace Argon
 	public:
 		D3D11VideoMode(DXGI_OUTPUT_DESC OutputDesc, DXGI_MODE_DESC ModeDesc);
 
+		bool Load();
+
 		///////////////////////////////////////////
 		// IVideoMode Implementation
 		String			GetDescription();

@@ -9,6 +9,7 @@ namespace Argon
 	{
 		friend singleton;
 	public:
+
 		///(BOOL)
 		///
 		///Add a messageboard to the manager so others can gain access to it

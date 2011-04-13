@@ -48,6 +48,9 @@ namespace Argon
 		void FindAllFiles(String Directory, Vector<String>* Out) = 0;
 
 	EndInterface(IPlatform)
+
+	ArgonExport void CreatePlatform(IPlatform** Platform);
+
 } //Namespace
 
 #endif //_IPLATFORM_HEADER_

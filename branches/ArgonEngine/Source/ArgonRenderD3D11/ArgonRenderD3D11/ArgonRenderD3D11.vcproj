@@ -453,8 +453,8 @@
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="$(SolutionDir)Build\"
+			IntermediateDirectory="$(SolutionDir)Build\$(ProjectName)"
 			ConfigurationType="2"
 			>
 			<Tool
@@ -487,6 +487,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="ArgonStandard_x86.lib D3D11.lib DXGI.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_x86.dll"
+				AdditionalLibraryDirectories="$(SolutionDir)Build"
 			/>
 			<Tool
 				Name="VCALinkTool"

@@ -20,17 +20,22 @@ namespace Argon
 
 	bool ArgonEngine::Load()
 	{
-		m_Root = new ("Root") Root();
+		CreatePlatform(&m_Platform);
+
+		ArgonCreateRoot(&m_Root, m_Platform);
 		m_Root->Load();
 		return true;
 	}
 
 	bool ArgonEngine::Unload()
 	{
+		m_Root->UnLoad();
+		m_Platform->UnLoad();
+
 		return true;
 	}
 
-	Root* ArgonEngine::GetRoot() const 
+	IRoot* ArgonEngine::GetRoot() const 
 	{
 		return m_Root;
 	}
