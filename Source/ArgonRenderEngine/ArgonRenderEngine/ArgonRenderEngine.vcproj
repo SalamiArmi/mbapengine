@@ -919,9 +919,9 @@
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|Win32"
-			OutputDirectory="$(SolutionDir)Build\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)Build\"
-			ConfigurationType="4"
+			OutputDirectory="$(SolutionDir)Build\"
+			IntermediateDirectory="$(SolutionDir)Build\$(ProjectName)"
+			ConfigurationType="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -940,7 +940,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)Include&quot;"
+				PreprocessorDefinitions="ArgonStaticLibrary;"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -952,10 +954,16 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				AdditionalDependencies="ArgonStandard_x86.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_x86.dll"
+				AdditionalLibraryDirectories="$(SolutionDir)Build"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -965,6 +973,9 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -1034,6 +1045,8 @@
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|x64"
+			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			>
 			<Tool
@@ -1141,6 +1154,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Include\Interface\IRenderSystem.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Interface\IRoot.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Interface\ISceneManager.h"
 				>
 			</File>
 			<File
@@ -1300,6 +1321,10 @@
 			Name="Root"
 			>
 			<File
+				RelativePath=".\Root\ArgonMessageBoardManager.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Root\ArgonRoot.cpp"
 				>
 			</File>
@@ -1308,11 +1333,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Root\MessageBoardManager.h"
+				RelativePath=".\Root\ArgonSceneManager.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Root\SceneManager.h"
+				RelativePath=".\Root\ArgonSceneManager.h"
 				>
 			</File>
 		</Filter>

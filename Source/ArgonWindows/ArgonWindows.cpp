@@ -3,6 +3,11 @@
 
 namespace Argon
 {
+	void CreatePlatform(IPlatform** Platform)
+	{
+		*Platform = new WindowsPlatform();
+	}
+
 	WindowsPlatform::WindowsPlatform()
 	{
 	}
@@ -10,6 +15,11 @@ namespace Argon
 
 	WindowsPlatform::~WindowsPlatform()
 	{
+	}
+
+	bool WindowsPlatform::Load()
+	{
+		return true;
 	}
 	
 	///Load a Dll library

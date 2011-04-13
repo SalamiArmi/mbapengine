@@ -16,6 +16,13 @@ namespace Argon
 		///Param Out: The object that will be returned if successfull
 		bool	QueryInterface(GUID Guid, void** Out)	= 0;
 
+		///LOAD(BOOL)
+		///
+		///Load the Interface All interfaces must use this
+		///
+		///No Params:
+		bool	Load()									= 0;
+
 		///RELEASE(BOOL)
 		///
 		///Either Release a reference or release the object

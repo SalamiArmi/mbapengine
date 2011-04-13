@@ -539,8 +539,8 @@
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|Win32"
-			OutputDirectory="$(SolutionDir)Build\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)Build\"
+			OutputDirectory="$(SolutionDir)Build"
+			IntermediateDirectory="$(SolutionDir)Build\$(ProjectName)"
 			ConfigurationType="2"
 			>
 			<Tool

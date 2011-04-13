@@ -136,7 +136,7 @@ namespace Argon
 		///If the instance was cleanedup because of zero references will return true else it will return false
 		///
 		///No Params:
-		virtual bool Unload()
+		virtual bool UnLoad()
 		{
 			if(--m_RefCount == 0)
 			{

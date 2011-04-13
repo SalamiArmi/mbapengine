@@ -16,6 +16,14 @@ namespace Argon
 	{
 	}
 
+	bool D3D11VideoMode::Load()
+	{
+		assert(m_RefCount > 0);
+		++m_RefCount;
+
+		return true;
+	}
+
 	String D3D11VideoMode::GetDescription()
 	{
 		char* Temp = new char[128];

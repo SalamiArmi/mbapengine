@@ -18,6 +18,14 @@ namespace Argon
 	{
 	}
 
+	bool D3D11Driver::Load()
+	{
+		assert(m_RefCount > 0);
+		++m_RefCount;
+
+		return true;
+	}
+
 	String D3D11Driver::GetName()
 	{
 		DXGI_ADAPTER_DESC1 AdapterDesc;

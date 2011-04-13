@@ -16,6 +16,8 @@ namespace Argon
 		WindowsPlatform();
 		~WindowsPlatform();
 
+		bool Load();
+
 		///////////////////////////////////////////////////////////////////
 		// IPlatform Implemention
 		void*			LoadLibrary(String FileName);		 						///Load a Dll library
