@@ -767,6 +767,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Standard\ArgonException.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Standard\ArgonList.h"
 				>
 			</File>

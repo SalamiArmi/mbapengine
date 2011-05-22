@@ -11,6 +11,7 @@ namespace Argon
 		{
 			RENDERPASS_Normal = 1 << 1,
 			RENDERPASS_Post = 1 << 2,
+			RENDERPASS_TopMost = 1 << 3,
 		};
 
 		///FRAMEUPDATE(VOID)

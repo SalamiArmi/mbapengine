@@ -20,10 +20,13 @@ namespace Argon
 
 	bool ArgonEngine::Load()
 	{
+		//Create the Platform and the Root to render with
 		CreatePlatform(&m_Platform);
+		m_Platform->Load();
 
 		ArgonCreateRoot(&m_Root, m_Platform);
 		m_Root->Load();
+
 		return true;
 	}
 
@@ -38,6 +41,11 @@ namespace Argon
 	IRoot* ArgonEngine::GetRoot() const 
 	{
 		return m_Root;
+	}
+
+	IPlatform* ArgonEngine::GetPlatform() const
+	{
+		return m_Platform;
 	}
 
 } //Namespace

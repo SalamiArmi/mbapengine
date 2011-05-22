@@ -47,6 +47,13 @@ namespace Argon
 		///Param Directory: The location of the directory to find all the files
 		void FindAllFiles(String Directory, Vector<String>* Out) = 0;
 
+		///CREATEWINDOW(IWINDOW)
+		///
+		///Create Window specific to the platform
+		///
+		///No Params:
+		IWindow* CreateWindow() = 0;
+
 	EndInterface(IPlatform)
 
 	ArgonExport void CreatePlatform(IPlatform** Platform);

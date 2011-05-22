@@ -65,12 +65,10 @@ namespace Argon
 #	ifndef ArgonImport
 #		define ArgonImport __declspec(dllimport)
 #	endif
-#	if defined ArgonStaticLibrary
-#		ifndef ArgonAPI
-#			define ArgonAPI extern "C" __declspec(dllexport)
-#		endif
+#	ifndef ArgonAPI
+#		define ArgonAPI extern "C" __declspec(dllexport)
 #	else
-#		define ArgonAPI
+#		define ArgonAPI __declspec(dllimport)
 #	endif
 #	ifndef ArgonStandardExport
 #		define ArgonStandard __declspec(dllimport)

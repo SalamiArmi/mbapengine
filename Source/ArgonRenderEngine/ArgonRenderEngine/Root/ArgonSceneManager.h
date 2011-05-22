@@ -59,6 +59,9 @@ namespace Argon
 		bool			SupportsPass(RenderPass Pass);
 
 	protected:
+		
+		
+
 		Root*			m_Creator;	//The Root which created this Manager
 		QString			m_Name;		//The name of the Component
 	};

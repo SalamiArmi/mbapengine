@@ -1165,6 +1165,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Interface\ISceneNode.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Interface\ISurface.h"
 				>
 			</File>
@@ -1253,6 +1257,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Standard\ArgonQuaternion.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Standard\ArgonSingleton.h"
 				>
 			</File>
@@ -1338,6 +1346,10 @@
 			</File>
 			<File
 				RelativePath=".\Root\ArgonSceneManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Root\SceneNode.h"
 				>
 			</File>
 		</Filter>

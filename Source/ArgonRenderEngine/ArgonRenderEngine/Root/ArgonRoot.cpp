@@ -35,8 +35,6 @@ namespace Argon
 		m_Platform->UnLoad();
 		delete m_Timer;
 
-	
-
 		return true;
 	}
 
@@ -52,11 +50,19 @@ namespace Argon
 		}
 
 		//Render Listners
+		m_ActiveRenderSystem->BeginFrame();
 
 		//Render the Normal Pass
 		RenderListners(IFrameListner::RENDERPASS_Normal);
 
 		//Render Post Pass
+		RenderListners(IFrameListner::RENDERPASS_Post);
+
+		//Render Topmost Pass
+		RenderListners(IFrameListner::RENDERPASS_TopMost);
+
+		//End the Frame and also present to the screen
+		m_ActiveRenderSystem->EndFrame();
 
 		return false;
 	}
