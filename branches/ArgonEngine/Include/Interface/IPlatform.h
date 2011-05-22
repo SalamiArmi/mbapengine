@@ -1,9 +1,8 @@
 #ifndef _IPLATFORM_HEADER_
 #define _IPLATFORM_HEADER_
 
-#include "Windows.h"
-
-#include "IArgonUnknown.h"
+#include <Interface/IWindow.h>
+#include <Interface/IArgonUnknown.h>
 #include <Standard/ArgonString.h>
 #include <Standard/ArgonVector.h>
 
@@ -52,7 +51,7 @@ namespace Argon
 		///Create Window specific to the platform
 		///
 		///No Params:
-		IWindow* CreateWindow() = 0;
+		IWindow* CreateArgonWindow() = 0;
 
 	EndInterface(IPlatform)
 

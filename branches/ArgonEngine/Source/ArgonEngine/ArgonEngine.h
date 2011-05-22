@@ -4,6 +4,7 @@
 #include <Standard/ArgonStandard.h>
 #include <Standard/ArgonSingleton.h>
 #include <Standard/ArgonVector.h>
+#include <Standard/ArgonTimer.h>
 
 #include <Interface\IRoot.h>
 #include <Interface\IPlatform.h>
@@ -33,6 +34,13 @@ namespace Argon
 		///No Params:
 		bool				Unload();
 
+		///FRAMEUPDATE(BOOL)
+		///
+		/// Frame update for the Engine and all its components
+		///
+		///No Params:
+		bool				FrameUpdate();
+
 		///GETROOT(ROOT)
 		///
 		///Get the root if the engine it contains all the engine components and render systems
@@ -51,8 +59,7 @@ namespace Argon
 		IPlatform*				m_Platform;				//The platform that will be used throughout the life of the application
 		IRoot*					m_Root;					//The Root is used to hide all Render Systems
 
-		ISceneManager*			m_ActiveSceneManager;	//The current rendering scenemanager
-		Vector<SceneManager*>	m_SceneManagers;		//The scenemanagers for rendering
+		Timer*					m_Timer;				//Main frame update timer
 	};
 } //Namespace
 

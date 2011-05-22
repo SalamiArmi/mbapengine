@@ -3,6 +3,7 @@
 
 #include <Interface/IPlatform.h>
 #include <Interface/IArgonUnknownImp.h>
+#include <Interface/IWindow.h>
 #include <Standard/ArgonPair.h>
 #include "Windows.h"
 
@@ -25,6 +26,7 @@ namespace Argon
 		bool			UnLoadLibrary(void* Library);								///UnLoad the Library to freeup memory
 		bool			UnLoadLibrary(String LibraryFileName);						///UnLoad the Library to freeup memory
 		void			FindAllFiles(String Directory, Vector<String>* Out);		///Find all files in a directory
+		IWindow*		CreateArgonWindow();
 
 	protected:
 		Vector<WindowsDll*>				m_LoadedLibraries;				///All Current loaded libraries, When the Platoform is deleted remove all platforms

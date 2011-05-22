@@ -2,8 +2,9 @@
 #include <string.h>
 #include <sstream>
 #include <algorithm>
-#include <Standard/ArgonLog.h>
 
+#include <Standard/ArgonLog.h>
+#include <Standard/ArgonException.h>
 #include <Standard/ArgonMemory.h>
 
 namespace Argon
@@ -34,6 +35,27 @@ namespace Argon
 	{
 		m_Root->UnLoad();
 		m_Platform->UnLoad();
+
+		return true;
+	}
+
+	bool ArgonEngine::FrameUpdate()
+	{
+		try
+		{
+			//Get Time Delta
+			float DeltaT = m_Timer->GetMilliseconds();
+
+			//Update the Active SceneManager
+			m_Root->FrameUpdate(DeltaT);
+	
+			//Update complete Render the Frame
+			m_Root->DrawOneFrame();
+		}
+		catch(...)
+		{
+			return false;
+		}
 
 		return true;
 	}

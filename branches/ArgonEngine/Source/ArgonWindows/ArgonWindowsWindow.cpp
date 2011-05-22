@@ -30,7 +30,7 @@ namespace Argon
 
 	void Window::SetHandle(void* Handle)
 	{
-		m_Handle = Handle;
+		m_Handle = (HWND)Handle;
 	}
 
 } //Namespace

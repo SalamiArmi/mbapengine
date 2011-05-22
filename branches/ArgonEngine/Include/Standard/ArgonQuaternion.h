@@ -84,7 +84,7 @@ namespace Argon
 			return x * Q.x + y * Q.y + z * Q.z + w * Q.w;
 		}
 
-		Matrix4 ImportingQuaternionMatrix4(const Quaternion &Q)
+		Matrix4 ImportingQuaternionMatrix4(const Quaternion &q)
 		{
 			float xx = q.x * q.x;
 			float xy = q.x * q.y;

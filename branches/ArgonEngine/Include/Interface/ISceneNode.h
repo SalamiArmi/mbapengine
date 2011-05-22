@@ -9,13 +9,27 @@ namespace Argon
 {
 	DeclareBasedInterface(ISceneNode, IArgonUnknown)
 
+		///FRAMEDRAW(BOOL)
+		///
+		/// Draw a new Frame
+		///
+		///No Params:
+		bool FrameDraw() = 0;
+
+		///FRAMEUPDATE(BOOL)
+		///
+		/// Update the Frame before drawing
+		///
+		///Param DeltaT: The time between two frames
+		bool FrameUpdate(float DeltaT) = 0;
+
 		///(VOID)
 		///
 		///
 		///
 		///
 		///No Params:
-		void SetPosition(Vector3 &Position);
+		void SetPosition(Vector3 &Position) = 0;
 	
 		///(VOID)
 		///
@@ -23,7 +37,7 @@ namespace Argon
 		///
 		///
 		///No Params:
-		Vector3 GetPosition();
+		Vector3 GetPosition() = 0;
 
 		///(VOID)
 		///
@@ -31,7 +45,7 @@ namespace Argon
 		///
 		///
 		///No Params:
-		void SetRotation(Vector3 &Rotation)
+		void SetRotation(Vector3 &Rotation) = 0;
 		
 		///(VOID)
 		///
@@ -39,7 +53,7 @@ namespace Argon
 		///
 		///
 		///No Params:
-		Vector3 GetRotation();
+		Vector3 GetRotation() = 0;
 
 		///(VOID)
 		///
@@ -47,7 +61,7 @@ namespace Argon
 		///
 		///
 		///No Params:
-		void SetScale(Vector3 Scale);
+		void SetScale(Vector3 Scale) = 0;
 
 		///(VOID)
 		///
@@ -55,7 +69,7 @@ namespace Argon
 		///
 		///
 		///No Params:
-		Vector3 GetScale();
+		Vector3 GetScale() = 0;
 
 	EndInterface(ISceneNode)
 } //Namespace

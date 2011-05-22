@@ -5,7 +5,7 @@
 
 namespace Argon
 {
-	class ArgonStandardExport Exception : public std::exception
+	class Exception : public std::exception
 	{
 	public:
 
@@ -33,7 +33,7 @@ namespace Argon
 		{
 		}
 
-		Exception(int Line, const char* Function, const char* Reason, const char* Source, ExcpetionType Type = EXCEPTIONTYPE_Unknown) throw()
+		Exception(int Line, char* Function, char* Reason, char* Source, ExcpetionType Type = EXCEPTIONTYPE_Unknown) throw()
 			: m_Reason(Reason),
 			m_Line(Line),
 			m_Function(Function),
