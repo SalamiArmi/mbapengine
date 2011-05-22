@@ -3,9 +3,12 @@
 
 #include <Standard/ArgonStandard.h>
 #include <Standard/ArgonSingleton.h>
+#include <Standard/ArgonVector.h>
 
 #include <Interface\IRoot.h>
 #include <Interface\IPlatform.h>
+
+#define _CreateWindow_
 
 namespace Argon
 {
@@ -45,10 +48,11 @@ namespace Argon
 		IPlatform*			GetPlatform() const;
 
 	protected:
+		IPlatform*				m_Platform;				//The platform that will be used throughout the life of the application
+		IRoot*					m_Root;					//The Root is used to hide all Render Systems
 
-	private:
-		IPlatform*		m_Platform;		//The platform that will be used throughout the life of the application
-		IRoot*			m_Root;			//The Root is used to hide all Render Systems		
+		ISceneManager*			m_ActiveSceneManager;	//The current rendering scenemanager
+		Vector<SceneManager*>	m_SceneManagers;		//The scenemanagers for rendering
 	};
 } //Namespace
 

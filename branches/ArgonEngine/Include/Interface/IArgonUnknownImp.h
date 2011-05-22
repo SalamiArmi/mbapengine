@@ -13,6 +13,7 @@
 #define _IARGONUNKNOWNIMPL_HEADER_
 
 #include "ArgonInterface.h"
+#include <Standard/ArgonStandard.h>
 
 namespace Argon
 {

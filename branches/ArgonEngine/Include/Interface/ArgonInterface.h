@@ -27,6 +27,7 @@ namespace Argon
 		GUID_IVideoMode,			//Driver Video Information
 		GUID_IMessageBoardReader,	//MessageBoard readers will recieve messages
 		GUID_IRoot,					//Root creates and Initalises the Rendering Engine also shuts it down
+		GUID_IWindow,				//Window is either created externally or internally by the create function
 	};
 } //Namespace
  

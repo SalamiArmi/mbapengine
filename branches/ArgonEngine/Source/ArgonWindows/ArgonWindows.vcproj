@@ -293,6 +293,14 @@
 			RelativePath=".\ArgonWindowsDll.h"
 			>
 		</File>
+		<File
+			RelativePath=".\ArgonWindowsWindow.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\ArgonWindowsWindow.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
