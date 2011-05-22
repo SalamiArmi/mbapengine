@@ -14,8 +14,15 @@ namespace Argon
 
 		if(Window)
 		{
-			ArgonEngine::instance()->GetPlatform()->CreateWindow();
+			ArgonEngine::instance()->GetPlatform()->CreateArgonWindow();
 		}
+
+		return true;
+	}
+
+	ArgonExport void FrameUpdate()
+	{
+		ArgonEngine::instance()->FrameUpdate();
 	}
 
 } //Namespace

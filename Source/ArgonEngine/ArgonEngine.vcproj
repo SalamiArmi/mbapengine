@@ -265,15 +265,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\Standard\ArgonMatrix3.inl"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Include\Standard\ArgonMatrix4.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\Standard\ArgonMatrix4.inl"
 				>
 			</File>
 			<File

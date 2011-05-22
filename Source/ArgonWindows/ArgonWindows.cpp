@@ -98,4 +98,9 @@ namespace Argon
 		FindClose(Find);
 	}
 
+	IWindow* WindowsPlatform::CreateArgonWindow()
+	{
+		return NULL;
+	}
+
 } //Namespace

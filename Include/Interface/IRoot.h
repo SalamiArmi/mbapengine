@@ -12,6 +12,13 @@ namespace Argon
 {
 	DeclareBasedInterface(IRoot, IArgonUnknown)
 		
+		///FRAMEUPDATE(BOOL)
+		///
+		/// Render a single fame
+		///
+		///Param DeltaT:
+		bool				FrameUpdate(float DeltaT);
+
 		///DRAWONEFRAME(BOOL)
 		///
 		/// Render a single fame

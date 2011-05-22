@@ -39,11 +39,18 @@ namespace Argon
 		///No Params:
 		bool				Unload();
 
+		///FRAMEUPDATE(BOOL)
+		///
+		/// Update the Frame
+		///
+		///Param DeltaT:
+		bool				FrameUpdate(float DeltaT);
+
 		///DRAWONEFRAME(BOOL)
 		///
 		/// Render a single fame
 		///
-		///No Params:
+		///Param DeltaT: The new frame time since last frame
 		bool				DrawOneFrame();
 
 		///GETRENDERSYSTEMCOUNT(SIZE_T)
@@ -139,7 +146,6 @@ namespace Argon
 		IRenderSystem*			m_ActiveRenderSystem;
 		SceneManager*			m_ActiveSceneManager;
 		IPlatform*				m_Platform;
-		Timer*					m_Timer;
 
 		Vector<IFrameListner*>	m_FrameListners;
 		Vector<SceneManager*>	m_SceneManagers;

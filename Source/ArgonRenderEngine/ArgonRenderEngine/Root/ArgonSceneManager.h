@@ -4,6 +4,9 @@
 #include <Interface/IFrameListner.h>
 #include <Interface/IComponent.h>
 #include <Interface/IArgonUnknownImp.h>
+#include <Interface/ISceneNode.h>
+
+#include <Standard/ArgonVector.h>
 
 #include "ArgonRoot.h"
 
@@ -24,7 +27,7 @@ namespace Argon
 
 		///GETCREATOR(ROOT)
 		///
-		///Get the Root whom Created this object
+		/// Get the Root whom Created this object
 		///
 		///No Params:
 		IRoot*			GetCreator();
@@ -46,24 +49,31 @@ namespace Argon
 
 		///DRAW(BOOL)
 		///
-		///Draw the Graphical object
+		/// Draw the Graphical object
 		///
 		///Param Pass: The pass that will be preformed
 		bool			FrameDraw(RenderPass Pass);
 
 		///SUPPORTEDPASS(BOOL)
 		///
-		///Does the Graphics Support this pass if so make an attempt to render
+		/// Does the Graphics Support this pass if so make an attempt to render
 		///
 		///Param Pass: The Pass that will be checked against
 		bool			SupportsPass(RenderPass Pass);
 
+		///CREATESCENENODE(ISCENENODE)
+		///
+		/// Create a new scene node that will contain all required transform information
+		///
+		///No Params:
+		ISceneNode*		CreateSceneNode(QString Name);
+
 	protected:
-		
+		Vector<ISceneNode*>	m_SceneNodes;
 		
 
-		Root*			m_Creator;	//The Root which created this Manager
-		QString			m_Name;		//The name of the Component
+		Root*				m_Creator;	//The Root which created this Manager
+		QString				m_Name;		//The name of the Component
 	};
 } //Namespace
 

@@ -31,19 +31,32 @@ namespace Argon
 
 	bool SceneManager::FrameUpdate(float DeltaT)
 	{
-		for(
+		for(Vector<ISceneNode*>::Iterator it = m_SceneNodes.Begin(); it != m_SceneNodes.End(); ++it)
+		{
+			(*it)->FrameUpdate(DeltaT);
+		}
 
 		return false;
 	}
 
 	bool SceneManager::FrameDraw(RenderPass Pass)
 	{
+		for(Vector<ISceneNode*>::Iterator it = m_SceneNodes.Begin(); it != m_SceneNodes.End(); ++it)
+		{
+			(*it)->FrameDraw();
+		}
+
 		return false;
+	}
+
+	ISceneNode* SceneManager::CreateSceneNode(QString Name)
+	{
+		return NULL;
 	}
 
 	bool SceneManager::SupportsPass(IFrameListner::RenderPass Pass)
 	{
-		return IFrameListner::RENDERPASS_Normal;
+		return (Pass & IFrameListner::RENDERPASS_Normal);
 	}
 
 } //Namespace

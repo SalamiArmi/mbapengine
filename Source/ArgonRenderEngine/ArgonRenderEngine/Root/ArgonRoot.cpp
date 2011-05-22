@@ -11,8 +11,7 @@ namespace Argon
 	}
 
 	Root::Root(IPlatform* Platform)
-		: m_Platform(Platform),
-		m_Timer(new Timer())
+		: m_Platform(Platform)
 	{
 		m_Platform->AddRef();
 	}
@@ -26,29 +25,30 @@ namespace Argon
 		FindSupportedComponents();		//Find all Supported Components
 		ImportRenderSystems();			//Import and prepare the render systems
 
-		m_Timer->Reset();				//Start the Timer
 		return true;
 	}
 
 	bool Root::Unload()
 	{
 		m_Platform->UnLoad();
-		delete m_Timer;
 
 		return true;
 	}
 
-	bool Root::DrawOneFrame()
+	bool Root::FrameUpdate(float DeltaT)
 	{
-		//Get DeltaT
-		float DeltaT = (float)m_Timer->GetMilliseconds();
-
 		//Update the Listners
 		for(Vector<IFrameListner*>::Iterator it = m_FrameListners.Begin(); it != m_FrameListners.End(); ++it)
 		{
 			(*it)->FrameUpdate(DeltaT);
 		}
 
+		return false;
+	}
+
+
+	bool Root::DrawOneFrame()
+	{
 		//Render Listners
 		m_ActiveRenderSystem->BeginFrame();
 
