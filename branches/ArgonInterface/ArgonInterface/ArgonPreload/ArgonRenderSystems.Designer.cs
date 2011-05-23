@@ -42,6 +42,7 @@
             this.m_RenderSystemsList.Name = "m_RenderSystemsList";
             this.m_RenderSystemsList.Size = new System.Drawing.Size(332, 21);
             this.m_RenderSystemsList.TabIndex = 0;
+            this.m_RenderSystemsList.SelectedIndexChanged += new System.EventHandler(this.m_RenderSystemsList_SelectedIndexChanged);
             // 
             // m_RenderSystemsLabel
             // 
@@ -68,7 +69,6 @@
             this.m_CreateDevice.TabIndex = 3;
             this.m_CreateDevice.Text = "Create Device";
             this.m_CreateDevice.UseVisualStyleBackColor = true;
-            this.m_CreateDevice.Click += new System.EventHandler(this.m_CreateDevice_Click);
             // 
             // m_Cancel
             // 
@@ -78,7 +78,6 @@
             this.m_Cancel.TabIndex = 3;
             this.m_Cancel.Text = "Cancel";
             this.m_Cancel.UseVisualStyleBackColor = true;
-            this.m_Cancel.Click += new System.EventHandler(this.m_Cancel_Click);
             // 
             // ArgonRenderSystems
             // 
@@ -92,7 +91,6 @@
             this.Controls.Add(this.m_RenderSystemsList);
             this.Name = "ArgonRenderSystems";
             this.Text = "ArgonRenderSystems";
-            this.Load += new System.EventHandler(this.ArgonRenderSystems_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

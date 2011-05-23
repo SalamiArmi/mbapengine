@@ -12,6 +12,16 @@ namespace Argon
 {
 	DeclareBasedInterface(IRoot, IArgonUnknown)
 		
+		///(VOID)
+		///
+		/// Create a new Root with a desired rendersystem.
+		///
+		///Param Window: The Window that will be rendered to. If NULL Fullscreen mode will be enabled
+		///Param RenderSystemIndex: The desired render system to use.
+		///Param DriverIndex: The Driver to use. The Driver will determin the screen if using multiple monitors
+		///Param ModeIndex: The Resolution that will be used
+		bool				Create(void* Window, size_t RenderSystemIndex, size_t DriverIndex, size_t ModeIndex);
+
 		///FRAMEUPDATE(BOOL)
 		///
 		/// Render a single fame

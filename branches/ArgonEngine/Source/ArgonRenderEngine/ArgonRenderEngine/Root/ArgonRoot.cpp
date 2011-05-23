@@ -32,6 +32,22 @@ namespace Argon
 	{
 		m_Platform->UnLoad();
 
+		
+		return true;
+	}
+
+	bool Root::Create(void* Window, size_t RenderSystemIndex, size_t DriverIndex, size_t ModeIndex)
+	{
+		m_ActiveRenderSystem = m_LoadedRenderSystems.At(RenderSystemIndex);
+		m_ActiveRenderSystem->Load();
+
+		m_ActiveRenderSystem->CreateDevice(DriverIndex, ModeIndex, Window);
+
+		for(Vector<IRenderSystem*>::Iterator it = m_LoadedRenderSystems.Begin(); it != m_LoadedRenderSystems.End(); ++it)
+		{
+			(*it)->UnLoad();
+		}
+
 		return true;
 	}
 
@@ -144,12 +160,11 @@ namespace Argon
 				{
 					GUID Type = GUID_IArgonUnknown;
 					IComponent* pComponent = NULL;
-					if(LibraryEntryPoint(true, (void**)&pComponent, &Type))
+					if(LibraryEntryPoint(false, NULL, &Type))
 					{
-						//Log Message
-						ARGONERROR("Engine Log.ArgonLog", "Message Logging Test");
-
-						m_Components.Push_Back(pComponent);
+						if(Type != GUID_IRenderSystem)
+							if(LibraryEntryPoint(false, (void**)&pComponent, &Type))
+								m_Components.Push_Back(pComponent);
 					}
 					else
 						m_Platform->UnLoadLibrary(Component);
@@ -176,7 +191,7 @@ namespace Argon
 					{
 						if(Type == GUID_IRenderSystem)
 						{
-							IRenderSystem* RenderSystem;
+							IRenderSystem* RenderSystem = NULL;
 							if(LibraryEntryPoint(true, (void**)&RenderSystem, &Type))
 							{
 								if(RenderSystem)
@@ -188,10 +203,14 @@ namespace Argon
 						}
 					}
 					else
+					{
 						m_Platform->UnLoadLibrary(Component);
+					}
 				}
 				else
+				{
 					m_Platform->UnLoadLibrary(Component);
+				}
 			}
 		}
 	}

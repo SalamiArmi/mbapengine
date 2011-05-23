@@ -548,6 +548,9 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				Description=""
+				CommandLine="echo *********** DEBUG ***************&#x0D;&#x0A;&#x0D;&#x0A;echo off&#x0D;&#x0A;echo Updating DLL&apos;s and Shaders ...&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build&quot;&#x0D;&#x0A;"
+				Outputs="$(TargetFileName)"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -567,10 +570,11 @@
 				MinimalRebuild="true"
 				ExceptionHandling="1"
 				SmallerTypeCheck="true"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				BufferSecurityCheck="true"
 				EnableFunctionLevelLinking="false"
 				EnableEnhancedInstructionSet="0"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -584,6 +588,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)\$(ProjectName)_x86.dll"
+				GenerateDebugInformation="true"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -609,6 +615,8 @@
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|x64"
+			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			>
 			<Tool

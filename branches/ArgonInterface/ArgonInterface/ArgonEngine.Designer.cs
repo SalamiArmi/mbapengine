@@ -28,24 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.m_RenderPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // panel1
+            // m_RenderPanel
             // 
-            this.panel1.Location = new System.Drawing.Point(12, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(908, 397);
-            this.panel1.TabIndex = 0;
+            this.m_RenderPanel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.m_RenderPanel.Location = new System.Drawing.Point(12, 45);
+            this.m_RenderPanel.Name = "m_RenderPanel";
+            this.m_RenderPanel.Size = new System.Drawing.Size(1521, 739);
+            this.m_RenderPanel.TabIndex = 0;
             // 
             // ArgonEngine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1545, 796);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.m_RenderPanel);
             this.Name = "ArgonEngine";
-            this.Text = "Form1";
+            this.Text = "Argon Editor";
             this.Load += new System.EventHandler(this.ArgonEngine_Load);
             this.ResumeLayout(false);
 
@@ -53,7 +54,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel m_RenderPanel;
     }
 }
 

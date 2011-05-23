@@ -921,13 +921,16 @@
 			Name="Argon Engine|Win32"
 			OutputDirectory="$(SolutionDir)Build\"
 			IntermediateDirectory="$(SolutionDir)Build\$(ProjectName)"
-			ConfigurationType="2"
+			ConfigurationType="4"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				Description=""
+				CommandLine=""
+				Outputs=""
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -942,7 +945,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)Include&quot;"
-				PreprocessorDefinitions="ArgonStaticLibrary;"
+				PreprocessorDefinitions="ArgonAPIExport;ArgonStaticLibrary"
+				KeepComments="false"
+				RuntimeLibrary="1"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -954,16 +960,11 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="ArgonStandard_x86.lib"
-				OutputFile="$(OutDir)\$(ProjectName)_x86.dll"
-				AdditionalLibraryDirectories="$(SolutionDir)Build"
+				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\$(ProjectName)_x86.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -973,9 +974,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

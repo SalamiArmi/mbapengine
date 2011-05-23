@@ -171,14 +171,14 @@ namespace Argon
 
 				ChainDesc.Flags = D3D11_CREATE_DEVICE_DEBUG;
 
-				D3D_FEATURE_LEVEL FeatureLevel[] = { D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_1 };
+				D3D_FEATURE_LEVEL FeatureLevel[] = { D3D_FEATURE_LEVEL_11_0 };
 
 				/*
 					TODO MAKE A SINGLE DEVICE WHICH CAN TAKE MULTIPLE SWAPCHAINS
 				*/
 
 				HRESULT hr = S_OK;
-				if(FAILED(hr = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, FeatureLevel, 2, D3D11_SDK_VERSION, &ChainDesc, &m_SwapChain, &m_Device, NULL, &m_DeviceContext)))
+				if(FAILED(hr = D3D11CreateDeviceAndSwapChain(Driver->GetAdapter(), D3D_DRIVER_TYPE_UNKNOWN, NULL, D3D11_CREATE_DEVICE_DEBUG | D3D11_CREATE_DEVICE_SINGLETHREADED, FeatureLevel, 1, D3D11_SDK_VERSION, &ChainDesc, &m_SwapChain, &m_Device, NULL, &m_DeviceContext)))
 				{
 					//Log Internal error
 					return false;

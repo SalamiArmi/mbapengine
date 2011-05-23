@@ -12,7 +12,7 @@
 
 namespace Argon
 {
-	ArgonAPI class SceneManager : public IArgonUnknownImp3<IComponent, GUID_IComponent, IFrameListner, GUID_IFrameListner, ISceneManager, GUID_ISeneManager>
+	class SceneManager : public IArgonUnknownImp3<IComponent, GUID_IComponent, IFrameListner, GUID_IFrameListner, ISceneManager, GUID_ISeneManager>
 	{
 	public:
 		SceneManager(QString Name, Root* Creator);

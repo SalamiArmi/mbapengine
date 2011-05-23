@@ -30,22 +30,6 @@ namespace Argon
 		m_Device = new D3D11Device();
 		m_Device->Load();
 
-		//m_Device->CreateDevice(0,0,NULL);
-
-		////Create the BackBuffer render target
-		//ID3D11Texture2D* BackBuffer = NULL;
-		//ID3D11RenderTargetView* RenderTarget;
-		//m_Device->GetSwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&BackBuffer);
-		//m_Device->GetDevice()->CreateRenderTargetView(BackBuffer, NULL, &RenderTarget);
-
-		//m_BackBuffer = new ("D3D11RenderTarget") D3D11RenderTarget(RenderTarget);
-
-		//BackBuffer->Release();
-
-		////Create the Depth Stencil
-		//m_DepthStencil = new ("D3D11DepthStencil") D3D11DepthStencil(m_Width, m_Height, ISurface::FORMAT_Depth24);
-		//m_DepthStencil->Load();
-
 		return false;
 	}
 

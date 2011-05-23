@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
@@ -23,6 +22,7 @@ namespace Argon
 
     public partial class ArgonEngine : Form
     {
+
         public ArgonEngine()
         {
             InitializeComponent();
@@ -30,7 +30,6 @@ namespace Argon
 
         [System.Security.SuppressUnmanagedCodeSecurity(), System.Runtime.InteropServices.DllImport("User32.dll")]
         public static extern int PeekMessageA(MessageStruct msg, IntPtr hWnd, int messageFilterMin, int messageFilterMax, int flags);
-
 
         private bool AppIsAdle()
         {
@@ -40,22 +39,17 @@ namespace Argon
 
         private void ArgonEngine_Load(object sender, EventArgs e)
         {
-            ArgonRenderSystems RenderSystems = new ArgonRenderSystems(panel1.Handle);
-            if (RenderSystems.ShowDialog() == DialogResult.OK)
-            {
-                System.Windows.Forms.Application.Idle += new EventHandler(this.OnApplicationUpate);
-            }
-            else
-            {
-                Application.Exit();
-            }
+            ArgonEngineDll.PreLoadEngine();
+            ArgonEngineDll.CreateEngine(m_RenderPanel.Handle, 0, 0, 0);
+
+            Application.Idle += new EventHandler(this.OnApplicationUpate);
         }
 
         private void OnApplicationUpate(object sender, EventArgs e)
         {
             do
             {
-              ArgonEngineDll.Update();
+                ArgonEngineDll.FrameUpdate();
             } while (AppIsAdle());
         }
     }

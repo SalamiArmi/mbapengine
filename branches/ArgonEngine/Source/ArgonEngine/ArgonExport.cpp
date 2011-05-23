@@ -8,14 +8,15 @@ namespace Argon
 	// /Storing or creating until statics are chosen
 	///
 	///No Params:
-	ArgonExport bool PreLoadEngine(void* Window)
+	ArgonExport bool PreLoadEngine()
 	{
 		ArgonEngine::instance()->Load(); //Preload all the Components
+		return true;
+	}
 
-		if(Window)
-		{
-			ArgonEngine::instance()->GetPlatform()->CreateArgonWindow();
-		}
+	ArgonExport bool CreateEngine(void* Window, size_t RenderSystemIndex, size_t DriverIndex, size_t ModeIndex)
+	{
+		ArgonEngine::instance()->Create(Window, RenderSystemIndex, DriverIndex, ModeIndex);
 
 		return true;
 	}
