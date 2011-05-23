@@ -65,8 +65,8 @@
 			Name="Argon Engine|Win32"
 			>
 			<DebugSettings
-				Command=""
-				WorkingDirectory=""
+				Command="C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build\ArgonInterface.exe"
+				WorkingDirectory="C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build\"
 				CommandArguments=""
 				Attach="false"
 				DebuggerType="3"
@@ -78,7 +78,7 @@
 				SQLDebugging=""
 				Environment=""
 				EnvironmentMerge="true"
-				DebuggerFlavor=""
+				DebuggerFlavor="0"
 				MPIRunCommand=""
 				MPIRunArguments=""
 				MPIRunWorkingDirectory=""

@@ -34,6 +34,13 @@ namespace Argon
 		///No Params:
 		bool				Unload();
 
+		///(VOID)
+		///
+		/// Create a new device with the desired driver and render system
+		///
+		///No Params:
+		bool				Create(void* Window, size_t RenderSystem, size_t DriverIndex, size_t ModeIndex);
+
 		///FRAMEUPDATE(BOOL)
 		///
 		/// Frame update for the Engine and all its components

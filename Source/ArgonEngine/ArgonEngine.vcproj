@@ -163,8 +163,8 @@
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|Win32"
-			OutputDirectory="$(SolutionDir)Build\$(ConfigurationName)"
-			IntermediateDirectory="$(SolutionDir)Build\"
+			OutputDirectory="$(SolutionDir)Build\"
+			IntermediateDirectory="$(SolutionDir)Build\$(ProjectName)"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			>
@@ -173,6 +173,9 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				Description=""
+				CommandLine="echo *********** DEBUG ***************&#x0D;&#x0A;&#x0D;&#x0A;echo off&#x0D;&#x0A;echo Updating DLL&apos;s and Shaders ...&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build&quot;"
+				Outputs="$(TargetFileName)"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -185,9 +188,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				UseUnicodeResponseFiles="false"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)Include&quot;"
 				PreprocessorDefinitions="WIN32;_ARGONWINDOWS_;"
+				RuntimeLibrary="3"
+				WarningLevel="1"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -202,6 +209,8 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ArgonStandard_x86.lib ArgonRenderEngine_x86.lib ArgonWindows_x86.lib"
 				AdditionalLibraryDirectories="$(SolutionDir)Build"
+				GenerateDebugInformation="true"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"

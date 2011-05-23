@@ -39,6 +39,18 @@ namespace Argon
 		return true;
 	}
 
+	bool ArgonEngine::Create(void* Window, size_t RenderSystemIndex, size_t DriverIndex, size_t ModeIndex)
+	{
+		m_Root->Create(Window, RenderSystemIndex, DriverIndex, ModeIndex);
+
+		if(Window)
+		{
+			m_Platform->CreateArgonWindow();
+		}
+
+		return true;
+	}
+
 	bool ArgonEngine::FrameUpdate()
 	{
 		try

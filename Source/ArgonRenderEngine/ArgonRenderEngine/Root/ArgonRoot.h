@@ -18,7 +18,7 @@ namespace Argon
 	class SceneManager;
 	class Timer;
 
-	ArgonAPI class Root : public singleton<Root>, public IArgonUnknownImp<IRoot, GUID_IRoot>
+	class Root : public singleton<Root>, public IArgonUnknownImp<IRoot, GUID_IRoot>
 	{
 		friend singleton;
 	public:
@@ -38,6 +38,13 @@ namespace Argon
 		///
 		///No Params:
 		bool				Unload();
+
+		///CREATE(BOOL)
+		///
+		/// Create the Rendersystem with the desired Resolution and window
+		///
+		///No Params:
+		bool				Create(void* Window, size_t RenderSystemIndex, size_t DriverIndex, size_t ModeIndex);
 
 		///FRAMEUPDATE(BOOL)
 		///

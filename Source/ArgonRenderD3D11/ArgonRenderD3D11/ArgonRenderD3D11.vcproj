@@ -462,6 +462,9 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				Description=""
+				CommandLine="echo *********** DEBUG ***************&#x0D;&#x0A;&#x0D;&#x0A;echo off&#x0D;&#x0A;&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;$(SolutionDir)\..\ArgonInterface\Build\ArgonEngine\Components&quot;&#x0D;&#x0A;"
+				Outputs="$(TargetFileName)"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -474,7 +477,11 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)Include&quot;"
+				PreprocessorDefinitions="ArgonAPIExport"
+				RuntimeLibrary="1"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -490,6 +497,8 @@
 				AdditionalDependencies="ArgonStandard_x86.lib D3D11.lib DXGI.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_x86.dll"
 				AdditionalLibraryDirectories="$(SolutionDir)Build"
+				GenerateDebugInformation="true"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -515,6 +524,8 @@
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|x64"
+			OutputDirectory="$(SolutionDir)$(PlatformName)\$(ConfigurationName)"
+			IntermediateDirectory="$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			>
 			<Tool
