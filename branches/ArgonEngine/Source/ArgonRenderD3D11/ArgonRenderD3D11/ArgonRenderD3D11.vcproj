@@ -656,6 +656,14 @@
 			RelativePath=".\ArgonD3D11VideoMode.h"
 			>
 		</File>
+		<File
+			RelativePath=".\ArgonD3D11Viewport.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\ArgonD3D11Viewport.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

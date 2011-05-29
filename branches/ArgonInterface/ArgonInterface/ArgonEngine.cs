@@ -26,6 +26,8 @@ namespace Argon
         public ArgonEngine()
         {
             InitializeComponent();
+
+            this.FormClosing += new FormClosingEventHandler(this.OnFormDestroyed);
         }
 
         [System.Security.SuppressUnmanagedCodeSecurity(), System.Runtime.InteropServices.DllImport("User32.dll")]
@@ -34,7 +36,10 @@ namespace Argon
         private bool AppIsAdle()
         {
             MessageStruct Msg = new MessageStruct();
-            return (PeekMessageA(Msg, IntPtr.Zero, 0, 0, 0) == 0);
+
+            PeekMessageA(Msg, IntPtr.Zero, 0, 0, 0);
+
+            return false;
         }
 
         private void ArgonEngine_Load(object sender, EventArgs e)
@@ -47,10 +52,12 @@ namespace Argon
 
         private void OnApplicationUpate(object sender, EventArgs e)
         {
-            do
-            {
-                ArgonEngineDll.FrameUpdate();
-            } while (AppIsAdle());
+             ArgonEngineDll.FrameUpdate();
+        }
+
+        private void OnFormDestroyed(object sender, FormClosingEventArgs e)
+        {
+            ArgonEngineDll.DestoryEngine();
         }
     }
 }

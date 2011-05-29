@@ -174,7 +174,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description=""
-				CommandLine="echo *********** DEBUG ***************&#x0D;&#x0A;&#x0D;&#x0A;echo off&#x0D;&#x0A;echo Updating DLL&apos;s and Shaders ...&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build&quot;"
+				CommandLine="echo *********** DEBUG ***************&#x0D;&#x0A;&#x0D;&#x0A;echo off&#x0D;&#x0A;echo Updating DLL&apos;s and Shaders ...&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build&quot;&#x0D;&#x0A;"
 				Outputs="$(TargetFileName)"
 			/>
 			<Tool
@@ -447,6 +447,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Include\Interface\IVideoMode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\Interface\IViewport.h"
 				>
 			</File>
 			<File

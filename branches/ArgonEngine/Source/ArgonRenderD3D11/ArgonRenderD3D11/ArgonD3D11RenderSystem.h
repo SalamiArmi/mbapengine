@@ -9,6 +9,8 @@
 
 #include <Standard/ArgonSingleton.h>
 
+#include <assert.h>
+
 namespace Argon
 {
 	//Predefines
@@ -67,6 +69,8 @@ namespace Argon
 		D3D11Device*		m_Device;
 		D3D11RenderTarget*	m_BackBuffer;
 		D3D11DepthStencil*	m_DepthStencil;
+
+		ID3D11Counter*		m_D3D11Counter;
 	};
 
 } //Namespace

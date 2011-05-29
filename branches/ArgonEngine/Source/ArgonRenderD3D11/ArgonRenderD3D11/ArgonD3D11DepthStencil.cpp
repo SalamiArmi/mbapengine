@@ -7,7 +7,9 @@ namespace Argon
 	D3D11DepthStencil::D3D11DepthStencil(uint Width, uint Height, ISurface::Format Format)
 		: m_Height(Height),
 		m_Width(Width),
-		m_Format(Format)
+		m_Format(Format),
+		m_Buffer(NULL),
+		m_DepthStencil(NULL)
 	{
 	}
 
@@ -71,6 +73,17 @@ namespace Argon
 	ID3D11DepthStencilView* D3D11DepthStencil::GetTexture()
 	{
 		return m_DepthStencil;
+	}
+
+	void D3D11DepthStencil::Clear()
+	{
+#if _DEBUG
+		D3D11Device* Device = D3D11RenderSystem::instance()->GetDevice();
+		Device->GetDeviceContext()->ClearDepthStencilView(m_DepthStencil, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+#else
+		D3D11RenderSystem::instance()->GetDevice()->GetDeviceContext()->ClearDepthStencilView(DepthStencil, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+#endif
+		
 	}
 
 } //Namespace

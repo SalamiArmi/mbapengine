@@ -56,6 +56,13 @@ namespace Argon
 		///No Params:
 		ID3D11DepthStencilView* GetTexture();
 
+		///CLEAR(VOID)
+		///
+		///	Clear the depth stencil with a depth of 1.0f
+		///
+		///No Params:
+		void Clear();
+
 	protected:
 		~D3D11DepthStencil();
 

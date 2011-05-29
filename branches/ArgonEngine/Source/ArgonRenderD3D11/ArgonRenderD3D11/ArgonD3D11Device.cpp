@@ -16,6 +16,12 @@ namespace Argon
 
 	D3D11Device::~D3D11Device()
 	{
+		m_Drivers.Clear();
+
+		assert(m_DeviceContext->Release() == 0);
+		assert(m_SwapChain->Release() == 0);
+		assert(m_Factory->Release() == 0);
+		assert(m_Device->Release() == 0);
 	}
 
 	bool D3D11Device::Load()

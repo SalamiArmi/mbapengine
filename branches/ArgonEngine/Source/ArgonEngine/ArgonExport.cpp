@@ -21,6 +21,14 @@ namespace Argon
 		return true;
 	}
 
+	ArgonExport bool DestoryEngine()
+	{
+		ArgonEngine::instance()->Unload();
+		ArgonEngine::destroyInstance();
+
+		return true;
+	}
+
 	ArgonExport void FrameUpdate()
 	{
 		ArgonEngine::instance()->FrameUpdate();

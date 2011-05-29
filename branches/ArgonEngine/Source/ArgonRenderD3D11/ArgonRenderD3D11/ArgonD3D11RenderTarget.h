@@ -58,13 +58,24 @@ namespace Argon
 		///Param MessageBoard: The message board that send the message for the reader
 		void ReadMessage(IMessageBoard* MessageBoard, uint Message);
 
-		///(VOID)
+		///GETTEXTURE(D3D11RENDERTARGETVIEW)
 		///
 		///Internal Use
 		///Get the DirectX Texture RenderTarget
 		///
 		///No Params:
 		ID3D11RenderTargetView* GetTexture();
+
+		///GETTEXTURE(D3D11RENDERTARGETVIEW)
+		///
+		///Internal Use
+		///Clear the render target
+		///
+		///Param Alpha: The Alpha value of the color that will begin at the start of the frame
+		///Param Alpha: The Red value of the color that will begin at the start of the frame
+		///Param Alpha: The Green value of the color that will begin at the start of the frame
+		///Param Alpha: The Blue value of the color that will begin at the start of the frame
+		void Clear(uint Alpha, uint Red, uint Green, uint Blue);
 
 	protected:
 		~D3D11RenderTarget();

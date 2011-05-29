@@ -29,7 +29,7 @@ namespace Argon
 		IWindow*		CreateArgonWindow();
 
 	protected:
-		Vector<WindowsDll*>				m_LoadedLibraries;				///All Current loaded libraries, When the Platoform is deleted remove all platforms
+		Vector<WindowsDll*>				m_LoadedLibraries;				//All Current loaded libraries, When the Platoform is deleted remove all platforms
 	};	
 
 } //Namespace

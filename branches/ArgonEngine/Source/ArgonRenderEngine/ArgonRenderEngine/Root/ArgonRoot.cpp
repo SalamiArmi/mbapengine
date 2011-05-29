@@ -39,9 +39,8 @@ namespace Argon
 	bool Root::Create(void* Window, size_t RenderSystemIndex, size_t DriverIndex, size_t ModeIndex)
 	{
 		m_ActiveRenderSystem = m_LoadedRenderSystems.At(RenderSystemIndex);
-		m_ActiveRenderSystem->Load();
-
 		m_ActiveRenderSystem->CreateDevice(DriverIndex, ModeIndex, Window);
+		m_ActiveRenderSystem->AddRef();
 
 		for(Vector<IRenderSystem*>::Iterator it = m_LoadedRenderSystems.Begin(); it != m_LoadedRenderSystems.End(); ++it)
 		{
