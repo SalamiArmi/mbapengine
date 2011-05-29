@@ -28,6 +28,7 @@ namespace Argon
 		GUID_IMessageBoardReader,	//MessageBoard readers will recieve messages
 		GUID_IRoot,					//Root creates and Initalises the Rendering Engine also shuts it down
 		GUID_IWindow,				//Window is either created externally or internally by the create function
+		GUID_IViewport,				//Viewports can allow multiple views for a backbuffer
 	};
 } //Namespace
  

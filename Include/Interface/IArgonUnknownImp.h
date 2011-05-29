@@ -139,7 +139,7 @@ namespace Argon
 		///No Params:
 		virtual bool UnLoad()
 		{
-			if(--m_RefCount == 0)
+			if(--m_RefCount <= 0)
 			{
 				delete this;
 				return true;

@@ -76,7 +76,8 @@ namespace Argon
 			if(m_Size > 0 && m_AllocatedSize > 0)
 			{
 				delete[] m_Data;
-				m_AllocatedSize = m_Size = m_Data = 0x0;
+				m_AllocatedSize = m_Size = 0x0;
+				m_Data = 0x0;
 			}
 		}
 

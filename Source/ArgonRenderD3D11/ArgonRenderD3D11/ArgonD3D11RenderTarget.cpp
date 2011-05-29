@@ -19,7 +19,11 @@ namespace Argon
 	}
 
 	D3D11RenderTarget::D3D11RenderTarget(ID3D11RenderTargetView* DesiredTarget)
-		: m_RenderTarget(DesiredTarget) 
+		: m_RenderTarget(DesiredTarget),
+		m_Width(0),
+		m_Height(0),
+		m_Pool(ISurface::POOL_Managed),
+		m_Format(FORMAT_Unknown)
 	{
 	}
 
@@ -75,6 +79,12 @@ namespace Argon
 	ID3D11RenderTargetView* D3D11RenderTarget::GetTexture()
 	{
 		return m_RenderTarget;
+	}
+
+	void D3D11RenderTarget::Clear(uint Alpha, uint Red, uint Green, uint Blue)
+	{
+		float Color[] = { Red, Green, Blue, Alpha };
+		D3D11RenderSystem::instance()->GetDevice()->GetDeviceContext()->ClearRenderTargetView(m_RenderTarget, Color);
 	}
 
 } //Namespace

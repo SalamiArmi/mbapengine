@@ -10,13 +10,14 @@
 namespace Argon
 {
 	ArgonEngine::ArgonEngine()
-		: m_Root(NULL)
+		: m_Root(NULL),
+		m_Timer(NULL),
+		m_Window(NULL)
 	{
 	}
 
 	ArgonEngine::~ArgonEngine()
 	{
-
 	}
 
 	bool ArgonEngine::Load()
@@ -36,6 +37,13 @@ namespace Argon
 		m_Root->UnLoad();
 		m_Platform->UnLoad();
 
+		if(m_Window)
+		{
+			m_Window->UnLoad();
+		}
+
+		delete m_Timer;
+
 		return true;
 	}
 
@@ -45,8 +53,13 @@ namespace Argon
 
 		if(Window)
 		{
-			m_Platform->CreateArgonWindow();
+			m_Window = m_Platform->CreateArgonWindow();
+			m_Window->Load();
+			m_Window->SetHandle(Window);
 		}
+
+		//Create the Timer
+		m_Timer = new Timer();
 
 		return true;
 	}

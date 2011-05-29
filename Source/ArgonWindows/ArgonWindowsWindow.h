@@ -8,7 +8,7 @@
 
 namespace Argon
 {
-	class Window : public IArgonUnknownImp<IWindow, GUID::GUID_IWindow>
+	class Window : public IArgonUnknownImp<IWindow, GUID_IWindow>
 	{
 	public:
 		Window();
@@ -20,6 +20,13 @@ namespace Argon
 		///
 		///No Params:
 		void	Create();
+
+		///LOAD(VOID)
+		///
+		/// Load the Window but do not create it
+		///
+		///No Params:
+		bool	Load();
 
 		///UNLOAD(BOOL)
 		///

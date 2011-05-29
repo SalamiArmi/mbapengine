@@ -1123,6 +1123,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Interface\ICamera.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Interface\IComponent.h"
 				>
 			</File>

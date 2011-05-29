@@ -1,5 +1,6 @@
 #include "ArgonWindows.h"
 #include "ArgonWindowsDll.h"
+#include "ArgonWindowsWindow.h"
 
 namespace Argon
 {
@@ -100,7 +101,8 @@ namespace Argon
 
 	IWindow* WindowsPlatform::CreateArgonWindow()
 	{
-		return NULL;
+		Window* Win = new Window();
+		return Win;
 	}
 
 } //Namespace

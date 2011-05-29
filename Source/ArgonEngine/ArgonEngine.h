@@ -8,6 +8,7 @@
 
 #include <Interface\IRoot.h>
 #include <Interface\IPlatform.h>
+#include <Interface\IWindow.h>
 
 #define _CreateWindow_
 
@@ -65,6 +66,7 @@ namespace Argon
 	protected:
 		IPlatform*				m_Platform;				//The platform that will be used throughout the life of the application
 		IRoot*					m_Root;					//The Root is used to hide all Render Systems
+		IWindow*				m_Window;
 
 		Timer*					m_Timer;				//Main frame update timer
 	};

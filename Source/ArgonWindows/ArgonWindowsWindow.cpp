@@ -5,12 +5,20 @@ namespace Argon
 	Window::Window()
 		: m_Handle(0x0)
 	{
-
+		m_RefCount = 0;
 	}
 
 	Window::~Window()
 	{
 
+	}
+
+	bool Window::Load()
+	{
+		assert(m_RefCount == 0);
+		++m_RefCount;
+
+		return true;
 	}
 
 	void Window::Create()
@@ -20,6 +28,16 @@ namespace Argon
 
 	bool Window::UnLoad()
 	{
+		if(m_RefCount > 1)
+		{
+			--m_RefCount;
+		}
+		else
+		{
+			IArgonUnknownImp<IWindow, GUID_IWindow>::UnLoad();
+			return true;
+		}
+
 		return false;
 	}
 

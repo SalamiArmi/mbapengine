@@ -17,8 +17,10 @@ namespace Argon
 		m_BackBuffer(NULL),
 		m_DepthStencil(NULL),
 		m_Width(0),
-		m_Height(0)
+		m_Height(0),
+		m_D3D11Counter(NULL)
 	{
+		m_RefCount = 0;
 	}
 
 	D3D11RenderSystem::~D3D11RenderSystem()
@@ -27,6 +29,9 @@ namespace Argon
 
 	bool D3D11RenderSystem::Load()
 	{
+		assert(m_RefCount == 0);
+		++m_RefCount;
+
 		m_Device = new D3D11Device();
 		m_Device->Load();
 
@@ -35,6 +40,25 @@ namespace Argon
 
 	bool D3D11RenderSystem::UnLoad()
 	{		
+		if(m_RefCount > 1)
+		{
+			--m_RefCount;
+		}
+		else
+		{
+			assert(m_Device->Unload());
+			assert(m_BackBuffer->UnLoad());
+			assert(m_DepthStencil->UnLoad());
+
+			if(m_D3D11Counter)
+			{
+				assert(m_D3D11Counter->Release() == 0);
+			}
+
+			IArgonUnknownImp2<IRenderSystem, GUID_IRenderSystem, IComponent, GUID_IComponent>::UnLoad();
+			return true;
+		}
+
 		return false;
 	}
 
@@ -65,7 +89,26 @@ namespace Argon
 			m_Height = VideoMode->GetHeight();
 		}
 
-		return m_Device->CreateDevice(DriverIndex, ModeIndex, Window);
+		bool Success = m_Device->CreateDevice(DriverIndex, ModeIndex, Window);
+
+		//Create the BackBuffer render target
+		ID3D11Texture2D* BackBuffer = NULL;
+		ID3D11RenderTargetView* RenderTarget = NULL;
+		m_Device->GetSwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&BackBuffer);
+		m_Device->GetDevice()->CreateRenderTargetView(BackBuffer, NULL, &RenderTarget);
+
+		//Create a Buffer without accually creating a backbuffer
+		m_BackBuffer = new D3D11RenderTarget(RenderTarget);
+
+		//Release the Referance of the device
+		BackBuffer->Release();
+		BackBuffer = NULL;
+
+		//Create the Depth Stencil
+		m_DepthStencil = new D3D11DepthStencil(m_Width, m_Height, ISurface::FORMAT_Depth24);
+		m_DepthStencil->Load();
+
+		return Success;
 	}
 
 	void D3D11RenderSystem::RenderMesh(IMesh* Mesh)
@@ -84,34 +127,40 @@ namespace Argon
 
 	ISurface* D3D11RenderSystem::CreateRenderTarget(uint Width, uint Height, ISurface::Format Format)
 	{
-		return new ("D3D11RenderTarget") D3D11RenderTarget(Width, Height, Format);
+		return new D3D11RenderTarget(Width, Height, Format);
 	}
 
 	ISurface* D3D11RenderSystem::CreateDepthStencil(uint Width, uint Height, ISurface::Format Format)
 	{
-		return new ("D3D11DepthStencil") D3D11DepthStencil(Width, Height, Format);
+		return new D3D11DepthStencil(Width, Height, Format);
 	}
 
 	bool D3D11RenderSystem::BeginFrame()
 	{
 		//Clear Buffers
-		ID3D11RenderTargetView* RenderTarget = m_BackBuffer->GetTexture();
-		float Color[] = { 0, 0, 0, 0 };
-		m_Device->GetDeviceContext()->ClearRenderTargetView(RenderTarget, Color);
+		m_BackBuffer->Clear(255, 255, 0, 0);
+		m_DepthStencil->Clear();
 
-
-		ID3D11DepthStencilView* DepthStencil = m_DepthStencil->GetTexture();
-		m_Device->GetDeviceContext()->ClearDepthStencilView(DepthStencil, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+		D3D11_COUNTER_DESC CounterDesc;
+		CounterDesc.Counter = D3D11_COUNTER_DEVICE_DEPENDENT_0;
+		CounterDesc.MiscFlags = 0;
+		m_Device->GetDevice()->CreateCounter(&CounterDesc, &m_D3D11Counter);
 
 		//Begin the new frame
-		m_Device->GetDeviceContext()->Begin(NULL); 
+		m_Device->GetDeviceContext()->Begin(m_D3D11Counter);
 		
 		return true;
 	}
 
 	bool D3D11RenderSystem::EndFrame()
 	{
-		m_Device->GetDeviceContext()->End(NULL);
+		m_Device->GetDeviceContext()->End(m_D3D11Counter);
+	
+		m_Device->GetSwapChain()->Present(0, 0);
+
+		m_D3D11Counter->Release();	
+		m_D3D11Counter = NULL;
+
 		return true;
 	}
 
