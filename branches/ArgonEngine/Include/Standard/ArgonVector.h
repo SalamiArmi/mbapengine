@@ -83,7 +83,7 @@ namespace Argon
 
 		void		Reverse();
 
-		void		Resize(size_t NewSize)
+		void Resize(size_t NewSize)
 		{
 			m_Size = m_AllocatedSize = NewSize;
 			T* Data = new T[m_Size]; //Create a new buffer
@@ -99,25 +99,28 @@ namespace Argon
 			m_Data = Data; 
 		}
 
-		void		EraseObject(const T& Object);
+		void EraseObject(const T& Object)
+		{
 
-		T&			Front()
+		}
+
+		T& Front()
 		{
 			return m_Data[0];
 		}
 
-		T&			Back()
+		T& Back()
 		{
 			return m_Data[m_Size - 1];
 		}
 
-		T&			At(size_t Index)
+		T& At(size_t Index)
 		{
 			assert(m_Size > 0);
 			return m_Data[Index];
 		}
 
-		const T&	At(size_t Index) const
+		const T& At(size_t Index) const
 		{
 			assert(m_Size > 0);
 			return m_Data[Index];
