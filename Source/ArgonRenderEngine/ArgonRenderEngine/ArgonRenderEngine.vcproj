@@ -1350,8 +1350,16 @@
 				RelativePath=".\Root\ArgonSceneManager.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="Core"
+			>
 			<File
-				RelativePath=".\Root\SceneNode.h"
+				RelativePath="..\..\..\Include\Core\ArgonCamera.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonSceneNode.h"
 				>
 			</File>
 		</Filter>

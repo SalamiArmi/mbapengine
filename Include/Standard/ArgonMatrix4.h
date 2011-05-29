@@ -8,9 +8,53 @@ namespace Argon
 	template<typename T>class Matrix4T
 	{
 	public:
-		Matrix4T(bool SetToIdentity = true);
-		Matrix4T(const T Init[16]);
-		Matrix4T(T m00, T m01, T m02, T m03, T m10, T m11, T m12, T m13, T m20, T m21, T m22, T m23, T m30, T m31, T m32, T m33);
+		Matrix4T(bool SetToIdentity = true)
+		{
+			if(SetToIdentity)
+			{
+				SetIdentity();
+			}
+		}
+
+		Matrix4T(const T Init[16])
+		{
+			m_Single[0] = Init[0];
+			m_Single[1] = Init[1];
+			m_Single[2] = Init[2];
+			m_Single[3] = Init[3];
+			m_Single[4] = Init[4];
+			m_Single[5] = Init[5];
+			m_Single[6] = Init[6];
+			m_Single[7] = Init[7];
+			m_Single[8] = Init[8];
+			m_Single[9] = Init[9];
+			m_Single[10] = Init[10];
+			m_Single[11] = Init[11];
+			m_Single[12] = Init[12];
+			m_Single[13] = Init[13];
+			m_Single[14] = Init[14];
+			m_Single[15] = Init[15];
+		}
+
+		Matrix4T(T m00, T m01, T m02, T m03, T m10, T m11, T m12, T m13, T m20, T m21, T m22, T m23, T m30, T m31, T m32, T m33)
+		{
+			m_Single[0] = m00;
+			m_Single[1] = m01;
+			m_Single[2] = m02;
+			m_Single[3] = m03;
+			m_Single[4] = m10;
+			m_Single[5] = m11;
+			m_Single[6] = m12;
+			m_Single[7] = m13;
+			m_Single[8] = m20;
+			m_Single[9] = m21;
+			m_Single[10] = m22;
+			m_Single[11] = m23;
+			m_Single[12] = m30;
+			m_Single[13] = m31;
+			m_Single[14] = m32;
+			m_Single[15] = m33;
+		}
 
 		// operators
 		Matrix4T operator*(const Matrix4T& RHS) const

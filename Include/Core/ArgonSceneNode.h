@@ -1,57 +1,59 @@
-#ifndef _ISCENENODE_HEADER_
-#define _ISCENENODE_HEADER_
+#ifndef _SCENENODE_HEADER_
+#define _SCENENODE_HEADER_
 
-#include <Interface/IArgonUnknown.h>
-
+#include <Standard/ArgonMatrix4.h>
 #include <Standard/ArgonVector3.h>
-#include <Standard/ArgonQuaternion.h>
 #include <Standard/ArgonVector.h>
 
 namespace Argon
 {
-	DeclareBasedInterface(ISceneNode, IArgonUnknown)
+	class SceneNode
+	{
+	public:
+		SceneNode();
+		virtual ~SceneNode();
 
 		///FRAMEDRAW(BOOL)
 		///
 		/// Draw a new Frame
 		///
 		///No Params:
-		bool FrameDraw() = 0;
+		bool FrameDraw();
 
 		///FRAMEUPDATE(BOOL)
 		///
 		/// Update the Frame before drawing
 		///
 		///Param DeltaT: The time between two frames
-		bool FrameUpdate(float DeltaT) = 0;
+		bool FrameUpdate(float DeltaT);
 
 		///SETPOSITION(VOID)
 		///
 		/// Set the Position of the scenenode in the world
 		///
 		///Params Position: The Position that the node will be moved to
-		void SetPosition(Vector3 &Position) = 0;
+		void SetPosition(Vector3 &Position);
 	
 		///GETPOSITION(VECTOR3)
 		///
 		/// Get the Current Rendering position of the Scenenode
 		///
 		///No Params:
-		Vector3 GetPosition() = 0;
+		Vector3 GetPosition();
 
 		///SETORIENTATION(VOID)
 		///
 		/// Set the rotation of the scenenode
 		///
 		///Params Orientation: The new Rotation in radians
-		void SetOrientation(Vector3 &Orientation) = 0;
+		void SetOrientation(Vector3 &Orientation);
 		
 		///GETORIENTATION(VECTOR3)
 		///
 		/// Get the Orientation in Radians
 		///
 		///No Params:
-		Vector3 GetOrientation() = 0;
+		Vector3 GetOrientation();
 
 		///ROLL(VOID)
 		///
@@ -79,58 +81,63 @@ namespace Argon
 		/// Set the scale of the Scenenode
 		///
 		///Params Scale: The new scale
-		void SetScale(Vector3 &Scale) = 0;
+		void SetScale(Vector3 &Scale);
 
 		///GETSCALE(VECTOR3)
 		///
 		/// Get the scale of the Scenenode
 		///
 		///No Params:
-		Vector3 GetScale() = 0;
+		Vector3 GetScale();
 
 		///ATTACH(VOID)
 		///
 		/// Attach a new child scenenode
 		///
 		///Params Node: The node that will be attached to this node
-		void Attach(actual_ISceneNode* Node) = 0;
+		void Attach(SceneNode* Node);
 
 		///DETACH(VOID)
 		///
 		/// Detach the desired node from this parent node
 		///
 		///Param Node: The desired node that will be detached
-		void Detach(actual_ISceneNode* Node) = 0;
+		void Detach(SceneNode* Node);
 
 		///DETACH(VOID)
 		///
 		/// Detach the desired node from this parent node
 		///
 		///Params Index: The Index of the desired node that will be detached
-		void Detach(size_t Index) = 0;
+		void Detach(size_t Index);
 
 		///GETCHILDCOUNT(SIZE_T)
 		///
 		/// Get the total amount of children for this parent
 		///
 		///No Params:
-		size_t GetChildCount() = 0;
+		size_t GetChildCount();
 
 		///REMOVEALLCHILDREN(VOID)
 		///
 		/// Remove all child nodes from this parent
 		///
 		///No Params:
-		void RemoveAllChildren() = 0;
+		void RemoveAllChildren();
 
 		///GETPARENT(ISCENENODE)
 		///
 		/// Get the current Parent of this node
 		///
 		///No Params:
-		actual_ISceneNode* GetParent() const = 0;
+		SceneNode* GetParent() const;
 
-	EndInterface(ISceneNode)
+	protected:
+		SceneNode*				m_Parent;
+		Vector<SceneNode*>		m_Children;
+
+		Matrix4					m_Transformation;
+	};
 } //Namespace
 
-#endif //_ISCENENODE_HEADER_
+#endif //_SCENENODE_HEADER_

@@ -895,8 +895,28 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Core"
+			>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonCamera.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonSceneNode.h"
+				>
+			</File>
+		</Filter>
+		<File
+			RelativePath=".\ArgonCamera.cpp"
+			>
+		</File>
 		<File
 			RelativePath=".\ArgonLog.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\ArgonSceneNode.cpp"
 			>
 		</File>
 		<File
