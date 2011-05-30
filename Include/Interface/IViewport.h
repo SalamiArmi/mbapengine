@@ -1,8 +1,10 @@
 #ifndef _IVIEWPORT_HEADER_
 #define _IVIEWPORT_HEADER_
 
-#include <Interface/ICamera.h>
+#include <Interface/IArgonUnknown.h>
+
 #include <Standard/ArgonVector2.h>
+#include <Core/ArgonCamera.h>
 
 namespace Argon
 {
@@ -55,14 +57,14 @@ namespace Argon
 		/// Set the Camera that will be used for viewing
 		///
 		///Params Cam: The Camera that is required for attaining the View Projection Matrix
-		void SetCamera(ICamera* Cam);
+		void SetCamera(Camera* Cam);
 
 		///(VOID)
 		///
 		/// Get the Camera in which rendering is begining viewed from
 		///
 		///No Params:
-		ICamera* GetCamera();
+		Camera* GetCamera();
 
 		///SETCLEARCOLOR(VOID)
 		///

@@ -4,7 +4,6 @@
 #include <Interface/IFrameListner.h>
 #include <Interface/IComponent.h>
 #include <Interface/IArgonUnknownImp.h>
-#include <Interface/ISceneNode.h>
 
 #include <Standard/ArgonVector.h>
 
@@ -61,20 +60,36 @@ namespace Argon
 		///Param Pass: The Pass that will be checked against
 		bool			SupportsPass(RenderPass Pass);
 
-		///CREATESCENENODE(ISCENENODE)
+		///CREATESCENENODE(SCENENODE)
 		///
 		/// Create a new scene node that will contain all required transform information
 		///
 		///No Params:
-		ISceneNode*		CreateSceneNode(QString Name);
+		SceneNode*		CreateSceneNode(QString Name);
+
+		///CREATECAMERA(CAMERA)
+		///
+		/// Create a new camera that will contain all required transform information
+		///
+		///No Params:
+		Camera*		CreateCamera(QString Name);
+
+		///GETCAMERA(CAMERA)
+		///
+		/// Get a Camera from the Name
+		///
+		///No Params:
+		Camera*		GetCamera(QString Name);
 
 	protected:
-		Vector<ISceneNode*>	m_SceneNodes;
+		Vector<SceneNode*>	m_SceneNodes;
+		Vector<Camera*>		m_Cameras;
 		
 
 		Root*				m_Creator;	//The Root which created this Manager
 		QString				m_Name;		//The name of the Component
 	};
+
 } //Namespace
 
 #endif //_SCENEMANAGER_HEADER_

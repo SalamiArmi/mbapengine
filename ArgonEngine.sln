@@ -6,6 +6,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Engine", "Engine", "{810C5AC1-75D3-4F1C-AFE2-3E57B572B6E5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArgonRenderD3D11", "Source\ArgonRenderD3D11\ArgonRenderD3D11\ArgonRenderD3D11.vcproj", "{1EBEBEE0-7C9E-4AEE-8BEC-9784763E4147}"
+	ProjectSection(ProjectDependencies) = postProject
+		{127CBC0D-A66D-4854-A319-612023715C18} = {127CBC0D-A66D-4854-A319-612023715C18}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArgonStandard", "Source\ArgonStandard\ArgonStandard\ArgonStandard.vcproj", "{127CBC0D-A66D-4854-A319-612023715C18}"
 EndProject
@@ -27,8 +30,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArgonWindows", "Source\Argo
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArgonRenderEngine", "Source\ArgonRenderEngine\ArgonRenderEngine\ArgonRenderEngine.vcproj", "{DBA37458-BC6D-4273-9D6D-9489F8108726}"
+	ProjectSection(ProjectDependencies) = postProject
+		{127CBC0D-A66D-4854-A319-612023715C18} = {127CBC0D-A66D-4854-A319-612023715C18}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ArgonEngine", "Source\ArgonEngine\ArgonEngine.vcproj", "{221C49A9-6529-444B-8D20-FD1C70C15CBA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{127CBC0D-A66D-4854-A319-612023715C18} = {127CBC0D-A66D-4854-A319-612023715C18}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

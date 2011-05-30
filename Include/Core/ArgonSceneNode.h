@@ -4,14 +4,22 @@
 #include <Standard/ArgonMatrix4.h>
 #include <Standard/ArgonVector3.h>
 #include <Standard/ArgonVector.h>
+#include <Standard/ArgonQString.h>
 
 namespace Argon
 {
-	class SceneNode
+	class ArgonStandard SceneNode
 	{
 	public:
-		SceneNode();
+		SceneNode(QString Name);
 		virtual ~SceneNode();
+		
+		///GETNAME(QSTRING)
+		///
+		/// Get the name of the Node or concrete class type
+		///
+		///No Params:
+		QString GetName();
 
 		///FRAMEDRAW(BOOL)
 		///
@@ -133,6 +141,8 @@ namespace Argon
 		SceneNode* GetParent() const;
 
 	protected:
+		QString					m_Name;
+
 		SceneNode*				m_Parent;
 		Vector<SceneNode*>		m_Children;
 

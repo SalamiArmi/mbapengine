@@ -4,13 +4,14 @@
 #include <Core/ArgonSceneNode.h>
 
 #include <Standard/ArgonMatrix4.h>
+#include <Standard/ArgonQString.h>
 
 namespace Argon
 {
-	class Camera : public SceneNode
+	class ArgonStandard Camera : public SceneNode
 	{
 	public:
-		Camera();
+		Camera(QString Name);
 		~Camera();
 
 		///GETVIEWMATRIX(MATRIX4)
@@ -55,7 +56,13 @@ namespace Argon
 		void GetProjection(float &FOVY, float &Aspect, float &Near, float &Far);
 
 	protected:
+		Matrix4			m_View;
+		Matrix4			m_Projection;
 
+		float			m_Fovy;
+		float			m_Aspect;
+		float			m_Near;
+		float			m_Far;
 	};
 
 } //Namespace
