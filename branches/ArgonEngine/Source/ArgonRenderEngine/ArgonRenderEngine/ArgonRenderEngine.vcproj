@@ -1123,10 +1123,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\Include\Interface\ICamera.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\Include\Interface\IComponent.h"
 				>
 			</File>
@@ -1164,10 +1160,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Include\Interface\ISceneManager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\Include\Interface\ISceneNode.h"
 				>
 			</File>
 			<File

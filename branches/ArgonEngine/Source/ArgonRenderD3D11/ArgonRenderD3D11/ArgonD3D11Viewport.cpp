@@ -60,12 +60,12 @@ namespace Argon
 		return m_Enabled;
 	}
 
-	void D3D11Viewport::SetCamera(ICamera* Cam)
+	void D3D11Viewport::SetCamera(Camera* Cam)
 	{
 		m_Camera = Cam;
 	}
 
-	ICamera* D3D11Viewport::GetCamera()
+	Camera* D3D11Viewport::GetCamera()
 	{
 		return m_Camera;
 	}

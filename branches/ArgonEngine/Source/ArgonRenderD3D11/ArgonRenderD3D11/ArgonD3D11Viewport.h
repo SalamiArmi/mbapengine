@@ -2,7 +2,7 @@
 #define _ARGOND3D11VIEWPORT_HEADER_
 
 #include <Interface/IViewport.h>
-#include <Interface/ICamera.h>
+#include <Core/ArgonCamera.h>
 
 #include <Standard/ArgonVector2.h>
 
@@ -63,14 +63,14 @@ namespace Argon
 		/// Set the Camera that will be used for viewing
 		///
 		///Params Cam: The Camera that is required for attaining the View Projection Matrix
-		void SetCamera(ICamera* Cam);
+		void SetCamera(Camera* Cam);
 
 		///(VOID)
 		///
 		/// Get the Camera in which rendering is begining viewed from
 		///
 		///No Params:
-		ICamera* GetCamera();
+		Camera* GetCamera();
 
 		///SETCLEARCOLOR(VOID)
 		///
@@ -96,7 +96,7 @@ namespace Argon
 		Vector2			m_Dimensions;
 		Vector2			m_Position;
 		size_t*			m_ClearColor;
-		ICamera*		m_Camera;
+		Camera*			m_Camera;
 	};
 } //Namespace
 

@@ -31,7 +31,7 @@ namespace Argon
 
 	bool SceneManager::FrameUpdate(float DeltaT)
 	{
-		for(Vector<ISceneNode*>::Iterator it = m_SceneNodes.Begin(); it != m_SceneNodes.End(); ++it)
+		for(Vector<SceneNode*>::Iterator it = m_SceneNodes.Begin(); it != m_SceneNodes.End(); ++it)
 		{
 			(*it)->FrameUpdate(DeltaT);
 		}
@@ -41,7 +41,7 @@ namespace Argon
 
 	bool SceneManager::FrameDraw(RenderPass Pass)
 	{
-		for(Vector<ISceneNode*>::Iterator it = m_SceneNodes.Begin(); it != m_SceneNodes.End(); ++it)
+		for(Vector<SceneNode*>::Iterator it = m_SceneNodes.Begin(); it != m_SceneNodes.End(); ++it)
 		{
 			(*it)->FrameDraw();
 		}
@@ -49,8 +49,32 @@ namespace Argon
 		return false;
 	}
 
-	ISceneNode* SceneManager::CreateSceneNode(QString Name)
+	SceneNode* SceneManager::CreateSceneNode(QString Name)
 	{
+		//Create a new SceneNode
+		SceneNode* Node = new SceneNode(Name);
+		m_SceneNodes.Push_Back(Node);
+		return Node;
+	}
+
+	Camera* SceneManager::CreateCamera(QString Name)
+	{
+		//Create a new Camera
+		Camera* Cam = new Camera(Name);
+		m_Cameras.Push_Back(Cam);
+		return Cam;
+	}
+
+	Camera* SceneManager::GetCamera(QString Name)
+	{
+		for(Vector<Camera*>::Iterator it = m_Cameras.Begin(); it != m_Cameras.End(); ++it)
+		{
+			if((*it)->GetName() == Name)
+			{
+				return (*it);
+			}
+		}
+
 		return NULL;
 	}
 

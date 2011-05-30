@@ -3,9 +3,11 @@
 
 #include <Standard/ArgonQString.h>
 
+#include <Core/ArgonCamera.h>
+#include <Core/ArgonSceneNode.h>
+
 #include "IFrameListner.h"
 #include "IArgonUnknown.h"
-#include "ISceneNode.h"
 
 namespace Argon
 {
@@ -49,12 +51,26 @@ namespace Argon
 		///Param Pass: The Pass that will be checked against
 		bool			SupportsPass(IFrameListner::RenderPass Pass);
 
-		///CREATESCENENODE(ISCENENODE)
+		///CREATESCENENODE(SCENENODE)
 		///
 		/// Create a new scene node that will contain all required transform information
 		///
 		///No Params:
-		ISceneNode*		CreateSceneNode(QString Name);
+		SceneNode*		CreateSceneNode(QString Name);
+
+		///CREATECAMERA(CAMERA)
+		///
+		/// Create a new camera that will contain all required transform information
+		///
+		///No Params:
+		Camera*		CreateCamera(QString Name);
+
+		///GETCAMERA(CAMERA)
+		///
+		/// Get a Camera from the Name
+		///
+		///No Params:
+		Camera*		GetCamera(QString Name);
 
 	EndInterface(ISceneManager)
 
