@@ -1,0 +1,8 @@
+= Argon Engine =
+
+Argon Engine was started orignally to be a side project using multiple OS Platforms and multiple Render Platforms including but not limited to:
+* OpenGL
+* DirectX
+* User RenderSystems
+
+= ArgonEngine Structure =
