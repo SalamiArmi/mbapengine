@@ -26,7 +26,7 @@ namespace Argon
 		CreatePlatform(&m_Platform);
 		m_Platform->Load();
 
-		ArgonCreateRoot(&m_Root, m_Platform);
+		m_Root = new Root(m_Platform);
 		m_Root->Load();
 
 		return true;
@@ -60,6 +60,12 @@ namespace Argon
 
 		//Create the Timer
 		m_Timer = new Timer();
+		m_SceneManager = m_Root->CreateSceneManager("Main Scene");
+		m_Root->SetCurrentSceneManager(m_SceneManager);
+
+		Text* Txt = m_SceneManager->CreateText("Text Test");
+		Txt->SetText("BOOBS");
+		Txt->Load();
 
 		return true;
 	}
@@ -69,7 +75,7 @@ namespace Argon
 		try
 		{
 			//Get Time Delta
-			float DeltaT = m_Timer->GetMilliseconds();
+			float DeltaT = (float)m_Timer->GetMilliseconds();
 
 			//Update the Active SceneManager
 			m_Root->FrameUpdate(DeltaT);
@@ -85,7 +91,7 @@ namespace Argon
 		return true;
 	}
 
-	IRoot* ArgonEngine::GetRoot() const 
+	Root* ArgonEngine::GetRoot() const 
 	{
 		return m_Root;
 	}

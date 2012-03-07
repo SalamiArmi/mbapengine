@@ -21,8 +21,8 @@ namespace Argon
 
 		///////////////////////////////////////////////////////////////////
 		// IPlatform Implemention
-		void*			LoadLibrary(String FileName);		 						///Load a Dll library
-		FARPROC			LoadEntryPoint(void* Library, String EnrtyPoint) ;			///Load the Entry Point to the Library
+		void*			LoadArgonLibrary(String FileName);		 					///Load a Dll library
+		void*			LoadEntryPoint(void* Library, String EnrtyPoint) ;			///Load the Entry Point to the Library
 		bool			UnLoadLibrary(void* Library);								///UnLoad the Library to freeup memory
 		bool			UnLoadLibrary(String LibraryFileName);						///UnLoad the Library to freeup memory
 		void			FindAllFiles(String Directory, Vector<String>* Out);		///Find all files in a directory

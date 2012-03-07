@@ -1,13 +1,14 @@
 #ifndef _ARGOND3D11RENDERSYSTEM_HEADER_
 #define _ARGOND3D11RENDERSYSTEM_HEADER_
 
-#include "ArgonD3D11Device.h"
-
 #include <Interface/IArgonUnknownImp.h>
 #include <Interface/IRenderSystem.h>
 #include <Interface/IComponent.h>
+#include <Interface/IFont.h>
 
 #include <Standard/ArgonSingleton.h>
+
+#include "ArgonD3D11Device.h"
 
 #include <assert.h>
 
@@ -48,6 +49,11 @@ namespace Argon
 		void 		SetViewport(IViewport* Viewport);
 		void 		SetVertexDeclaration(IMesh::VertexDeclaration VertexDecl);
 		void		SetDepthStencil(ISurface* DepthStencil);
+		IViewport*	CreateViewport(uint Width, uint Height, uint PositionX, uint PositionY);
+		IViewport*	CreateViewport(Vector2 Size, Vector2 Position);
+		IViewport*	GetViewport(uint Index);
+		IFont*		CreateAFont();
+		IFont*		GetFont(uint Index);
 
 
 		///GETDEVICE(D3D11DEVICE)
@@ -55,7 +61,15 @@ namespace Argon
 		///Get the D3D11Device from the rendersystem
 		///
 		///No Params:
-		D3D11Device* GetDevice();
+		D3D11Device*		GetDevice();
+		
+		///GETBACKBUFFER(D3D11RENDERTARGET)
+		///
+		/// Get the Device back buffer
+		/// Internal use only
+		/// 
+		///No Params:
+		D3D11RenderTarget*	GetBackBuffer();
 
 	protected:
 		virtual ~D3D11RenderSystem();
@@ -64,6 +78,9 @@ namespace Argon
 		uint				m_Width;
 		uint				m_Height;
 		float				m_ClearColor[4];
+
+		Vector<IViewport*>	m_Viewports;
+		Vector<IFont*>	m_Fonts;
 
 	private:
 		D3D11Device*		m_Device;

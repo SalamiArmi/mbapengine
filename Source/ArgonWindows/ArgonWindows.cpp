@@ -24,7 +24,7 @@ namespace Argon
 	}
 	
 	///Load a Dll library
-	void* WindowsPlatform::LoadLibrary(String FileName)
+	void* WindowsPlatform::LoadArgonLibrary(String FileName)
 	{
 		HINSTANCE Component = LoadLibraryExA(FileName.c_str(), NULL, NULL);
 		m_LoadedLibraries.Push_Back(new WindowsDll(FileName, Component));
@@ -32,9 +32,9 @@ namespace Argon
 	}
 
 	///Load the Entry Point to the Library
-	FARPROC WindowsPlatform::LoadEntryPoint(void* Library, String EnrtyPoint)
+	void* WindowsPlatform::LoadEntryPoint(void* Library, String EnrtyPoint)
 	{
-		return GetProcAddress((HINSTANCE)Library, EnrtyPoint.c_str());
+		return (void*)GetProcAddress((HINSTANCE)Library, EnrtyPoint.c_str());
 	}
 
 	///UnLoad the Library to freeup memory

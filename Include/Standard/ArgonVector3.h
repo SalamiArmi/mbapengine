@@ -205,11 +205,7 @@ namespace Argon
 		T x, y, z;
 	};
 
-#	if defined ArgonX64
-	typedef Vector3T<double> Vector3;
-#	else 
 	typedef Vector3T<float> Vector3;
-#	endif
 
 }
 

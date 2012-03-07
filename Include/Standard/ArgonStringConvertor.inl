@@ -114,13 +114,9 @@ namespace Argon
 
 	String StringConvertor::ToString(bool boolean)
 	{
-		if (boolean == true)
-		{
-			return "True";
-		}
-		else if (boolean == false)
-		{
-			return "False";
-		}
+		std::istringstream iss(boolean);
+		String s;
+		iss >> std::boolalpha >> s;
+		return s;
 	}
 }

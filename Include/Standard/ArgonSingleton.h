@@ -13,62 +13,65 @@
 
 #include "assert.h"
 
-template <typename T> 
-class singleton
+namespace Argon
 {
-public:
 
-	// Gets a reference to the instance of the singleton class.
-	//
-	//	returns a reference to the instance of the singleton class.
-	//	If there is no instance of the class yet, one will be created.
-	static T* instance()
+	template <typename T> 
+	class singleton
 	{
-		if (m_instance == 0)
+	public:
+
+		// Gets a reference to the instance of the singleton class.
+		//
+		//	returns a reference to the instance of the singleton class.
+		//	If there is no instance of the class yet, one will be created.
+		static T* instance()
 		{
-			m_instance = new T;
+			if (m_instance == 0)
+			{
+				m_instance = new T;
+			}
+
+			assert(m_instance != 0);
+
+			return m_instance;
 		}
 
-		assert(m_instance != 0);
+		// Destroys the singleton class instance.
 
-		return m_instance;
-	}
+		//	Be aware that all references to the single class instance will be
+		//	invalid after this method has been executed!
+		static inline void destroyInstance()
+		{
+			delete m_instance;
+			m_instance = 0;
+		}
 
-	// Destroys the singleton class instance.
+	protected:
 
-	//	Be aware that all references to the single class instance will be
-	//	invalid after this method has been executed!
-	static inline void destroyInstance()
-	{
-		delete m_instance;
-		m_instance = 0;
-	}
+		// Default constructor.
+		inline singleton()
+		{
+		}
 
-protected:
+		// Destructor
+		inline virtual ~singleton()
+		{
+		}
 
-	// Default constructor.
-	inline singleton()
-	{
-	}
+	protected:
 
-	// Destructor
-	inline virtual ~singleton()
-	{
-	}
+		// Copy constructor.
+		inline singleton(const singleton& source)
+		{
+		}
 
-private:
+		// singleton class instance
+		static T* m_instance;
+	};
 
-	// Copy constructor.
-	inline singleton(const singleton& source)
-	{
-	}
-
-	 // singleton class instance
-	static T* m_instance;
-};
-
-// static class member initialisation.
-template <typename T>
-T* singleton<T>::m_instance = 0;
-
+	// static class member initialisation.
+	template <typename T>
+	T* singleton<T>::m_instance = 0;
+}
 #endif //_ARGONSINGLETON_HEADER_

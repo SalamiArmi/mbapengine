@@ -6,6 +6,8 @@
 #include <Standard/ArgonMatrix4.h>
 #include <Standard/ArgonQString.h>
 
+#pragma warning(disable : 4251 )
+
 namespace Argon
 {
 	class ArgonStandard Camera : public SceneNode

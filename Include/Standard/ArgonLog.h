@@ -127,7 +127,6 @@ namespace Argon
 	protected:
 		QString					m_Name;			//The name of this Log Messager
 		LogType					m_LogType;		//LogType
-		HWND					m_Cmd;			//Comand Window
 		std::fstream			m_FileStream;	//The file that will be used for logging to a file
 
 		static Vector<Log*>		m_LogList;		//All the currently created logs

@@ -9,15 +9,25 @@ namespace Argon
 		
 		enum Usage
 		{
-			USAGE_Dynamic = 0,
-			USAGE_Default,
+			USAGE_Dynamic = 0,	//Create a Buffer that can have memory Allocated to it
+			USAGE_Default,		//Create a Buffer that will have a set size and will upload to video memory
 		}; //Enum
 
 		enum BufferType
 		{
-			BUFFERTYPE_VertexBuffer = 0,
-			BUFFERTYPE_IndexBuffer = 1,
+			BUFFERTYPE_VertexBuffer = 0,	//Video Memory Support
+			BUFFERTYPE_IndexBuffer = 1,		//Video Memory Support
+			BUFFERTYPE_PhysicalMemory = 2,	//Physical Memory, only RAM (Random Access Memory)
+			BUFFERTYPE_Attributes = 3,		
 		}; //Enum
+
+		///GETBUFFERTYPE(VOID)
+		///
+		///Get the usage type of this buffer
+		///
+		///
+		///No Params:
+		virtual BufferType GetBufferType() = 0;
 
 		///GETUSAGETYPE(VOID)
 		///
@@ -34,22 +44,29 @@ namespace Argon
 		///No Params:
 		virtual bool	Is32Bit()		= 0;
 
-		///LOADDATA(VOID)
+		///LoadPhysicalData(VOID)
 		///
 		///Load the Data into a void* and return it
 		///Once loaded it must be unloaded before the buffer can be loaded 
 		///again else will throw a internal exception
 		///
 		///No Params:
-		virtual void*	LoadData()		= 0;
+		virtual bool	LoadPhysicalData(void** Data)	= 0;
 
-		///UNLOADDATA(VOID)
+		///UnloadPhysicalData(VOID)
 		///
 		///Unload the data from previous LoadData
 		///If the Data is not loaded and Unload Data is Called a exception will be thrown
 		///
 		///No Params:
-		virtual bool	UnloadData()	= 0;
+		virtual bool	UnloadPhysicalData()	= 0;
+
+		//
+		//UploadToVideoMemory(BOOL)
+		//
+		//Upload the Physical memory to video memory
+		//
+		virtual bool	UploadToVideoMemory()	= 0;
 
 	EndInterface(IBuffer) //Interface
 } //Namespace

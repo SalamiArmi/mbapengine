@@ -29,6 +29,11 @@ namespace Argon
 		GUID_IRoot,					//Root creates and Initalises the Rendering Engine also shuts it down
 		GUID_IWindow,				//Window is either created externally or internally by the create function
 		GUID_IViewport,				//Viewports can allow multiple views for a backbuffer
+		GUID_IFont,					//
+		GUID_IText,					//
+		GUID_IRenderable,			//
+		GUID_IShader,				//
+		GUID_ITexture,				//
 	};
 } //Namespace
  

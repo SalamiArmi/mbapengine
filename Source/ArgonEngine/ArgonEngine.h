@@ -6,7 +6,7 @@
 #include <Standard/ArgonVector.h>
 #include <Standard/ArgonTimer.h>
 
-#include <Interface\IRoot.h>
+#include <Core\ArgonRoot.h>
 #include <Interface\IPlatform.h>
 #include <Interface\IWindow.h>
 
@@ -54,7 +54,7 @@ namespace Argon
 		///Get the root if the engine it contains all the engine components and render systems
 		///
 		///No Params:
-		IRoot*				GetRoot() const;
+		Root*				GetRoot() const;
 
 		///GETPLATFORM(IPLATFORM)
 		///
@@ -65,7 +65,8 @@ namespace Argon
 
 	protected:
 		IPlatform*				m_Platform;				//The platform that will be used throughout the life of the application
-		IRoot*					m_Root;					//The Root is used to hide all Render Systems
+		Root*					m_Root;					//The Root is used to hide all Render Systems
+		SceneManager*			m_SceneManager;
 		IWindow*				m_Window;
 
 		Timer*					m_Timer;				//Main frame update timer

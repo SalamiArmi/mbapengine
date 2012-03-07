@@ -9,8 +9,9 @@ namespace Argon
 		m_ClearColor(NULL),
 		m_Camera(NULL)
 	{
-		//Create the Viewport
+		m_RefCount = 0;
 
+		//Create the Viewport
 		//Position
 		m_Viewport.TopLeftX = Position.x;
 		m_Viewport.TopLeftY = Position.y;
@@ -26,7 +27,27 @@ namespace Argon
 
 	D3D11Viewport::~D3D11Viewport()
 	{
+	}
 
+	bool D3D11Viewport::Load()
+	{	
+		assert(m_RefCount == 0);
+		++m_RefCount;
+		return true;
+	}
+
+	bool D3D11Viewport::UnLoad()
+	{
+		if(m_RefCount > 1)
+		{
+			--m_RefCount;
+		}
+		else
+		{
+			IArgonUnknownImp<IViewport, GUID_IViewport>::UnLoad();
+		}
+
+		return false;
 	}
 
 	bool D3D11Viewport::Begin()
@@ -87,6 +108,11 @@ namespace Argon
 	size_t* D3D11Viewport::GetClearColor()
 	{
 		return m_ClearColor;
+	}
+
+	D3D11_VIEWPORT D3D11Viewport::GetD3D11Viewport()
+	{
+		return m_Viewport;
 	}
 
 } //Namespace

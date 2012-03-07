@@ -16,6 +16,22 @@ namespace Argon
 		D3D11Viewport(Vector2 Dimensions, Vector2 Position);
 		~D3D11Viewport();
 
+		///(BOOL)
+		///
+		///
+		///
+		///
+		///No Params:
+		bool Load();
+
+		///(BOOL)
+		///
+		///
+		///
+		///
+		///No Params:
+		bool UnLoad();
+
 		///BEGIN(BOOL)
 		///
 		/// Begin Rendering for this viewport
@@ -88,6 +104,13 @@ namespace Argon
 		///
 		///No Params:
 		size_t* GetClearColor();
+
+		///GETD3D11VIEWPORT(D3D11_VIEWPORT)
+		///
+		/// Get the Directx 11 Viewport
+		///
+		///No Params:
+		D3D11_VIEWPORT	GetD3D11Viewport();
 
 	protected:
 		D3D11_VIEWPORT	m_Viewport;

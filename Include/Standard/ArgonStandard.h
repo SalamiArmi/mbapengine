@@ -24,6 +24,12 @@ namespace Argon
 		typedef unsigned long		ulong;
 #	endif
 
+	typedef __int64					long64;
+	typedef unsigned __int64		ulong64;
+
+	typedef unsigned long			machine_address;
+
+	typedef unsigned short			ushort;
 	typedef unsigned int			uint;
 	typedef unsigned char			uchar;
 	typedef float					Real;
@@ -36,7 +42,7 @@ namespace Argon
 #	define ArgonMaxUChar			255
 #	define ArgonMinShort			-32768
 #	define ArgonMaxShort			32767
-#	define ArgonMaxUShort			65535
+#	define ArgonMaxUShort			0xffff
 #	define ArgonMinInt				-2147483648
 #	define ArgonMaxInt				2147483647
 #	define ArgonMaxUInt				4294967295
@@ -53,8 +59,8 @@ namespace Argon
 #		define ArgonULongMax		4294967295
 #	endif
 
-#	define ArgonPI					3.14159265358979323846f
-#	define ArgonTwoPI				6.28318530717958647692528f
+#	define ArgonPI					3.14159265358979323846
+#	define ArgonTwoPI				6.28318530717958647692528
 #	define ArgonFeetToMETERS		0.3048f
 
 //////////////////////////////////////////////////////////

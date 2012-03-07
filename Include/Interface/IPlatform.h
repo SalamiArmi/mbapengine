@@ -10,20 +10,20 @@ namespace Argon
 {
 	DeclareBasedInterface(IPlatform, IArgonUnknown)
 
-		///LOADLIBRARY(HANDLE)
+		///LOADARGONLIBRARY(HANDLE)
 		///
 		///Load a Dll library
 		///
 		///Param FileName: The destination to open the file
-		void* LoadLibrary(String FileName) = 0;		
+		void* LoadArgonLibrary(String FileName) = 0;		
 
-		///LOADENTRYPOINT(FARPROC)
+		///LOADENTRYPOINT(VOID*)
 		///
 		///Load the Entry Point to the Library
 		///
 		///Param Library: The Library to attempt to get the entry point from
 		///Param EntryPoint: The Entry point to attempt to gain access to the Library
-		FARPROC LoadEntryPoint(void* Library, String EnrtyPoint) = 0;
+		void* LoadEntryPoint(void* Library, String EnrtyPoint) = 0;
 
 		///UNLOADLIBRARY(BOOL)
 		///

@@ -163,8 +163,154 @@
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|Win32"
-			OutputDirectory="$(SolutionDir)Build\"
-			IntermediateDirectory="$(SolutionDir)Build\$(ProjectName)"
+			OutputDirectory="$(SolutionDir)/Build/"
+			IntermediateDirectory="$(SolutionDir)/Build/$(PlatformName)/$(ProjectName)"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description=""
+				CommandLine="echo *********** DEBUG ***************&#x0D;&#x0A;&#x0D;&#x0A;echo off&#x0D;&#x0A;echo Updating DLL&apos;s and Shaders ...&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build&quot;&#x0D;&#x0A;"
+				Outputs="$(TargetFileName)"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				UseUnicodeResponseFiles="false"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)Include&quot;"
+				PreprocessorDefinitions="WIN32;_ARGONWINDOWS_;"
+				RuntimeLibrary="3"
+				WarningLevel="3"
+				DebugInformationFormat="4"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="ArgonStandard_x86.lib ArgonRenderEngine_x86.lib ArgonWindows_x86.lib"
+				AdditionalLibraryDirectories="$(SolutionDir)Build"
+				GenerateDebugInformation="true"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="ArgonEngine GLUT x86d|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+				Description=""
+				CommandLine="echo *********** DEBUG ***************&#x0D;&#x0A;&#x0D;&#x0A;echo off&#x0D;&#x0A;echo Updating DLL&apos;s and Shaders ...&#x0D;&#x0A;copy &quot;$(TargetPath)&quot; &quot;C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build&quot;&#x0D;&#x0A;"
+				Outputs="$(TargetFileName)"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				UseUnicodeResponseFiles="false"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)Include&quot;"
+				PreprocessorDefinitions="WIN32;_ARGONWINDOWS_;"
+				RuntimeLibrary="3"
+				WarningLevel="1"
+				DebugInformationFormat="4"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="ArgonStandard_x86.lib ArgonRenderEngine_x86.lib ArgonWindows_x86.lib"
+				AdditionalLibraryDirectories="$(SolutionDir)Build"
+				GenerateDebugInformation="true"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="MT Static|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			>
@@ -374,7 +520,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\Standard\ArgonVector3.inl"
+				RelativePath="..\..\Include\Standard\ArgonVector4.h"
 				>
 			</File>
 		</Filter>
@@ -430,14 +576,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\Interface\IRoot.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\Interface\ISceneManager.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Include\Interface\ISurface.h"
 				>
 			</File>
@@ -466,7 +604,31 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Include\Core\ArgonRoot.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\Core\ArgonSceneManager.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Include\Core\ArgonSceneNode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\Core\ArgonText.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Export"
+			>
+			<File
+				RelativePath=".\ArgonExport.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ArgonInitializationExport.inl"
 				>
 			</File>
 		</Filter>
@@ -476,10 +638,6 @@
 		</File>
 		<File
 			RelativePath=".\ArgonEngine.h"
-			>
-		</File>
-		<File
-			RelativePath=".\ArgonExport.cpp"
 			>
 		</File>
 	</Files>
