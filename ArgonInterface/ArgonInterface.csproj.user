@@ -21,4 +21,14 @@
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ArgonEngine GLUT x86d|x86' ">
+    <StartProgram>C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build\ArgonInterface.exe</StartProgram>
+    <StartWorkingDirectory>C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build\</StartWorkingDirectory>
+    <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MT Static|x86' ">
+    <StartProgram>C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build\ArgonInterface.exe</StartProgram>
+    <StartWorkingDirectory>C:\Users\Mitchel\Desktop\Rendering Engine\branches\ArgonInterface\Build\</StartWorkingDirectory>
+    <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
+  </PropertyGroup>
 </Project>

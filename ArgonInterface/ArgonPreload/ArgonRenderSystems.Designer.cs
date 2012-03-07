@@ -69,6 +69,7 @@
             this.m_CreateDevice.TabIndex = 3;
             this.m_CreateDevice.Text = "Create Device";
             this.m_CreateDevice.UseVisualStyleBackColor = true;
+            this.m_CreateDevice.Click += new System.EventHandler(this.m_CreateDevice_Click);
             // 
             // m_Cancel
             // 
