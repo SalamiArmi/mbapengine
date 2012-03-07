@@ -45,9 +45,16 @@ namespace Argon
         private void ArgonEngine_Load(object sender, EventArgs e)
         {
             ArgonEngineDll.PreLoadEngine();
-            ArgonEngineDll.CreateEngine(m_RenderPanel.Handle, 0, 0, 0);
 
-            Application.Idle += new EventHandler(this.OnApplicationUpate);
+            ArgonRenderSystems SystemSelection = new ArgonRenderSystems(m_RenderPanel.Handle);
+            if (SystemSelection.ShowDialog() == DialogResult.OK)
+            {
+                Application.Idle += new EventHandler(this.OnApplicationUpate);
+            }
+            else
+            {
+                ArgonEngineDll.DestoryEngine();
+            }
         }
 
         private void OnApplicationUpate(object sender, EventArgs e)
