@@ -52,6 +52,39 @@ namespace Argon
 	private:
 		Type*	m_StoredPtr;
 	};
+
+	template<typename Type> class RefPtr
+	{
+	public:
+		explicit RefPtr(Type* Ptr)
+			: Ptr(m_RefPtr)
+		{
+		}
+
+		~RefPtr()
+		{
+			m_RefPtr->UnLoad();
+		}
+
+		Type& operator*() const
+		{
+			return *m_RefPtr;
+		}
+		
+		Type* operator->() const
+		{
+			return m_RefPtr;
+		}
+
+		Type* operator =(Type* Rhs) const
+		{
+			Rhs = m_RefPtr;
+			return this;
+		}
+
+	private:
+		Type*	m_RefPtr;
+	};
 }
 
 ///(VOID)
@@ -61,6 +94,7 @@ namespace Argon
 ///No Params:
 inline void* operator new(size_t BlockSize, const char* pDescription)
 {
+	pDescription;
 #if defined _USE_MEMORY_POOL_
 	return NULL; //TODO
 #else
@@ -76,6 +110,7 @@ inline void* operator new(size_t BlockSize, const char* pDescription)
 ///No Params:
 inline void operator delete(void* pBlock, const char* Description)
 {
+	Description;
 #if defined _USE_MEMORY_POOL_
 	
 #else

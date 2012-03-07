@@ -5,15 +5,22 @@
 
 namespace Argon
 {
-	void ArgonCreateRoot(IRoot** Root, IPlatform* Platform)
+	void ArgonCreateRoot(Root** Root, IPlatform* Platform)
 	{
-		*Root = new Argon::Root(Platform);
+		(*Root) = new Argon::Root(Platform);
 	}
 
 	Root::Root(IPlatform* Platform)
 		: m_Platform(Platform)
 	{
+		m_instance = this;
 		m_Platform->AddRef();
+	}
+
+	Root::Root()
+		: m_Platform(NULL)
+	{
+
 	}
 
 	Root::~Root()
@@ -28,12 +35,17 @@ namespace Argon
 		return true;
 	}
 
-	bool Root::Unload()
+	bool Root::UnLoad()
 	{
 		m_Platform->UnLoad();
 
 		
 		return true;
+	}
+
+	IRenderSystem* Root::GetActiveRenderSystem() const
+	{
+		return m_ActiveRenderSystem;
 	}
 
 	bool Root::Create(void* Window, size_t RenderSystemIndex, size_t DriverIndex, size_t ModeIndex)
@@ -45,6 +57,13 @@ namespace Argon
 		for(Vector<IRenderSystem*>::Iterator it = m_LoadedRenderSystems.Begin(); it != m_LoadedRenderSystems.End(); ++it)
 		{
 			(*it)->UnLoad();
+		}
+
+		//Create default Viewport
+		IViewport* Viewport = m_ActiveRenderSystem->CreateViewport(256, 256, 0, 0);
+		if(Viewport)
+		{
+			m_ActiveRenderSystem->SetViewport(Viewport);
 		}
 
 		return true;
@@ -92,14 +111,16 @@ namespace Argon
 		return m_LoadedRenderSystems.At(Index);
 	}
 
-	ISceneManager* Root::CreateSceneManager(QString Name)
+	SceneManager* Root::CreateSceneManager(QString Name)
 	{
 		SceneManager* Manager = new SceneManager(Name, this);
+		Manager->Load();
 		m_Components.Push_Back(Manager);
+		AddFrameListner(Manager);
 		return Manager;
 	}
 
-	void Root::UnLoadSceneManager(ISceneManager* Manager)
+	void Root::UnLoadSceneManager(SceneManager* Manager)
 	{
 		for(Vector<SceneManager*>::Iterator it = m_SceneManagers.Begin(); it != m_SceneManagers.End(); ++it)
 		{
@@ -117,12 +138,12 @@ namespace Argon
 		Manager->UnLoad();
 	}
 
-	ISceneManager* Root::GetCurrentSceneManager() const
+	SceneManager* Root::GetCurrentSceneManager() const
 	{
 		return m_ActiveSceneManager;
 	}
 
-	void Root::SetCurrentSceneManager(ISceneManager* Manager)
+	void Root::SetCurrentSceneManager(SceneManager* Manager)
 	{
 		m_ActiveSceneManager = (SceneManager*)Manager;
 	}
@@ -150,7 +171,7 @@ namespace Argon
 	{
 		for(size_t Index = 0; Index < m_FoundComponents.Size(); ++Index)
 		{
-			void* Component = m_Platform->LoadLibrary(m_FoundComponents.At(Index));
+			void* Component = m_Platform->LoadArgonLibrary(m_FoundComponents.At(Index));
 			if(Component)
 			{
 				//Log message Library Loaded
@@ -162,14 +183,22 @@ namespace Argon
 					if(LibraryEntryPoint(false, NULL, &Type))
 					{
 						if(Type != GUID_IRenderSystem)
+						{
 							if(LibraryEntryPoint(false, (void**)&pComponent, &Type))
+							{
 								m_Components.Push_Back(pComponent);
+							}
+						}
 					}
 					else
+					{
 						m_Platform->UnLoadLibrary(Component);
+					}
 				}
 				else
+				{
 					m_Platform->UnLoadLibrary(Component);
+				}
 			}
 		}
 	}
@@ -178,7 +207,7 @@ namespace Argon
 	{
 		for(size_t Index = 0; Index < m_FoundComponents.Size(); ++Index)
 		{
-			void* Component = (HINSTANCE)m_Platform->LoadLibrary(m_FoundComponents.At(Index).c_str());
+			void* Component = (HINSTANCE)m_Platform->LoadArgonLibrary(m_FoundComponents.At(Index).c_str());
 			if(Component)
 			{
 				//Log message Library Loaded

@@ -6,6 +6,8 @@
 #include <Standard/ArgonVector.h>
 #include <Standard/ArgonQString.h>
 
+#pragma warning(disable : 4251 )
+
 namespace Argon
 {
 	class ArgonStandard SceneNode
@@ -20,13 +22,6 @@ namespace Argon
 		///
 		///No Params:
 		QString GetName();
-
-		///FRAMEDRAW(BOOL)
-		///
-		/// Draw a new Frame
-		///
-		///No Params:
-		bool FrameDraw();
 
 		///FRAMEUPDATE(BOOL)
 		///

@@ -11,7 +11,6 @@
 #ifndef _VECTOR_HEADER_
 #define _VECTOR_HEADER_
 
-#include "Windows.h"
 #include "assert.h"
 
 namespace Argon
@@ -80,8 +79,6 @@ namespace Argon
 				m_Data = 0x0;
 			}
 		}
-
-		void		Reverse();
 
 		void Resize(size_t NewSize)
 		{
@@ -213,9 +210,8 @@ namespace Argon
 
 		T&			operator [] (size_t Index)
 		{
-			if(Index < m_Size)
-				return m_Data[Index];
-			return 0x0;
+			assert(Index < m_Size);
+			return m_Data[Index];
 		}
 
 		const T&	operator [] (size_t Index) const

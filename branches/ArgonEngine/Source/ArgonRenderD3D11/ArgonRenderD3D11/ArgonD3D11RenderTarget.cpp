@@ -83,7 +83,7 @@ namespace Argon
 
 	void D3D11RenderTarget::Clear(uint Alpha, uint Red, uint Green, uint Blue)
 	{
-		float Color[] = { Red, Green, Blue, Alpha };
+		float Color[] = { (float)Red, (float)Green, (float)Blue, (float)Alpha };
 		D3D11RenderSystem::instance()->GetDevice()->GetDeviceContext()->ClearRenderTargetView(m_RenderTarget, Color);
 	}
 

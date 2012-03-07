@@ -29,14 +29,14 @@ namespace Argon
 		/// Get the Top left corner of the Viewport
 		///
 		///No Params:
-		Vector2 GetPosition();
+		Vector2T<uint> GetPosition();
 
 		///GETDIMENSIONS(VECTOR2)
 		///
 		/// Get the Dimensions of the Viewport
 		///
 		///No Params:
-		Vector2 GetDimensions();
+		Vector2T<uint> GetDimensions();
 
 		///SETENABLED(VOID)
 		///

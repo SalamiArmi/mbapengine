@@ -1,4 +1,6 @@
+#include "ArgonRoot.h"
 #include "ArgonSceneManager.h"
+#include "ArgonText.h"
 
 namespace Argon
 {
@@ -19,7 +21,7 @@ namespace Argon
 		return true;
 	}
 
-	IRoot* SceneManager::GetCreator()
+	Root* SceneManager::GetCreator()
 	{
 		return m_Creator;
 	}
@@ -30,22 +32,30 @@ namespace Argon
 	}
 
 	bool SceneManager::FrameUpdate(float DeltaT)
-	{
+	{	
+		if(Root::instance()->GetCurrentSceneManager() != this) return false;
+
 		for(Vector<SceneNode*>::Iterator it = m_SceneNodes.Begin(); it != m_SceneNodes.End(); ++it)
 		{
 			(*it)->FrameUpdate(DeltaT);
 		}
 
-		return false;
+		return true;
 	}
 
 	bool SceneManager::FrameDraw(RenderPass Pass)
 	{
-		for(Vector<SceneNode*>::Iterator it = m_SceneNodes.Begin(); it != m_SceneNodes.End(); ++it)
+		if(Root::instance()->GetCurrentSceneManager() != this) return false;
+		
+		for(Vector<IRenderable*>::Iterator it = m_Renderables.Begin(); it != m_Renderables.End(); ++it)
 		{
-			(*it)->FrameDraw();
+			if((*it)->Bind())
+			{
+				(*it)->FrameDraw();
+				(*it)->UnBind();
+			}
 		}
-
+		
 		return false;
 	}
 
@@ -81,6 +91,20 @@ namespace Argon
 	bool SceneManager::SupportsPass(IFrameListner::RenderPass Pass)
 	{
 		return (Pass & IFrameListner::RENDERPASS_Normal);
+	}
+
+	Text* SceneManager::CreateText(QString Name)
+	{
+		Text* Txt = new Text(Name);
+		m_SceneNodes.Push_Back(Txt);
+		m_Renderables.Push_Back(Txt);
+
+		return Txt;
+	}
+
+	Text* SceneManager::GetText(QString Name)
+	{
+		return NULL;
 	}
 
 } //Namespace

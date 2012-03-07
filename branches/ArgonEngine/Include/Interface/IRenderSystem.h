@@ -2,14 +2,25 @@
 #define _IRENDERSYSTEM_HEADER_
 
 #include "IArgonUnknown.h"
-#include "IMesh.h"
 #include "IDriver.h"
 #include "ISurface.h"
+#include "IViewport.h"
+#include "IFont.h"
+#include "IBuffer.h"
+
 #include <Standard/ArgonMatrix4.h>
 
 namespace Argon
 {
-	class IViewport;
+	class Mesh;
+
+	struct MeshID
+	{
+		ulong MaterialID;
+		ulong VertexStart;
+		ulong FaceStart;
+		ulong IndexCount;
+	};
 
 	DeclareBasedInterface(IRenderSystem, IArgonUnknown)
 
@@ -25,7 +36,27 @@ namespace Argon
 			CREATE_Viewport,
 			CREATE_RenderTarget,
 			CREATE_DepthStencil,
+		};
 
+		enum VertexDeclaration
+		{
+			VERTEXDECL_Unknown					= (1 << 1),
+			VERTEXDECL_Position					= (1 << 2),			//Always a Vector3
+			VERTEXDECL_Normal					= (1 << 3),			//Always a Vector3
+			VERTEXDECL_TexCoord					= (1 << 4),			//Always a Vector2
+			VERTEXDECL_TexCoord1				= (1 << 5),			//Always a Vector2
+			VERTEXDECL_Tangent					= (1 << 6),			//Always a Vector3	
+			VERTEXDECL_Binormal					= (1 << 7),			//Always a Vector3
+			VERTEXDECL_TesselationFactor		= (1 << 8),			//Alwyas a Real
+			VERTEXDECL_Color					= (1 << 9),			//Always a Vector4
+		};
+
+		enum Topology
+		{
+			TOPOLOGY_PointList,
+			TOPOLOGY_LineList,
+			TOPOLOGY_TriangleList,
+			TOPOLOGY_TriangleStrip,
 		};
 
 		///LOAD(BOOL)
@@ -58,13 +89,6 @@ namespace Argon
 		///Param ModeIndex: The video description
 		///Param Window: The window that will be rendered to
 		bool		CreateDevice(uint DriverIndex, uint ModeIndex, void* Window);
-
-		///RENDERMESH(VOID)
-		///
-		///Render a mesh to the screen
-		///
-		///Param Mesh: The Mesh that will be renderd
-		void		RenderMesh(IMesh* Mesh);
 
 		//////////////////////////////////////////////////////////////////////////////////
 		// Wrapper for RenderSystem type mainly used in engine or internally
@@ -127,6 +151,23 @@ namespace Argon
 		///Param Format: The format in which the pixels will be arranged in this object
 		ISurface* CreateRenderTarget(uint Width, uint Height, ISurface::Format Format);
 
+		///CREATETEXTURE(ITEXTURE)
+		///
+		///Create a new Texture and return it
+		///
+		///Param Width: The width of the Texture
+		///Param Height: The height of the Height
+		///Param Format: The format in which the pixels will be arranged in this object
+		///Param Renderable: Can this Texture be rendered to
+		ITexture* CreateTexture(uint Width, uint Height, ISurface::Format Format, bool Renderable);
+
+		///CREATETEXTURE(ITEXTURE)
+		///
+		/// Create a texture from file
+		///
+		///Param Filename: The file to attempt to open
+		ITexture* CreateTexture(String Filename);
+
 		///CREATEDEPTHSTENCIL(ISURFACE)
 		///
 		///Create a new depth stencil buffer
@@ -136,6 +177,24 @@ namespace Argon
 		///Param Height: The height of the DepthStencil
 		///Param Format: The format in which the pixels will be arranged in this object
 		ISurface* CreateDepthStencil(uint Width, uint Height, ISurface::Format Format);
+
+		///CREATEVIEWPORT(IVIEWPORT)
+		///
+		/// Create a new viewport
+		///
+		///Param Width: The desired with of the Viewport
+		///Param Height: The desired height of the Viewport
+		///Param PositionX: The top left corner of the viewport along the X axis
+		///Param PositionY: The top left corner of the viewport along the Y axis
+		IViewport* CreateViewport(uint Width, uint Height, uint PositionX, uint PositionY);
+
+		///CREATEVIEWPORT(IVIEWPORT)
+		///
+		/// Create a new viewport
+		///
+		///Param Size: The desired size of the Viewport
+		///Param Position: The starting position starting from the top left corner
+		IViewport* CreateViewport(Vector2T<uint> Size, Vector2T<uint> Position);
 
 		///SETVIEWPORT(VOID)
 		///
@@ -149,7 +208,66 @@ namespace Argon
 		///Set the vertex declaratio
 		///
 		///Params VertexDecl: The vertex Declarartion that will be set
-		void SetVertexDeclaration(IMesh::VertexDeclaration VertexDecl);
+		void SetVertexDeclaration(VertexDeclaration* VertexDecl, ulong Size);
+
+		///GETVIEWPORT(IVIEWPORT)
+		///
+		/// Get the desired viewport at the Index
+		///
+		///Param Index: Which Viewport to retrieve
+		IViewport* GetViewport(uint Index);
+
+		///CREATEAFONT(IFONT)
+		///
+		/// Create a new Font
+		///
+		///No Params:
+		IFont* CreateAFont();
+
+		///GETFONT(IFONT)
+		///
+		/// Get the Desired Font at the Index
+		///
+		///Param Index: Which Font to retrieve
+		IFont* GetFont(uint Index);
+
+		///CREATEBUFFER(IBUFFER)
+		///
+		/// Create a new Buffer
+		///
+		///Param Type: The type of buffer to create
+		IBuffer* CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, ulong DataSize);
+
+		///CREATEBUFFER(IBUFFER)
+		///
+		/// Create a new Buffer
+		///
+		///Param Type: The type of buffer to create
+		///Param Data: The Data the will be added to the Buffer
+		///Param DataSize: The total size of the buffer in bytes
+		IBuffer* CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, char* Data, ulong DataSize);
+
+		///SETBUFFER(BOOL)
+		///
+		/// Create a new Buffer
+		///
+		///Param Type: The type of buffer to set
+		///Param Buffer: The buffer that will be added to the render system
+		bool SetBuffer( IBuffer::BufferType Type, IBuffer* Buffer );
+
+		///SETTOPOLOFY(BOOL)
+		///
+		/// Set the Buffer Topology
+		///
+		///Param Type: The type of Topology that will be used to create the final render
+		bool SetTopology( Topology Type );
+
+		///DRAWPRIMITIVE(VOID)
+		///
+		/// Draw the Mesh ID with the current set Vertex and Index Buffers.
+		///
+		///Param MeshID: The information about the ID to be Rendered
+		void DrawPrimitive( MeshID& ID );
 		
 	EndInterface(IRenderSystem) //Interface
 

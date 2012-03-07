@@ -3,7 +3,8 @@
 namespace Argon
 {
 	ArgonStandard SceneNode::SceneNode(QString Name)
-		: m_Name(Name)
+		: m_Name(Name),
+		m_Parent(NULL)
 	{
 	}
 
@@ -14,11 +15,6 @@ namespace Argon
 	ArgonStandard QString SceneNode::GetName()
 	{
 		return m_Name;
-	}
-
-	ArgonStandard bool SceneNode::FrameDraw()
-	{
-		return false;
 	}
 
 	ArgonStandard bool SceneNode::FrameUpdate(float DeltaT)

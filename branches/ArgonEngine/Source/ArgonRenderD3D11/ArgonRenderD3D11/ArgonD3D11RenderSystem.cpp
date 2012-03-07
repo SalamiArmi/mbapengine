@@ -2,11 +2,13 @@
 #include "ArgonD3D11RenderTarget.h"
 #include "ArgonD3D11Buffer.h"
 #include "ArgonD3D11DepthStencil.h"
-
+#include "ArgonD3D11Font.h"
 #include "ArgonD3D11RenderSystemExport.h"
 
 #include "ArgonD3D11Driver.h"
 #include "ArgonD3D11VideoMode.h"
+
+#include "ArgonD3D11Viewport.h"
 
 #include <Standard/ArgonMemory.h>
 
@@ -178,10 +180,54 @@ namespace Argon
 
 	void D3D11RenderSystem::SetDepthStencil(ISurface* DepthStencil)
 	{
+		//m_DepthStencil = static_cast<D3D11DepthStencil*>(DepthStencil);
+		//m_Device->GetDeviceContext()->OMSetRenderTargets(0, m_BackBuffer->GetTexture(), m_DepthStencil->GetTexture());
 	}
 
 	void D3D11RenderSystem::SetViewport(IViewport* Viewport)
 	{
+		m_Device->GetDeviceContext()->RSSetViewports(0, &static_cast<D3D11Viewport*>(Viewport)->GetD3D11Viewport());
+	}
+
+	IViewport* D3D11RenderSystem::CreateViewport(uint Width, uint Height, uint PositionX, uint PositionY)
+	{
+		D3D11Viewport* Viewport = new D3D11Viewport(Vector2((float)Width, (float)Height), Vector2((float)PositionX, (float)PositionY));
+		Viewport->Load();
+		m_Viewports.Push_Back(Viewport);
+
+		return Viewport;
+	}
+
+	IViewport* D3D11RenderSystem::CreateViewport(Vector2 Size, Vector2 Position)
+	{
+		D3D11Viewport* Viewport = new D3D11Viewport(Size, Position);
+		Viewport->Load();
+		m_Viewports.Push_Back(Viewport);
+
+		return Viewport;
+	}
+
+	IViewport* D3D11RenderSystem::GetViewport(uint Index)
+	{
+		return m_Viewports.At(Index);
+	}
+
+	IFont* D3D11RenderSystem::CreateAFont()
+	{
+		D3D11Font* Font = new D3D11Font();
+		if( !Font->Load() )
+		{
+			Font->UnLoad();
+			return NULL;
+		}
+
+		m_Fonts.Push_Back( (IFont*)Font );
+		return (IFont*)Font;
+	}
+
+	IFont* D3D11RenderSystem::GetFont(uint Index)
+	{
+		return m_Fonts.At(Index);
 	}
 
 	void D3D11RenderSystem::SetVertexDeclaration(IMesh::VertexDeclaration VertexDecl)
@@ -200,5 +246,11 @@ namespace Argon
 	{
 		return m_Device;
 	}
+
+	D3D11RenderTarget* D3D11RenderSystem::GetBackBuffer()
+	{
+		return m_BackBuffer;
+	}
+
 
 } //Namespace

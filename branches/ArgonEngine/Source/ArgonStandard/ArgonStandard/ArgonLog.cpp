@@ -6,8 +6,7 @@ namespace Argon
 
 	ArgonStandard Log::Log(QString Name, LogType Type)
 		: m_LogType(Type),
-		m_Name(Name),
-		m_Cmd(NULL)
+		m_Name(Name)
 	{
 		m_LogList.Push_Back(this);
 	}
@@ -26,20 +25,12 @@ namespace Argon
 			m_FileStream.open(m_Name.c_str());
 		}
 
-		if(m_LogType & LOGTYPE_CMD) //Create window for Displaying information
-		{
-			m_Cmd = CreateWindowExA(WS_EX_TOOLWINDOW | WS_EX_TOPMOST, "LISTBOX", "Reporter Output",
-				LBS_HASSTRINGS | WS_CAPTION | WS_SIZEBOX | WS_VISIBLE | WS_BORDER | WS_HSCROLL |
-				WS_VSCROLL,	35, 35, 400, 150, NULL, NULL, NULL, NULL);
-		}
-
 		return true;
 	}
 
 	ArgonStandard bool Log::Unload()
 	{
 		m_FileStream.close();			//Close the file
-		DestroyWindow(m_Cmd);	//Destory any UnNeeded Data
 		return true;
 	}
 
@@ -55,11 +46,6 @@ namespace Argon
 
 	ArgonStandard void Log::LogMessage(String& Message)
 	{
-		if(m_LogType & LOGTYPE_CMD) //Output in the file
-		{
-			SendMessageA(m_Cmd, LB_ADDSTRING, NULL, (LPARAM)Message.c_str());
-		}
-
 		if(m_LogType & LOGTYPE_File) //Output into the CMD window
 		{
 			m_FileStream.write(Message.c_str(), Message.Length());
@@ -69,11 +55,6 @@ namespace Argon
 
 	ArgonStandard void Log::LogMessage(const char* Message)
 	{
-		if(m_LogType & LOGTYPE_CMD) //Output in the file
-		{
-			SendMessageA(m_Cmd, LB_ADDSTRING, NULL, (LPARAM)Message);
-		}
-
 		if(m_LogType & LOGTYPE_File) //Output into the CMD window
 		{
 			CharAllocator Alloc;
