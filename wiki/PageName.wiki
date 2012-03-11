@@ -8,4 +8,4 @@ Argon Engine was started on the purpose of learning DirectX 11 and new OS's (Ope
 
 == Guidelines ==
 
-[WIKI:Programming Guidelines]
+[wiki:ProgrammingGuidelines]
