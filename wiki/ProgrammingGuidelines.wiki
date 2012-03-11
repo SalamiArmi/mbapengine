@@ -1,8 +1,29 @@
-#labels Featured
 = Programming Guidelines =
 
-== Class Layout ==
+== Namespace ==
 
+<code language="c++">
+namespace Argon
+{
+
+} //Namespace
+</code>
+
+== Class Layout ==
+<code language="c++">
+namespace Argon
+{
+     class ExampleClass
+     {
+         public:
+
+         private:
+
+         protected:
+
+     }; //Class
+} //Namespace
+</code>
 
 == Comments ==
 All comments are to be structures with a specific doxygen style, as displayed below.
