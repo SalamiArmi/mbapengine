@@ -1,8 +1,11 @@
 = Argon Engine =
 
-Argon Engine was started orignally to be a side project using multiple OS Platforms and multiple Render Platforms including but not limited to:
-* OpenGL
-* DirectX
-* User RenderSystems
+== Summary ==
 
-= ArgonEngine Structure =
+Argon Engine was started on the purpose of learning DirectX 11 and new OS's (Operating Systems). Currently Argon Engine can only work on Windows Operating System but in the future it will be able to work on any Operating System. 
+
+== Structure ==
+
+== Guidelines ==
+
+[WIKI:Programming Guidelines]
