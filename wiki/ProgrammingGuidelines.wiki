@@ -1,0 +1,16 @@
+#labels Featured
+= Programming Guidelines =
+
+== Class Layout ==
+
+
+== Comments ==
+All comments are to be structures with a specific doxygen style, as displayed below.
+
+///FUNCTIONNAME(RETURNTYPE)
+///
+///Quick information about the what the function will do
+///
+///Param ParamaterName: Quick description of the parameter
+RETURNTYPE FUNCTIONNAME(Type ParamaterName);
+
