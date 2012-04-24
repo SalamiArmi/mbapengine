@@ -6,7 +6,7 @@
 
 namespace Argon
 {
-	template< typename T > class PhysicalMemory : public IArgonUnknownImp<IBuffer, GUID_IBuffer>, public MutexImpl
+	template<typename T> class PhysicalMemory : public IArgonUnknownImp<IBuffer, GUID_IBuffer>, public MutexImpl
 	{
 	public:
 		PhysicalMemory(ulong Size)
@@ -16,6 +16,7 @@ namespace Argon
 			m_Usage(IBuffer::USAGE_Dynamic)
 		{
 			m_Memory = new T[Size];
+			Load();
 		}
 
 		~PhysicalMemory()
@@ -67,6 +68,13 @@ namespace Argon
 		}
 
 	private:
+
+		bool Load()
+		{
+			++m_RefCount;
+			return true;
+		}
+
 		int m_LockCount;
 		IBuffer::Usage m_Usage;
 

@@ -65,6 +65,8 @@ namespace Argon
 		//
 		bool UploadToVideoMemory();
 
+		ID3D10Buffer* GetVideoBufferPtr() const;
+
 	private:
 		bool			m_Dirty;
 		ushort			m_LoadPhysicalCount;

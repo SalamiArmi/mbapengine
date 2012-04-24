@@ -1,3 +1,5 @@
+#include <Standard/ArgonStandard.h>
+#include <Standard/ArgonVector.h>
 #include <Standard/ArgonVector2.h>
 #include <Standard/ArgonVector3.h>
 
@@ -17,11 +19,11 @@ template<typename IndexType> bool Mesh::OptimizeInplace()
 	m_AttributeBuffer->LoadPhysicalData( (void**)&SystemAttribs );
 	m_IndexBuffer->LoadPhysicalData( (void**)&IndexBuffer );
 
-	Vector<AttributeInfo> MaterialID;
-	MaterialID.Resize((size_t)GetMaterialCount(SystemAttribs));
+	Vector<AttributeInfo<IndexType>> MaterialID;
+	MaterialID.Resize((size_t)GetMaterialCount(SystemAttribs, m_FaceCount));
 
 	//Create Empty Slots
-	for( size_t Index = 0; Index < MaterialID.Size(); ++Index )
+	for(size_t Index = 0; Index < MaterialID.Size(); ++Index)
 	{
 		MaterialID[Index].MaterialID = Index;
 		MaterialID[Index].MinVertex = ULONG_MAX;
@@ -33,7 +35,7 @@ template<typename IndexType> bool Mesh::OptimizeInplace()
 
 	for(ulong Face = 0; Face < FaceCount; ++Face)
 	{
-		Vector<AttributeInfo<IndexType>>::iterator it = MaterialID.Begin();
+		Vector<AttributeInfo<IndexType>>::Iterator it = MaterialID.Begin();
 
 		ulong AttributeIndex = SystemAttribs[Face];
 
@@ -41,19 +43,19 @@ template<typename IndexType> bool Mesh::OptimizeInplace()
 		IndexType i2 = IndexBuffer[(Face * 3) + 1];
 		IndexType i3 = IndexBuffer[(Face * 3) + 2];
 
-		for(; it != MaterialID.end(); ++it)
+		for(; it != MaterialID.End(); ++it)
 		{
 			if((*it).MaterialID == AttributeIndex)
 			{
-				(*it).Faces.push_back( i1 );
+				(*it).Faces.Push_Back( i1 );
 				if( i1 < (*it).MinVertex ) (*it).MinVertex = i1;
 				if( i1 > (*it).MaxVertex ) (*it).MaxVertex = i1;
 
-				(*it).Faces.push_back( i2 );
+				(*it).Faces.Push_Back( i2 );
 				if( i2 < (*it).MinVertex ) (*it).MinVertex = i2;
 				if( i2 > (*it).MaxVertex ) (*it).MaxVertex = i2;
 
-				(*it).Faces.push_back( i3 );
+				(*it).Faces.Push_Back( i3 );
 				if( i3 < (*it).MinVertex ) (*it).MinVertex = i3;
 				if( i3 > (*it).MaxVertex ) (*it).MaxVertex = i3;
 			}
@@ -67,12 +69,12 @@ template<typename IndexType> bool Mesh::OptimizeInplace()
 	m_IndexBuffer->LoadPhysicalData((void**)&IndexBuffer);
 
 	//Create the Attribute Count
-	m_AttributeTable.Resize(MaterialID.Size())
+	m_AttributeTable.Resize(MaterialID.Size());
 
 	ulong FaceStart = 0;
 	IndexType Offset = 0;
 
-	for( Array< AttributeInfo<IndexType> >::iterator it = MaterialID.begin(); it != MaterialID.end(); ++it )
+	for( Vector<AttributeInfo<IndexType>>::Iterator it = MaterialID.Begin(); it != MaterialID.End(); ++it )
 	{
 		m_AttributeTable[(*it).MaterialID].MaterialID = (*it).MaterialID;
 
@@ -89,27 +91,27 @@ template<typename IndexType> bool Mesh::OptimizeInplace()
 			memcpy(IndexBuffer + Offset, &(*it).Faces[0], (*it).Faces.Size() * sizeof(IndexType));
 		}
 
-		for(ulong nIndex = 0; nIndex < ((*it).Faces.Size() / 3 ); ++nIndex)
+		for(ulong Index = 0; Index < ((*it).Faces.Size() / 3 ); ++Index)
 		{
 			SystemAttribs[Index + (Offset / 3)] = (*it).MaterialID;
 		}
 
-		m_AttributeTable[(*it).MaterialID ].FaceCount = (*it).Faces.size() / 3;
+		m_AttributeTable[(*it).MaterialID ].IndexCount = (*it).Faces.Size();
 
-		if((*it).MaxVertex == ULONG_MAX || (*it).MinVertex == -ULONG_MAX)
+		/*if((*it).MaxVertex == ULONG_MAX || (*it).MinVertex == -ULONG_MAX)
 		{
-			m_AttributeTable[ (*it).MaterialID ].VertexCount = 0;
-			m_AttributeTable[ (*it).MaterialID ].nVertexStart = 0;
+			m_AttributeTable[(*it).MaterialID ].VertexCount = 0;
+			m_AttributeTable[(*it).MaterialID ].nVertexStart = 0;
 		}
 		else
 		{
-			m_AttributeTable[ (*it).MaterialID ].VertexCount = ((*it).MaxVertex - (*it).MinVertex ) + 1;
-			m_AttributeTable[ (*it).MaterialID ].nVertexStart = (*it).MinVertex;
-		}
+			m_AttributeTable[(*it).MaterialID].VertexCount = ((*it).MaxVertex - (*it).MinVertex ) + 1;
+			m_AttributeTable[(*it).MaterialID].nVertexStart = (*it).MinVertex;
+		}*/
 	}
 
 	m_IndexBuffer->UnloadPhysicalData();
-	m_pAttributeBuffer->UnloadPhysicalData();
+	m_AttributeBuffer->UnloadPhysicalData();
 
 	return true;
 }
@@ -249,10 +251,9 @@ template<typename IndexType> bool Mesh::GenerateTangents()
 ulong Mesh::GetMaterialCount(ulong* AttributeBuffer, ulong FaceCount)
 {
 	ulong HeighestMaterialID = 0;
-
-	for( ulong nIndex = 0; Index < m_FaceCount; ++Index )
+	for(ulong Index = 0; Index < m_FaceCount; ++Index)
 	{
-		if( AttributeBuffer[Index] > HeighestMaterialID )
+		if(AttributeBuffer[Index] > HeighestMaterialID)
 		{
 			HeighestMaterialID = AttributeBuffer[Index];
 		}

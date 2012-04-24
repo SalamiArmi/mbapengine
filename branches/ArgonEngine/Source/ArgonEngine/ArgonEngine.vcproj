@@ -460,6 +460,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Include\Standard\ArgonShared.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Include\Standard\ArgonSingleton.h"
 				>
 			</File>
@@ -619,6 +623,26 @@
 				RelativePath="..\..\Include\Core\ArgonText.h"
 				>
 			</File>
+			<Filter
+				Name="Managers"
+				>
+				<File
+					RelativePath="..\..\Include\Core\ArgonGeometryManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\Core\ArgonManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\Core\ArgonTextureManager.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Resources"
+				>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Export"

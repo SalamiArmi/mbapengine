@@ -9,11 +9,11 @@
 
 namespace Argon
 {
-	D3D10RenderTarget::D3D10RenderTarget(uint Width, uint Height, ISurface::Format Format)
+	D3D10RenderTarget::D3D10RenderTarget(uint Width, uint Height, Format TargetFormat)
 		: m_Width(Width),
 		m_Height(Height),
-		m_Pool(ISurface::POOL_Managed),
-		m_Format(Format)
+		m_Pool(MemoryPool::POOL_Default),
+		m_Format(TargetFormat)
 	{
 
 	}
@@ -22,7 +22,7 @@ namespace Argon
 		: m_RenderTarget(DesiredTarget),
 		m_Width(0),
 		m_Height(0),
-		m_Pool(ISurface::POOL_Managed),
+		m_Pool(MemoryPool::POOL_Default),
 		m_Format(FORMAT_Unknown)
 	{
 	}
@@ -66,7 +66,7 @@ namespace Argon
 		return m_Width;
 	}
 
-	ISurface::MemoryPool D3D10RenderTarget::GetPoolType()
+	MemoryPool D3D10RenderTarget::GetPoolType()
 	{
 		return m_Pool;
 	}

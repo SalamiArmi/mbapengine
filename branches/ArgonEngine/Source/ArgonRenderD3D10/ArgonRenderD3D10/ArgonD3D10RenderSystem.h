@@ -36,8 +36,8 @@ namespace Argon
 		size_t		GetDriverCount();
 		IDriver*	GetDriver(size_t Index);
 		bool		CreateDevice(uint DriverIndex, uint VideoModeIndex, void* Window);
-		ISurface*	CreateRenderTarget(uint Width, uint Height, ISurface::Format Format);
-		ISurface*	CreateDepthStencil(uint Width, uint Height, ISurface::Format Format);
+		ISurface*	CreateRenderTarget(uint Width, uint Height, Format Format);
+		ISurface*	CreateDepthStencil(uint Width, uint Height, Format Format);
 		void		SetClearColor(float A, float R, float G, float B);
 
 		//////////////////////////////////////////////////////////////////////////////////
@@ -47,7 +47,7 @@ namespace Argon
 		bool		PresentFrame();
 		void 		SetMatrix(Matrix4 Matrix, MatrixType Type);
 		void 		SetRenderTarget(ISurface* RenderTarget);
-		ITexture*	CreateTexture(uint Width, uint Height, ISurface::Format Format, bool Renderable);
+		ITexture*	CreateTexture(uint Width, uint Height, Format Format, bool Renderable);
 		ITexture*	CreateTexture(String Filename);
 		void 		SetViewport(IViewport* Viewport);
 		void 		SetVertexDeclaration(VertexDeclaration* VertexDecl, ulong Size);
@@ -58,7 +58,7 @@ namespace Argon
 		IFont*		CreateAFont();
 		IFont*		GetFont(uint Index);
 		
-		IBuffer*	CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage);
+		IBuffer*	CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, ulong DataSize);
 		IBuffer*	CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, char* Data, ulong DataSize);
 		bool		SetBuffer(IBuffer::BufferType Type, IBuffer* Buffer);
 		bool		SetTopology(Topology Type);
@@ -93,6 +93,7 @@ namespace Argon
 	private:
 		D3D10Device*		m_Device;
 		D3D10RenderTarget*	m_BackBuffer;
+		D3D10RenderTarget*	m_RenderTarget;
 		D3D10DepthStencil*	m_DepthStencil;
 
 		D3D10Shader*		m_BoundShader;

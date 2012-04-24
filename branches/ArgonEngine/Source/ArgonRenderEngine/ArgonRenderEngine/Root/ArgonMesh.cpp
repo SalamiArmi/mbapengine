@@ -12,7 +12,7 @@ namespace Argon
 		m_VertexCount(VertexCount),
 		m_FaceCount(FaceCount),
 		m_Dirty(true),
-		m_IndicesAre32bit((FaceCount * 3) > ArgonMaxUShort)
+		m_IndicesAre32bit((FaceCount * 3) > ArgonMaxUShort),
 		m_VertexBuffer(new PhysicalMemory<char>(VertexCount * sizeof(float))),
 		m_IndexBuffer(new PhysicalMemory<char>((m_FaceCount * 3) * m_IndicesAre32bit ? sizeof(ushort) : sizeof(ulong))),
 		m_AttributeBuffer(new PhysicalMemory<ulong>(m_FaceCount))
@@ -31,17 +31,15 @@ namespace Argon
 
 	bool Mesh::Bind()
 	{
-		if( m_Invalid || m_VertexDeclaration != m_VideoVertexDeclaration )
+		if(m_Dirty || m_VertexDeclaration != m_VideoVertexDeclaration)
 		{
 			UploadToVideoMemory(); //Upload new Data to the Video Buffers
-			m_Invalid = false;
+			m_Dirty = false;
 		}
 
 		bool Success = false;
 
-		if(
-
-		Root::instance()->GetActiveRenderSystem()->SetVertexDecleration(
+		//Root::instance()->GetActiveRenderSystem()->SetVertexDecleration(
 		Success &= Root::instance()->GetActiveRenderSystem()->SetBuffer(IBuffer::BUFFERTYPE_IndexBuffer, m_VideoIndexBuffer);
 		Success &= Root::instance()->GetActiveRenderSystem()->SetBuffer(IBuffer::BUFFERTYPE_VertexBuffer, m_VideoVertexBuffer);
 
@@ -70,7 +68,7 @@ namespace Argon
 		{
 			Success = m_VertexBuffer->LoadPhysicalData(Data);//Lock the Vertex Buffer
 		}
-		else if(BufferType == BUFFERTYPE_Attributes)
+		else if(BufferType == IBuffer::BUFFERTYPE_Attributes)
 		{
 			Success = m_AttributeBuffer->LoadPhysicalData(Data);
 			m_DirtyAttributes = (Type == Mesh::LOCKTYPE_WriteOnly);
@@ -78,7 +76,7 @@ namespace Argon
 
 		if(Type == Mesh::LOCKTYPE_WriteOnly && Success)
 		{
-			m_Invalid = true; //Mesh should now be invalid
+			m_Dirty = true; //Mesh should now be invalid
 		}
 	}
 
@@ -92,12 +90,12 @@ namespace Argon
 		{
 			m_VertexBuffer->UnloadPhysicalData();
 		}
-		else if(BufferType == BUFFERTYPE_Attributes)
+		else if(BufferType == IBuffer::BUFFERTYPE_Attributes)
 		{
 			m_AttributeBuffer->UnloadPhysicalData();
 			if(m_DirtyAttributes)
 			{
-				m_IndicesAre32bit ? OptimizeInplace<ushort> : OptimizeInplace<ulong>();
+				m_IndicesAre32bit ? OptimizeInplace<ushort>() : OptimizeInplace<ulong>();
 				m_DirtyAttributes = false;
 			}
 		}

@@ -13,7 +13,7 @@ namespace Argon
 	class D3D10RenderTarget : public IArgonUnknownImp2<ISurface, GUID_ISurface, IMessageBoardReader, GUID_IMessageBoardReader>
 	{
 	public:
-		D3D10RenderTarget(uint Width, uint Height, ISurface::Format Format);
+		D3D10RenderTarget(uint Width, uint Height, Format TargetFormat);
 		D3D10RenderTarget(ID3D10RenderTargetView* DesiredTarget);
 		
 		///LOAD(BOOL)
@@ -49,7 +49,7 @@ namespace Argon
 		///Get the type of pool this item was created on
 		///
 		///No Params:
-		ISurface::MemoryPool GetPoolType();
+		MemoryPool GetPoolType();
 
 		///READMESSAGE(VOID)
 		///
@@ -83,8 +83,8 @@ namespace Argon
 
 		uint							m_Height;
 		uint							m_Width;
-		ISurface::MemoryPool			m_Pool;
-		ISurface::Format				m_Format;
+		MemoryPool						m_Pool;
+		Format							m_Format;
 	};
 
 } //Namespace

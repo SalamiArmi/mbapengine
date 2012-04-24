@@ -11,7 +11,7 @@ namespace Argon
 	class D3D10DepthStencil : public IArgonUnknownImp<ISurface, GUID_ISurface>
 	{
 	public:
-		D3D10DepthStencil(uint Width, uint Height, ISurface::Format Format);
+		D3D10DepthStencil(uint Width, uint Height, Format Format);
 
 		///LOAD(BOOL)
 		///
@@ -46,7 +46,7 @@ namespace Argon
 		///Get the type of pool this item was created on
 		///
 		///No Params:
-		ISurface::MemoryPool GetPoolType();
+		MemoryPool GetPoolType();
 
 		///(OD3D10DEPTHSTENCILVIEW)
 		///
@@ -70,7 +70,7 @@ namespace Argon
 		uint m_Height;
 
 		//Format
-		ISurface::Format m_Format;
+		Format m_Format;
 
 		//D3D10 Members
 		ID3D10Texture2D* m_Buffer;					//The Buffer for the Depth Stencil

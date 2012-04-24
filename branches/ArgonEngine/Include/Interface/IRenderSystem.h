@@ -4,6 +4,7 @@
 #include "IArgonUnknown.h"
 #include "IDriver.h"
 #include "ISurface.h"
+#include "ITexture.h"
 #include "IViewport.h"
 #include "IFont.h"
 #include "IBuffer.h"
@@ -149,7 +150,7 @@ namespace Argon
 		///Param Width: The width of the RenderTarget
 		///Param Height: The height of the RenderTarget
 		///Param Format: The format in which the pixels will be arranged in this object
-		ISurface* CreateRenderTarget(uint Width, uint Height, ISurface::Format Format);
+		ISurface* CreateRenderTarget(uint Width, uint Height, Format Format);
 
 		///CREATETEXTURE(ITEXTURE)
 		///
@@ -159,7 +160,7 @@ namespace Argon
 		///Param Height: The height of the Height
 		///Param Format: The format in which the pixels will be arranged in this object
 		///Param Renderable: Can this Texture be rendered to
-		ITexture* CreateTexture(uint Width, uint Height, ISurface::Format Format, bool Renderable);
+		ITexture* CreateTexture(uint Width, uint Height, Format Format, bool Renderable);
 
 		///CREATETEXTURE(ITEXTURE)
 		///
@@ -176,7 +177,7 @@ namespace Argon
 		///Param Width: The width of the DepthStencil
 		///Param Height: The height of the DepthStencil
 		///Param Format: The format in which the pixels will be arranged in this object
-		ISurface* CreateDepthStencil(uint Width, uint Height, ISurface::Format Format);
+		ISurface* CreateDepthStencil(uint Width, uint Height, Format Format);
 
 		///CREATEVIEWPORT(IVIEWPORT)
 		///

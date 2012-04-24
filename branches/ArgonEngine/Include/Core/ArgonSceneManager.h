@@ -8,11 +8,16 @@
 
 #include <Standard/ArgonVector.h>
 
-#include "Core/ArgonText.h"
+#include <Core/ArgonRoot.h>
+#include <Core/ArgonText.h>
+#include <Core/ArgonSceneNode.h>
+#include <Core/ArgonCamera.h>
+
 
 namespace Argon
 {
 	class Root;
+	class Node;
 
 	class SceneManager : public IArgonUnknownImp2<IComponent, GUID_IComponent, IFrameListner, GUID_IFrameListner>
 	{
@@ -104,6 +109,7 @@ namespace Argon
 		Vector<IRenderable*>	m_Renderables;
 
 		Root*					m_Creator;	//The Root which created this Manager
+		Node*					m_RootNode;
 		QString					m_Name;		//The name of the Component
 	};
 

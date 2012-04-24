@@ -1565,7 +1565,7 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Root"
+			Name="Source/Root"
 			>
 			<File
 				RelativePath=".\Root\ArgonMesh.cpp"
@@ -1585,10 +1585,22 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Core"
+			Name="Header/Core"
 			>
 			<File
 				RelativePath="..\..\..\Include\Core\ArgonCamera.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonEntity.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonManipulator.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonMaterial.h"
 				>
 			</File>
 			<File
@@ -1613,6 +1625,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Include\Core\ArgonText.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonTransform.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonUpdateTree.h"
 				>
 			</File>
 		</Filter>
