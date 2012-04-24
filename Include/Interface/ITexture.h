@@ -6,21 +6,7 @@
 
 namespace Argon
 {
-	DeclareBasedInterface(ITexture, IArgonUnknown)
-
-		///GETHEIGHT(UNSIGNEDINT)
-		///
-		///Get the Height of the Surface
-		///
-		///No Params:
-		uint GetHeight() = 0;
-
-		///GETWIDTH(UNSIGNEDINT)
-		///
-		///Get the Width of the Surface
-		///
-		///No Params
-		uint GetWidth() = 0;
+	DeclareBasedInterface(ITexture, ISurface)
 
 		///GETMIPLEVELCOUNT(UNSIGNEDINT)
 		///

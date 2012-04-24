@@ -9,15 +9,18 @@ namespace Argon
 		: m_ShaderBuffer(ShaderBuffer),
 		m_Shader(NULL),
 		m_BoundTechnique(NULL),
-		m_BoundPass(NULL),
-		IArgonUnknownImp<IShader, GUID_IShader>()
+		m_BoundPass(NULL)
+	{
+	}
+
+	D3D10Shader::~D3D10Shader()
 	{
 	}
 
 	bool D3D10Shader::Load()
 	{
 		++m_RefCount;
-		HRESULT hr = D3D10CreateEffectFromMemory((void *)ShaderBuffer.c_str(), ShaderBuffer.Length(), 0, D3D10RenderSystem::instance()->GetDevice()->GetDevice(), NULL, &m_Shader);
+		HRESULT hr = D3D10CreateEffectFromMemory((void *)m_ShaderBuffer.c_str(), m_ShaderBuffer.Length(), 0, D3D10RenderSystem::instance()->GetDevice()->GetDevice(), NULL, &m_Shader);
 	
 		return (hr == S_OK);
 	}
@@ -27,6 +30,7 @@ namespace Argon
 		if(m_RefCount > 1)
 		{
 			--m_RefCount;
+			return false;
 		}
 		else
 		{
@@ -37,7 +41,7 @@ namespace Argon
 			m_Shader->Release();
 #endif
 			
-			IArgonUnknownImp<IShader, GUID_IShader>::UnLoad();
+			return IArgonUnknownImp<IShader, GUID_IShader>::UnLoad();
 		}
 	}
 
@@ -65,89 +69,91 @@ namespace Argon
 			return false;
 		
 		m_BoundTechnique = m_Shader->GetTechniqueByName(TechniqueName.c_str());
+		return (m_BoundTechnique != NULL);
 	}
 
 	void D3D10Shader::SetMatrix(String VariableName, Matrix4 Matrix)
 	{
-		if(!m_Shader) 
-			return false;
+		if(!m_Shader)
+			return;
+
+		ID3D10EffectVariable* Variable = m_Shader->GetVariableByName(VariableName.c_str());
+		if(Variable)
+		{
+			Variable->AsMatrix()->SetMatrix(&Matrix[0]);
+		}
 	}
 
 	void D3D10Shader::SetTexture(String VariableName, ITexture* Texture)
 	{
 		if(!m_Shader) 
-			return false;
+			return;
 
 		ID3D10EffectVariable* Variable = m_Shader->GetVariableByName(VariableName.c_str());
 		if(Variable)
 		{
 			D3D10Texture* ShaderTexture = reinterpret_cast<D3D10Texture*>(Texture);
-			Variable->AsShaderResource()->SetResource(ShaderTexture->GetD3D10Resource());
-			return true;
+			Variable->AsShaderResource()->SetResource(ShaderTexture->GetD3D10ShaderResource());
 		}
-
-		return false;
 	}
 
 	void D3D10Shader::SetFloat(String VariableName, float FloatingPointValue)
 	{
 		if(!m_Shader) 
-			return false;
+			return;
 
 		ID3D10EffectVariable* Variable = m_Shader->GetVariableByName(VariableName.c_str());
 		if(Variable)
 		{
-			Variable->AsScaler()->SetFloat(FloatingPointValue);
-			return true;
+			Variable->AsScalar()->SetFloat(FloatingPointValue);
 		}
-
-		return false;
 	}
 
 	void D3D10Shader::SetBoolean(String VariableName, bool Boolean)
 	{
 		if(!m_Shader) 
-			return false;
+			return;
 
 		ID3D10EffectVariable* Variable = m_Shader->GetVariableByName(VariableName.c_str());
 		if(Variable)
 		{
-			Variable->AsScaler()->SetBool(Boolean);
-			return true;
+			Variable->AsScalar()->SetBool(Boolean);
 		}
-
-		return false;
 	}
 
 	void D3D10Shader::SetInteger(String VariableName, int Integer)
 	{
 		if(!m_Shader) 
-			return false;
+			return;
 
 		ID3D10EffectVariable* Variable = m_Shader->GetVariableByName(VariableName.c_str());
 		if(Variable)
 		{
-			Variable->AsScaler()->SetInt(Integer);
-			return true;
+			Variable->AsScalar()->SetInt(Integer);
 		}
-
-		return false;
 	}
 
 	void D3D10Shader::SetRenderTarget(String VariableName, ISurface* Surface)
 	{
 		if(!m_Shader) 
-			return false;
+			return;
 
 		ID3D10EffectVariable* Variable = m_Shader->GetVariableByName(VariableName.c_str());
 		if(Variable)
 		{
 			D3D10RenderTarget* RenderTarget = reinterpret_cast<D3D10RenderTarget*>(Surface);
 			Variable->AsRenderTargetView()->SetRenderTarget(RenderTarget->GetTexture());
-			return true;
 		}
+	}
 
-		return false;
+	ID3D10EffectTechnique* D3D10Shader::GetBoundTechnique()
+	{
+		return m_BoundTechnique;
+	}
+
+	ID3D10EffectPass* D3D10Shader::GetBoundPass()
+	{
+		return m_BoundPass;
 	}
 
 } //Namespace

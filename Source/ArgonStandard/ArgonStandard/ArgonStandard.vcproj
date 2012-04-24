@@ -560,6 +560,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Standard\ArgonBaseTree.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Standard\ArgonEvent.h"
 				>
 			</File>
@@ -673,6 +677,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Include\Standard\ArgonTimer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Standard\ArgonTree.h"
 				>
 			</File>
 			<File

@@ -1,7 +1,8 @@
-#include "ArgonRoot.h"
-#include <Standard/ArgonLog.h>
-#include "ArgonSceneManager.h"
 #include <Standard/ArgonTimer.h>
+#include <Standard/ArgonLog.h>
+
+#include "ArgonSceneManager.h"
+#include "ArgonRoot.h"
 
 namespace Argon
 {
@@ -38,8 +39,6 @@ namespace Argon
 	bool Root::UnLoad()
 	{
 		m_Platform->UnLoad();
-
-		
 		return true;
 	}
 
@@ -247,7 +246,7 @@ namespace Argon
 	{
 		m_Platform->FindAllFiles("ArgonEngine\\Components\\*.dll", &m_FoundComponents);
 	}
-	
+
 	void Root::RenderListners(IFrameListner::RenderPass Pass)
 	{
 		for(Vector<IFrameListner*>::Iterator it = m_FrameListners.Begin(); it != m_FrameListners.End(); ++it)

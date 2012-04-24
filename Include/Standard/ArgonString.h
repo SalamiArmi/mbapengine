@@ -334,7 +334,7 @@ namespace Argon
 		ulong			m_Size;
 	};
 
-	typedef StringT< char, CharAllocator > String;
-	typedef StringT< wchar_t, WideCharacterAllocator > wString;
+	typedef StringT<char, CharAllocator> String;
+	typedef StringT<wchar_t, WideCharacterAllocator> wString;
 }
 #endif //_ARGONSTRING_HEADER_

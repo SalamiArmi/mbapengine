@@ -9,6 +9,7 @@
 #include "ArgonD3D10VideoMode.h"
 #include "ArgonD3D10Viewport.h"
 #include "ArgonD3D10Shader.h"
+#include "ArgonD3D10Texture.h"
 
 #include <Standard/ArgonMemory.h>
 
@@ -107,30 +108,30 @@ namespace Argon
 		BackBuffer = NULL;
 
 		//Create the Depth Stencil
-		m_DepthStencil = new D3D10DepthStencil(m_Width, m_Height, ISurface::FORMAT_Depth24);
+		m_DepthStencil = new D3D10DepthStencil(m_Width, m_Height, FORMAT_Depth24);
 		m_DepthStencil->Load();
 
 		return Success;
 	}
 
-	ISurface* D3D10RenderSystem::CreateRenderTarget(uint Width, uint Height, ISurface::Format Format)
+	ISurface* D3D10RenderSystem::CreateRenderTarget(uint Width, uint Height, Format TargetFormat)
 	{
-		return new D3D10RenderTarget(Width, Height, Format);
+		return new D3D10RenderTarget(Width, Height, TargetFormat);
 	}
 
-	ITexture* D3D10RenderSystem::CreateTexture(uint Width, uint Height, ISurface::Format Format, bool Renderable)
+	ITexture* D3D10RenderSystem::CreateTexture(uint Width, uint Height, Format TextureFormat, bool Renderable)
 	{
-		return new D3D10Texture(Width, Height, Format, Renderable);
+		return NULL;//new D3D10Texture(Width, Height, TextureFormat, Renderable);
 	}
 
 	ITexture* D3D10RenderSystem::CreateTexture(String Filename)
 	{
-		return new D3D10Texture(Filename);
+		return NULL; //TODO
 	}
 
-	ISurface* D3D10RenderSystem::CreateDepthStencil(uint Width, uint Height, ISurface::Format Format)
+	ISurface* D3D10RenderSystem::CreateDepthStencil(uint Width, uint Height, Format DepthStencilFormat)
 	{
-		return new D3D10DepthStencil(Width, Height, Format);
+		return new D3D10DepthStencil(Width, Height, DepthStencilFormat);
 	}
 
 	bool D3D10RenderSystem::BeginFrame()
@@ -164,19 +165,19 @@ namespace Argon
 
 	void D3D10RenderSystem::SetRenderTarget(ISurface* RenderTarget)
 	{
-		m_RenderTarget = static_cast<D3D10RenderSystem*>(RenderTarget);
-		m_Device->GetDevice()->OMSetRenderTargets(0, m_RenderTarget ? &m_RenderTarget->GetTexture() : m_BackBuffer, m_DepthStencil ? m_DepthStencil->GetTexture() : NULL );
+		m_RenderTarget = static_cast<D3D10RenderTarget*>(RenderTarget);
+		//m_Device->GetDevice()->OMSetRenderTargets(1, m_RenderTarget ? m_RenderTarget->GetTexture() : m_BackBuffer->GetTexture(), m_DepthStencil ? m_DepthStencil->GetTexture() : NULL );
 	}
 
 	void D3D10RenderSystem::SetDepthStencil(ISurface* DepthStencil)
 	{
 		m_DepthStencil = static_cast<D3D10DepthStencil*>(DepthStencil);
-		m_Device->GetDevice()->OMSetRenderTargets(0, m_RenderTarget ? &m_RenderTarget->GetTexture() : m_BackBuffer, m_DepthStencil ? m_DepthStencil->GetTexture() : NULL );
+		//m_Device->GetDevice()->OMSetRenderTargets(1, m_RenderTarget ? m_RenderTarget->GetTexture() : m_BackBuffer->GetTexture(), m_DepthStencil ? m_DepthStencil->GetTexture() : NULL );
 	}
 
 	void D3D10RenderSystem::SetViewport(IViewport* Viewport)
 	{
-		m_Device->GetDevice()->RSSetViewports(0, &static_cast<D3D10Viewport*>(Viewport)->GetD3D10Viewport());
+		m_Device->GetDevice()->RSSetViewports(1, &static_cast<D3D10Viewport*>(Viewport)->GetD3D10Viewport());
 	}
 
 	IViewport* D3D10RenderSystem::CreateViewport(uint Width, uint Height, uint PositionX, uint PositionY)
@@ -223,24 +224,6 @@ namespace Argon
 		return m_Fonts.At(Index);
 	}
 	
-	IBuffer* D3D10RenderSystem::CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, ulong DataSize)
-	{
-		IBuffer* Buffer = NULL;
-		if(Type == IBuffer::BUFFERTYPE_VertexBuffer)
-		{
-			Buffer = new D3D10VertexBuffer(Usage);
-		}
-		else if(Type == IBuffer::BUFFERTYPE_IndexBuffer)
-		{
-			Buffer = new D3D10IndexBuffer(Usage);
-		}
-		else if(Type == IBuffer::BUFFERTYPE_PhysicalMemory)
-		{
-		}
-
-		return Buffer;
-	}
-
 	IBuffer* D3D10RenderSystem::CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, char* Data, ulong DataSize)
 	{
 		IBuffer* Buffer = NULL;
@@ -251,6 +234,24 @@ namespace Argon
 		else if(Type == IBuffer::BUFFERTYPE_IndexBuffer)
 		{
 			Buffer = new D3D10IndexBuffer(Usage, (ulong*)Data, DataSize);
+		}
+		else if(Type == IBuffer::BUFFERTYPE_PhysicalMemory)
+		{
+		}
+
+		return Buffer;
+	}
+
+	IBuffer* D3D10RenderSystem::CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, ulong DataSize)
+	{
+		IBuffer* Buffer = NULL;
+		if(Type == IBuffer::BUFFERTYPE_VertexBuffer)
+		{
+			Buffer = new D3D10VertexBuffer(Usage, NULL, DataSize);
+		}
+		else if(Type == IBuffer::BUFFERTYPE_IndexBuffer)
+		{
+			Buffer = new D3D10IndexBuffer(Usage, NULL, DataSize);
 		}
 
 		return Buffer;
@@ -269,38 +270,39 @@ namespace Argon
 		else if(Type == IBuffer::BUFFERTYPE_IndexBuffer)
 		{
 			D3D10IndexBuffer* IndexBuffer = static_cast<D3D10IndexBuffer*>(Buffer);
-			m_Device->GetDevice()->IASetIndexBuffers(0, 1, IndexBuffer->GetVideoBufferPtr(), NULL, NULL);
+			m_Device->GetDevice()->IASetIndexBuffer(IndexBuffer->GetVideoBufferPtr(), IndexBuffer->Is32Bit() ? DXGI_FORMAT_R32_UINT : DXGI_FORMAT_R16_UINT, 0);
 		}
 
 		return false;
 	}
 
-	bool D3D10RenderSystem::SetTopology( Topology Type )
+	bool D3D10RenderSystem::SetTopology(Topology Type)
 	{
-		D3D11_PRIMITIVE_TOPOLOGY Topology = D3D11_PRIMITIVE_TOPOLOGY_UNDEFINED;
+		D3D10_PRIMITIVE_TOPOLOGY Topology = D3D10_PRIMITIVE_TOPOLOGY_UNDEFINED;
 
 		switch(Type)
 		{
 		case TOPOLOGY_PointList:
-			Topology = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST;
+			Topology = D3D10_PRIMITIVE_TOPOLOGY_POINTLIST;
 			break;
 		case TOPOLOGY_LineList:
-			Topology = D3D11_PRIMITIVE_TOPOLOGY_LINELIST;
+			Topology = D3D10_PRIMITIVE_TOPOLOGY_LINELIST;
 			break;
 		case TOPOLOGY_TriangleList:
-			Topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
+			Topology = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 			break;
 		case TOPOLOGY_TriangleStrip:
-			Topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
+			Topology = D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP;
 			break;
 		}
 
-		m_Device->GetDevice()->IASetPrimitiveTopology( Topology );
+		m_Device->GetDevice()->IASetPrimitiveTopology(Topology);
+		return (Topology != D3D10_PRIMITIVE_TOPOLOGY_UNDEFINED);
 	}
 		
 	void D3D10RenderSystem::DrawPrimitive(MeshID& ID)
 	{
-		m_Device->GetDevice()->DrawIndexed( ID.IndexCount, ID.StartIndex, ID.VertexStart );
+		m_Device->GetDevice()->DrawIndexed(ID.IndexCount, ID.FaceStart * 3, ID.VertexStart);
 	}
 
 	void D3D10RenderSystem::SetVertexDeclaration(VertexDeclaration* VertexDecl, ulong Size)
@@ -311,7 +313,8 @@ namespace Argon
 		if(!m_BoundShader->GetBoundPass())
 			return;
 
-		D3D10_INPUT_ELEMENT_DESC Layout[Size];
+		Vector<D3D10_INPUT_ELEMENT_DESC> Layout;
+		Layout.Resize(Size);
 		unsigned Offset = 0;
 
 		for(ulong Index = 0; Index < Size; ++Index)
@@ -380,7 +383,7 @@ namespace Argon
 
 		D3D10_PASS_DESC Desc;
 		m_BoundShader->GetBoundPass()->GetDesc(&Desc);
-		m_Device->GetDevice()->CreateInputLayout(&Layout, Size, Desc.pIAInputSignature, Desc.IAInputSignatureSize, m_InputLayout);
+		m_Device->GetDevice()->CreateInputLayout(&Layout[0], Size, Desc.pIAInputSignature, Desc.IAInputSignatureSize, &m_InputLayout);
 		m_Device->GetDevice()->IASetInputLayout(m_InputLayout);
 	}
 	

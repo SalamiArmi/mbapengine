@@ -113,4 +113,9 @@ namespace Argon
 		}
 		return false;
 	}
+
+	ID3D10Buffer* D3D10IndexBuffer::GetVideoBufferPtr() const
+	{
+		return m_VideoMemoryBuffer;
+	}
 }

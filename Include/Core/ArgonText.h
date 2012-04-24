@@ -9,7 +9,7 @@
 
 namespace Argon
 {
-	class Text : public SceneNode, public IArgonUnknownImp<IRenderable, GUID_IRenderable>
+	class Text : public SceneNode
 	{
 	public:
 		Text(QString Name);

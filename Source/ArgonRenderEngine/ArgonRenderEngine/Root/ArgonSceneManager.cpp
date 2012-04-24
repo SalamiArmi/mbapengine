@@ -1,12 +1,14 @@
 #include "ArgonRoot.h"
 #include "ArgonSceneManager.h"
 #include "ArgonText.h"
+#include "ArgonSceneNode.h"
 
 namespace Argon
 {
 	SceneManager::SceneManager(QString Name, Root *Creator)
 		: m_Creator(Creator),
-		m_Name(Name)
+		m_Name(Name),
+		m_RootNode(new SceneNode("Root"))
 	{
 		
 	}
@@ -35,10 +37,7 @@ namespace Argon
 	{	
 		if(Root::instance()->GetCurrentSceneManager() != this) return false;
 
-		for(Vector<SceneNode*>::Iterator it = m_SceneNodes.Begin(); it != m_SceneNodes.End(); ++it)
-		{
-			(*it)->FrameUpdate(DeltaT);
-		}
+		m_RootNode->Update(DeltaT);
 
 		return true;
 	}

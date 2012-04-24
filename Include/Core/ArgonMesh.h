@@ -5,6 +5,7 @@
 
 #include <Interface/IBuffer.h>
 #include <Interface/IRenderSystem.h>
+#include <Standard/ArgonPhysicalMemory.h>
 
 namespace Argon
 {
@@ -158,8 +159,9 @@ namespace Argon
 		///
 		///Get the Heighest Attribute ID
 		///
-		///Params AttributeBuffer: The Vertex Buffer to search
-		ulong GetMaterialCount(ulong* AttributeBuffer);
+		///Params AttributeBuffer: The Attribute Ptr Buffer to search
+		///Params FaceCount: The Total amount of faces to search
+		ulong GetMaterialCount(ulong* AttributeBuffer, ulong FaceCount);
 
 	protected:
 		IRenderSystem::VertexDeclaration	m_VertexDeclaration;

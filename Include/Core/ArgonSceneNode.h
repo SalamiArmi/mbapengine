@@ -1,18 +1,30 @@
 #ifndef _SCENENODE_HEADER_
 #define _SCENENODE_HEADER_
 
-#include <Standard/ArgonMatrix4.h>
-#include <Standard/ArgonVector3.h>
+#include <Core/ArgonTransform.h>
+#include <Core/ArgonUpdateTree.h>
+
 #include <Standard/ArgonVector.h>
 #include <Standard/ArgonQString.h>
 
-#pragma warning(disable : 4251 )
+#pragma warning(disable : 4251)
 
 namespace Argon
 {
-	class ArgonStandard SceneNode
+	class ArgonStandard SceneNode : public Transform, public UpdatableTree<Node>
 	{
 	public:
+
+		enum
+		{
+			UpdateTransform			= 1 << 0,
+			UpdateBoundingSphere	= 1 << 1,
+			UpdateVisibility		= 1 << 3,
+
+			InitialUpdateFlags		= UpdateTransform | UpdateBoundingSphere,
+
+		}; //Enum
+
 		SceneNode(QString Name);
 		virtual ~SceneNode();
 		

@@ -6,6 +6,8 @@
 #include <Interface/ITexture.h>
 #include <Interface/ISurface.h>
 
+#include <Standard/ArgonMatrix4.h>
+
 namespace Argon
 {
 	DeclareBasedInterface(IShader, IArgonUnknown) 
@@ -32,12 +34,12 @@ namespace Argon
 		///Param TechniqueName: The Technique that will be set in the shader
 		virtual bool	SetTechnique(String TechniqueName)		= 0;
 
-		///SETTECHNIQUE(VOID)
+		///SETTECHNIQUE(STRING)
 		///
-		///Attempt to set the technique of the desired shader
+		///Get the current Technique name
 		///
-		///Param TechniqueName: The Technique that will be set in the shader
-		virtual bool	SetTechnique(String TechniqueName)		= 0;
+		///No Params:
+		virtual String	GetTechnique()		= 0;
 
 		///SETMATRIX(VOID)
 		///

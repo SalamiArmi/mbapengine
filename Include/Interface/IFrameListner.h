@@ -14,14 +14,6 @@ namespace Argon
 			RENDERPASS_TopMost = 1 << 3,
 		};
 
-		///FRAMEUPDATE(VOID)
-		///
-		/// The frame needs to be updated so that objects are not in the same
-		/// Positioin all the Time.
-		///
-		///Param DeltaT: Time since Last Frame
-		virtual bool FrameUpdate(float DeltaT);
-
 		///DRAW(BOOL)
 		///
 		///Draw the Graphical object
