@@ -709,7 +709,7 @@
 			</File>
 		</Filter>
 		<File
-			RelativePath="..\..\..\Include\Standard\ArgonIOExplorer.cpp"
+			RelativePath=".\ArgonIOExplorer.cpp"
 			>
 		</File>
 		<File

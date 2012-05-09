@@ -125,7 +125,7 @@ namespace Argon
 			return Vector3T(x / Scalar, y / Scalar, z / Scalar);
 		}
 
-		Vector3T& operator/=(T scalar)
+		Vector3T& operator/=(T Scalar)
 		{
 			x /= Scalar;
 			y /= Scalar;

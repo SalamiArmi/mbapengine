@@ -18,7 +18,7 @@ namespace Argon
 
 	ulong GeometryParser::GetFaceIndex(ulong Face, ushort VertexIndex)
 	{
-		return ((ulong)(m_Indices[(Face * 3) + Index]));
+		return ((ulong)(m_Indices[(Face * 3) + VertexIndex]));
 	}
 
 	ulong GeometryParser::GetFaceAttribute(ulong Face)
