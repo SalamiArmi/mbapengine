@@ -1,8 +1,9 @@
 #ifndef _ARGONPHYSICALMEMORY_HEADER_
 #define _ARGONPHYSICALMEMORY_HEADER_
 
-#include "Standard/ArgonMutex.h"
-#include "Interface/IBuffer.h"
+#include <Standard/ArgonMutex.h>
+#include <Interface/IBuffer.h>
+#include <Interface/IArgonUnknownImp.h>
 
 namespace Argon
 {

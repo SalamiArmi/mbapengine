@@ -48,7 +48,8 @@ namespace Argon
 		void 		SetMatrix(Matrix4 Matrix, MatrixType Type);
 		void 		SetRenderTarget(ISurface* RenderTarget);
 		ITexture*	CreateTexture(uint Width, uint Height, Format Format, bool Renderable);
-		ITexture*	CreateTexture(String Filename);
+		ITexture*	CreateTexture(String FileData);
+		IShader*	CreateShader(String ResourceName, String FileData);
 		void 		SetViewport(IViewport* Viewport);
 		void 		SetVertexDeclaration(VertexDeclaration* VertexDecl, ulong Size);
 		void		SetDepthStencil(ISurface* DepthStencil);
@@ -62,7 +63,7 @@ namespace Argon
 		IBuffer*	CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, char* Data, ulong DataSize);
 		bool		SetBuffer(IBuffer::BufferType Type, IBuffer* Buffer);
 		bool		SetTopology(Topology Type);
-		void		DrawPrimitive( MeshID& ID );
+		void		DrawPrimitive(MeshID& ID);
 
 		///GETDEVICE(D3D10DEVICE)
 		///

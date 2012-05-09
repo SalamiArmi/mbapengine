@@ -4,7 +4,6 @@
 
 namespace Argon
 {
-	
 	ID3DX10Sprite* D3D10Font::m_Sprite = NULL;
 
 	D3D10Font::D3D10Font(uint Height, uint Width, IFont::FontFlags Flags)

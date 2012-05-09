@@ -1,7 +1,7 @@
 #ifndef _ARGONVECTOR3_HEADER_
 #define _ARGONVECTOR3_HEADER_
 
-#include "math.h"
+#include "Math.h"
 #include <Standard/ArgonStandard.h>
 
 namespace Argon
@@ -171,7 +171,7 @@ namespace Argon
 
 		void Normalize()
 		{
-			T fMagnitude = Magnitude( );
+			T fMagnitude = Magnitude();
 			if (fMagnitude > FLT_EPSILON)
 				Scale(1.0f / fMagnitude);
 		}

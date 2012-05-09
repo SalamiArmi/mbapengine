@@ -3,7 +3,7 @@
 
 #include <fstream>
 
-#include "ArgonQString.h"
+#include "ArgonString.h"
 #include "ArgonVector.h"
 #include "ArgonStandard.h"
 
@@ -38,7 +38,7 @@ namespace Argon
 		///
 		///Param Name: The name of this log file also used as the file
 		///Param Type: The Type of logging system this will be, Default = File
-		Log(QString Name, LogType Type = LOGTYPE_File);
+		Log(String Name, LogType Type = LOGTYPE_File);
 
 		///LOG(DESTRUCTOR)
 		///
@@ -65,14 +65,12 @@ namespace Argon
 		///
 		///Set the type of output the application will show
 		///
-		///
 		///Param Type: What type of log will be used, by default set to file
- 		void SetOuputType(LogType Type);
+		void SetOuputType(LogType Type);
 
 		///GETOUTPUTTYPE(LOGTYPE)
 		///
 		///Get the current log type
-		///
 		///
 		///No Params:
 		LogType GetOutputType() const;
@@ -107,14 +105,11 @@ namespace Argon
 		///Log the message to the desired log type
 		/// 
 		///Param Message: The message that will be loged once operator has been called
-		Log* operator<<(String Message);
-		
-		///OPERATOR<<(LOG*)
-		///
-		///Log a message to the log using the shift operators
-		///
-		///Param Message: Log the message to the designated type
-		Log* operator<<(const char* Message);
+		Log* operator<<(String Message)
+		{
+			LogMessage(Message);
+			return this;
+		}
 
 		///GETLOG(LOG)
 		///
@@ -122,18 +117,16 @@ namespace Argon
 		///
 		///Param Name: The name of the log
 		///Param Create: Create a new log if not found
-		static Log* GetLog(QString Name, bool Create = false);
+		static Log* GetLog(String Name, bool Create = false);
 
 	protected:
-		QString					m_Name;			//The name of this Log Messager
+		String					m_Name;			//The name of this Log Messager
 		LogType					m_LogType;		//LogType
 		std::fstream			m_FileStream;	//The file that will be used for logging to a file
-
-		static Vector<Log*>		m_LogList;		//All the currently created logs
 	};
+
 #if defined _DEBUG
-#	define ARGONERROR(LogName, Message) Log* Log = Log::GetLog(LogName); \
-		if(Log) Log->LogMessage(Log::LOGLEVEL_Error, Message, __FILE__, __FUNCTION__);
+#	define ARGONERROR(LogName, Message) { Log* Log = Log::GetLog(LogName); if(Log) Log->LogMessage(Log::LOGLEVEL_Error, Message, __FILE__, __FUNCTION__); }
 #else
 #	define ARGONERROR(LogName, Message)
 #endif

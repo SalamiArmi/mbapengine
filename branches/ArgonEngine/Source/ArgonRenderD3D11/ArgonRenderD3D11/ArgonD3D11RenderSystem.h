@@ -34,9 +34,9 @@ namespace Argon
 		size_t		GetDriverCount();
 		IDriver*	GetDriver(size_t Index);
 		bool		CreateDevice(uint DriverIndex, uint VideoModeIndex, void* Window);
-		void		RenderMesh(IMesh* Mesh);
-		ISurface*	CreateRenderTarget(uint Width, uint Height, ISurface::Format Format);
-		ISurface*	CreateDepthStencil(uint Width, uint Height, ISurface::Format Format);
+		void		RenderMesh(Mesh* Mesh);
+		ISurface*	CreateRenderTarget(uint Width, uint Height, Format Format);
+		ISurface*	CreateDepthStencil(uint Width, uint Height, Format Format);
 		void		SetClearColor(float A, float R, float G, float B);
 
 		//////////////////////////////////////////////////////////////////////////////////

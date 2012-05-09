@@ -6,16 +6,17 @@
 
 #include <Standard/ArgonVector.h>
 #include <Standard/ArgonQString.h>
+#include <Standard/ArgonQuaternion.h>
 
 #pragma warning(disable : 4251)
 
 namespace Argon
 {
-	class ArgonStandard SceneNode : public Transform, public UpdatableTree<Node>
+	class SceneNode : public Transform, public UpdatableTree<SceneNode>
 	{
 	public:
 
-		enum
+		enum NodeFlags
 		{
 			UpdateTransform			= 1 << 0,
 			UpdateBoundingSphere	= 1 << 1,
@@ -42,33 +43,19 @@ namespace Argon
 		///Param DeltaT: The time between two frames
 		bool FrameUpdate(float DeltaT);
 
-		///SETPOSITION(VOID)
-		///
-		/// Set the Position of the scenenode in the world
-		///
-		///Params Position: The Position that the node will be moved to
-		void SetPosition(Vector3 &Position);
-	
-		///GETPOSITION(VECTOR3)
-		///
-		/// Get the Current Rendering position of the Scenenode
-		///
-		///No Params:
-		Vector3 GetPosition();
-
 		///SETORIENTATION(VOID)
 		///
 		/// Set the rotation of the scenenode
 		///
 		///Params Orientation: The new Rotation in radians
-		void SetOrientation(Vector3 &Orientation);
+		void SetOrientation(Quaternion &Orientation);
 		
-		///GETORIENTATION(VECTOR3)
+		///GETORIENTATION(QUATERNION)
 		///
 		/// Get the Orientation in Radians
 		///
 		///No Params:
-		Vector3 GetOrientation();
+		Quaternion GetOrientation();
 
 		///ROLL(VOID)
 		///
@@ -105,55 +92,8 @@ namespace Argon
 		///No Params:
 		Vector3 GetScale();
 
-		///ATTACH(VOID)
-		///
-		/// Attach a new child scenenode
-		///
-		///Params Node: The node that will be attached to this node
-		void Attach(SceneNode* Node);
-
-		///DETACH(VOID)
-		///
-		/// Detach the desired node from this parent node
-		///
-		///Param Node: The desired node that will be detached
-		void Detach(SceneNode* Node);
-
-		///DETACH(VOID)
-		///
-		/// Detach the desired node from this parent node
-		///
-		///Params Index: The Index of the desired node that will be detached
-		void Detach(size_t Index);
-
-		///GETCHILDCOUNT(SIZE_T)
-		///
-		/// Get the total amount of children for this parent
-		///
-		///No Params:
-		size_t GetChildCount();
-
-		///REMOVEALLCHILDREN(VOID)
-		///
-		/// Remove all child nodes from this parent
-		///
-		///No Params:
-		void RemoveAllChildren();
-
-		///GETPARENT(ISCENENODE)
-		///
-		/// Get the current Parent of this node
-		///
-		///No Params:
-		SceneNode* GetParent() const;
-
 	protected:
 		QString					m_Name;
-
-		SceneNode*				m_Parent;
-		Vector<SceneNode*>		m_Children;
-
-		Matrix4					m_Transformation;
 	};
 } //Namespace
 

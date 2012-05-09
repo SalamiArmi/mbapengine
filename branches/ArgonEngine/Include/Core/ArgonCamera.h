@@ -10,7 +10,7 @@
 
 namespace Argon
 {
-	class ArgonStandard Camera : public SceneNode
+	class Camera : public SceneNode
 	{
 	public:
 		Camera(QString Name);

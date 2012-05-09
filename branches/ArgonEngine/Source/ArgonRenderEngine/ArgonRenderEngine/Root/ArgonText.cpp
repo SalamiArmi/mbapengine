@@ -10,7 +10,6 @@ namespace Argon
 		m_Alignment(TEXTALIGN_Left),
 		m_Color(Vector4(1.0f, 1.0f, 1.0f, 1.0f))
 	{
-		m_RefCount = 0;
 	}
 
 	Text::~Text()
@@ -20,9 +19,6 @@ namespace Argon
 
 	bool Text::Load()
 	{
-		assert(m_RefCount == 0);
-		++m_RefCount;
-
 		m_Font = Root::instance()->GetActiveRenderSystem()->CreateAFont();
 		return true;
 	}

@@ -254,7 +254,7 @@ namespace Argon
 
 		bool operator==(const StringT<T, AllocatorT> &Str) const
 		{
-			if ( memcmp(m_String, Str, m_Size > Str.m_Size ? m_Size : Str.m_Size) == 0 )
+			if (memcmp(m_String, Str.c_str(), m_Size > Str.m_Size ? m_Size : Str.m_Size) == 0)
 				return true;
 
 			return false;
@@ -271,7 +271,7 @@ namespace Argon
 
 		bool operator!=(const StringT<T, AllocatorT> &Str) const
 		{
-			if (memcmp(m_String, Str, m_Size > Str.m_Size ? m_Size : Str.m_Size) == 0)
+			if (memcmp(m_String, Str.c_str(), m_Size > Str.m_Size ? m_Size : Str.m_Size) == 0)
 				return false;
 
 			return true;

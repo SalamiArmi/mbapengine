@@ -4,7 +4,7 @@
 
 namespace Argon
 {
-	D3D11DepthStencil::D3D11DepthStencil(uint Width, uint Height, ISurface::Format Format)
+	D3D11DepthStencil::D3D11DepthStencil(uint Width, uint Height, Format Format)
 		: m_Height(Height),
 		m_Width(Width),
 		m_Format(Format),
@@ -65,7 +65,7 @@ namespace Argon
 		return m_Width;
 	}
 
-	ISurface::MemoryPool D3D11DepthStencil::GetPoolType()
+	MemoryPool D3D11DepthStencil::GetPoolType()
 	{
 		return ISurface::POOL_Default;
 	}

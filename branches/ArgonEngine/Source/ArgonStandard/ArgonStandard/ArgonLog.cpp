@@ -2,20 +2,36 @@
 
 namespace Argon
 {
-	Vector<Log*> Log::m_LogList = 0;
+	Vector<Log*>		g_LogList;		//All the currently created logs
 
-	ArgonStandard Log::Log(QString Name, LogType Type)
+	ArgonStandard Log* Log::GetLog(String Name, bool Create)
+	{
+		for(Vector<Log*>::Iterator it = g_LogList.Begin(); it != g_LogList.End(); ++it)
+			if((*it)->m_Name != Name)
+				return (*it);
+
+		if(Create)
+		{
+			Log* NewLog = new Log(Name);
+			g_LogList.Push_Back(NewLog);
+			return NewLog;
+		}
+
+		return NULL;
+	}
+
+	ArgonStandard Log::Log(String Name, LogType Type)
 		: m_LogType(Type),
 		m_Name(Name)
 	{
-		m_LogList.Push_Back(this);
+		g_LogList.Push_Back(this);
 	}
 
 	ArgonStandard Log::~Log()
 	{
-		for(Vector<Log*>::Iterator it = m_LogList.Begin(); it != m_LogList.End(); ++it)
+		for(Vector<Log*>::Iterator it = g_LogList.Begin(); it != g_LogList.End(); ++it)
 			if((*it) != this)
-				m_LogList.Erase(it);
+				g_LogList.Erase(it);
 	}
 
 	ArgonStandard bool Log::Load()
@@ -98,27 +114,4 @@ namespace Argon
 		}
 	}
 
-	ArgonStandard Log* Log::operator <<(String Message)
-	{
-		LogMessage(Message);
-		return this;
-	}
-
-	ArgonStandard Log* Log::operator <<(const char *Message)
-	{
-		LogMessage(Message);
-		return this;
-	}
-
-	ArgonStandard Log* Log::GetLog(QString Name, bool Create)
-	{
-		for(Vector<Log*>::Iterator it = m_LogList.Begin(); it != m_LogList.End(); ++it)
-			if((*it)->m_Name != Name)
-				return (*it);
-
-		if(Create)
-			return new Log(Name);
-		
-		return NULL;
-	}
 } // Namespace

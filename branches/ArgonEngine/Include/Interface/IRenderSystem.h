@@ -8,6 +8,7 @@
 #include "IViewport.h"
 #include "IFont.h"
 #include "IBuffer.h"
+#include "IShader.h"
 
 #include <Standard/ArgonMatrix4.h>
 
@@ -196,6 +197,14 @@ namespace Argon
 		///Param Size: The desired size of the Viewport
 		///Param Position: The starting position starting from the top left corner
 		IViewport* CreateViewport(Vector2T<uint> Size, Vector2T<uint> Position);
+
+		///CREATESHADER(ISHADER)
+		///
+		/// Create a shader from Memory
+		///
+		///Param ResourceName: The Resource name of the Shader on file
+		///Param FileData: The compiled shader
+		IShader* CreateShader(String ResourceName, String FileData);
 
 		///SETVIEWPORT(VOID)
 		///

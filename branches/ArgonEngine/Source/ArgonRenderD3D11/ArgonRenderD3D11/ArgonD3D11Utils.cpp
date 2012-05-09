@@ -2,7 +2,7 @@
 namespace Argon
 {
 
-	DXGI_FORMAT ArgonFormatToD3D11(ISurface::Format Format)
+	DXGI_FORMAT ArgonFormatToD3D11(Format Format)
 	{
 		DXGI_FORMAT ReturnFormat;
 

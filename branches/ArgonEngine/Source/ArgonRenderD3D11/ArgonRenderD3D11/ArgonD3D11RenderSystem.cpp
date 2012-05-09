@@ -113,26 +113,26 @@ namespace Argon
 		return Success;
 	}
 
-	void D3D11RenderSystem::RenderMesh(IMesh* Mesh)
+	void D3D11RenderSystem::RenderMesh(Mesh* RenderMesh)
 	{	
-		m_Device->GetDeviceContext()->IASetVertexBuffers(0, 1, (ID3D11Buffer* const*)((D3D11Buffer*)Mesh->GetVertexBuffer())->GetD3D11Buffer(), 0 /*&Mesh->GetStride()*/, 0);
+		m_Device->GetDeviceContext()->IASetVertexBuffers(0, 1, (ID3D11Buffer* const*)((D3D11Buffer*)RenderMesh->GetVertexBuffer())->GetD3D11Buffer(), 0 &RenderMesh->GetStride(), 0);
 		
 		DXGI_FORMAT IndexFormat;
-		if(Mesh->GetVertexBuffer()->Is32Bit())
+		if(RenderMesh->GetVertexBuffer()->Is32Bit())
 			IndexFormat = DXGI_FORMAT_R16_UINT;
 		else
 			IndexFormat = DXGI_FORMAT_R32_UINT;
 		
-		m_Device->GetDeviceContext()->IASetIndexBuffer((ID3D11Buffer*)((D3D11Buffer*)Mesh->GetIndexBuffer())->GetD3D11Buffer(), IndexFormat, 0);
-		m_Device->GetDeviceContext()->Draw(Mesh->GetVertexCount(), Mesh->GetStartVertex());
+		m_Device->GetDeviceContext()->IASetIndexBuffer((ID3D11Buffer*)((D3D11Buffer*)RenderMesh->GetIndexBuffer())->GetD3D11Buffer(), IndexFormat, 0);
+		m_Device->GetDeviceContext()->Draw(RenderMesh->GetVertexCount(), RenderMesh->GetStartVertex());
 	}
 
-	ISurface* D3D11RenderSystem::CreateRenderTarget(uint Width, uint Height, ISurface::Format Format)
+	ISurface* D3D11RenderSystem::CreateRenderTarget(uint Width, uint Height, Format Format)
 	{
 		return new D3D11RenderTarget(Width, Height, Format);
 	}
 
-	ISurface* D3D11RenderSystem::CreateDepthStencil(uint Width, uint Height, ISurface::Format Format)
+	ISurface* D3D11RenderSystem::CreateDepthStencil(uint Width, uint Height, Format Format)
 	{
 		return new D3D11DepthStencil(Width, Height, Format);
 	}
