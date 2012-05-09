@@ -9,7 +9,7 @@
 
 namespace Argon
 {
-	D3D11RenderTarget::D3D11RenderTarget(uint Width, uint Height, ISurface::Format Format)
+	D3D11RenderTarget::D3D11RenderTarget(uint Width, uint Height, Format Format)
 		: m_Width(Width),
 		m_Height(Height),
 		m_Pool(ISurface::POOL_Managed),
@@ -66,7 +66,7 @@ namespace Argon
 		return m_Width;
 	}
 
-	ISurface::MemoryPool D3D11RenderTarget::GetPoolType()
+	MemoryPool D3D11RenderTarget::GetPoolType()
 	{
 		return m_Pool;
 	}

@@ -1,13 +1,16 @@
 #ifndef _ARGONMATRIX4_HEADER_
 #define	_ARGONMATRIX4_HEADER_
 
+#include <cstring>
 #include <Standard/ArgonVector3.h>
 
 namespace Argon
 {
 	template<typename T>class Matrix4T
 	{
+		friend class Transform4;
 	public:
+
 		Matrix4T(bool SetToIdentity = true)
 		{
 			if(SetToIdentity)
@@ -106,12 +109,12 @@ namespace Argon
 			return (memcmp(m_Single, RHS.m_Single, 16 * sizeof(T)) != 0);
 		}
 
-		T& operator () (int Row,int Coloumn)
+		T& operator () (int Row, int Coloumn)
 		{ 
 			return m_Single[Coloumn * 4 + Row];	
 		}
 
-		const T& operator () (int Row,int Coloumn) const
+		const T& operator () (int Row, int Coloumn) const
 		{ 
 			return m_Single[Coloumn * 4 + Row];
 		}
@@ -125,61 +128,6 @@ namespace Argon
 		{
 			memset(m_Single, 0, 16 * sizeof(T));
 			m_Single[0] = m_Single[5] = m_Single[10] = m_Single[15] = 1.0f;
-		}
-
-		const Vector3& GetTranslation() const
-		{
-			return (*reinterpret_cast<const Vector3*>(m_RowCol[3]));
-		}
-
-		Matrix4T& Set(const Matrix4T& m, const Vector3& v)
-		{
-			m_RowCol[0][0] = m.m_RowCol[0][0];
-			m_RowCol[0][1] = m.m_RowCol[0][1];
-			m_RowCol[0][2] = m.m_RowCol[0][2];
-			m_RowCol[1][0] = m.m_RowCol[1][0];
-			m_RowCol[1][1] = m.m_RowCol[1][1];
-			m_RowCol[1][2] = m.m_RowCol[1][2];
-			m_RowCol[2][0] = m.m_RowCol[2][0];
-			m_RowCol[2][1] = m.m_RowCol[2][1];
-			m_RowCol[2][2] = m.m_RowCol[2][2];
-			m_RowCol[3][0] = v.x;
-			m_RowCol[3][1] = v.y;
-			m_RowCol[3][2] = v.z;
-
-			m_RowCol[0][3] = m_RowCol[1][3] = m_RowCol[2][3] = 0.0F;
-			m_RowCol[3][3] = 1.0F;
-
-			return (*this);
-		}
-
-		Matrix4T& Set(const Vector3& c1, const Vector3& c2, const Vector3& c3, const Vector3& c4)
-		{
-			m_RowCol[0][0] = c1.x;
-			m_RowCol[0][1] = c1.y;
-			m_RowCol[0][2] = c1.z;
-			m_RowCol[1][0] = c2.x;
-			m_RowCol[1][1] = c2.y;
-			m_RowCol[1][2] = c2.z;
-			m_RowCol[2][0] = c3.x;
-			m_RowCol[2][1] = c3.y;
-			m_RowCol[2][2] = c3.z;
-			m_RowCol[3][0] = c4.x;
-			m_RowCol[3][1] = c4.y;
-			m_RowCol[3][2] = c4.z;
-
-			m_RowCol[0][3] = m_RowCol[1][3] = m_RowCol[2][3] = 0.0F;
-			m_RowCol[3][3] = 1.0F;
-
-			return (*this);
-		}
-
-		Matrix4T& SetTranslation(const Vector3& p)
-		{
-			m_RowCol[3][0] = p.x;
-			m_RowCol[3][1] = p.y;
-			m_RowCol[3][2] = p.z;
-			return (*this);
 		}
 
 		void GetVectorComponents(Vector3& Up, Vector3& Out, Vector3& Right)
@@ -255,111 +203,6 @@ namespace Argon
 			Result.m_Single[15] *= InvDet;
 
 			return true;
-		}
-
-		void RotateX(T Radians)
-		{
-			T Cosine = cosf(Radians);
-			T Sine = sinf(Radians);
-
-			Matrix4T Temp;
-			Temp.m_RowCol[1][1] = Cosine;
-			Temp.m_RowCol[1][2] = Sine;
-			Temp.m_RowCol[2][1] = -Sine;
-			Temp.m_RowCol[2][2] = Cosine;
-
-			*this = Temp * *this;
-		}
-
-		void RotateY(T Radians)
-		{
-			T Cosine = cosf(Radians);
-			T Sine = sinf(Radians);
-
-			Matrix4T Temp;
-			Temp.m_RowCol[0][0] = Cosine;
-			Temp.m_RowCol[0][2] = -Sine;
-			Temp.m_RowCol[2][0] = Sine;
-			Temp.m_RowCol[2][2] = Cosine;
-
-			*this = Temp * *this;
-		}
-
-		void RotateZ(T Radians)
-		{
-			T Cosine = cosf(Radians);
-			T Sine = sinf(Radians);
-
-			Matrix4T Temp;
-			Temp.m_RowCol[0][0] = Cosine;
-			Temp.m_RowCol[1][0] = -Sine;
-			Temp.m_RowCol[0][1] = Sine;
-			Temp.m_RowCol[1][1] = Cosine;
-
-			*this = Temp * *this;
-		}
-
-		void RotateArbitrary(const Vector3& Axis, T Radius)
-		{
-			T s = sinf(Radians);
-			T c = cosf(Radians);
-			T t = 1.0f - c;
-
-			Vector3 NormalizedAxis(Axis);
-			NormalizedAxis.Normalize( );
-			const T& x = NormalizedAxis.x;
-			const T& y = NormalizedAxis.y;
-			const T& z = NormalizedAxis.z;
-
-			Matrix4T Temp;
-			Temp.m_RowCol[0][0] = t * x * x + c;
-			Temp.m_RowCol[0][1] = t * x * y + s * z;
-			Temp.m_RowCol[0][2] = t * x * z - s * y;
-			Temp.m_RowCol[1][0] = t * x * y - s * z;
-			Temp.m_RowCol[1][1] = t * y * y + c;
-			Temp.m_RowCol[1][2] = t * y * z + s * x;
-			Temp.m_RowCol[2][0] = t * x * z + s * y;
-			Temp.m_RowCol[2][1] = t * y * z - s * x;
-			Temp.m_RowCol[2][2] = t * z * z + c;
-
-			*this = Temp * *this;
-		}
-
-		void Scale(T x, T y, T z)
-		{
-			Matrix4T Temp;
-
-			Temp.m_RowCol[0][0] = x;
-			Temp.m_RowCol[1][1] = y;
-			Temp.m_RowCol[2][2] = z;
-
-			*this = Temp * *this;
-		}
-
-		void Scale(const Vector3& Scale)
-		{
-			Scale(Scale.x, Scale.y, Scale.z);
-		}
-
-		void Translate(T x, T y, T z)
-		{
-			Matrix4T Temp;
-
-			Temp[12] = x;
-			Temp[13] = y;
-			Temp[14] = z;
-
-			*this = mTmp * *this;
-		}
-
-		void Translate(const Vector3& Translate)
-		{
-			Translate(Translate.x, Translate.y, Translate.z);
-		}
-
-		void Transpose(Matrix4T& Result) const
-		{
-
 		}
 
 		void LookAt(const Vector3& Eye, const Vector3& Center, const Vector3& Up)
@@ -455,11 +298,6 @@ namespace Argon
 			*this = *this * Temp;
 		}
 
-		void GetEulerAngles(T& x, T& y, T& z)
-		{
-
-		}
-
 		union
 		{
 			T  m_Single[16];
@@ -473,7 +311,7 @@ namespace Argon
 	typedef Matrix4T<float> Matrix4;
 #	endif
 
-	float Determinant(const Matrix4& m)
+	inline float Determinant(const Matrix4& m)
 	{
 		float n00 = m(0,0);
 		float n01 = m(0,1);
@@ -490,7 +328,7 @@ namespace Argon
 		return (n00 * (n11 * n22 - n12 * n21) + n01 * (n12 * n20 - n10 * n22) + n02 * (n10 * n21 - n11 * n20));
 	}
 
-	Matrix4 Inverse(const Matrix4& m)
+	inline Vector3 InverseTransform(const Matrix4& m, const Vector3& p)
 	{
 		float n00 = m(0,0);
 		float n01 = m(0,1);
@@ -513,105 +351,12 @@ namespace Argon
 
 		float t = 1.0F / (n00 * p00 + n01 * p10 + n02 * p20);
 
-		return (Transform4D(p00 * t,
-			(n02 * n21 - n01 * n22) * t,
-			(n01 * n12 - n02 * n11) * t,
-			(n01 * (n13 * n22 - n12 * n23) + n02 * (n11 * n23 - n13 * n21) + n03 * (n12 * n21 - n11 * n22)) * t,
-			p10 * t,
-			(n00 * n22 - n02 * n20) * t,
-			(n02 * n10 - n00 * n12) * t,
-			(n00 * (n12 * n23 - n13 * n22) + n02 * (n13 * n20 - n10 * n23) + n03 * (n10 * n22 - n12 * n20)) * t,
-			p20 * t,
-			(n01 * n20 - n00 * n21) * t,
-			(n00 * n11 - n01 * n10) * t,
-			(n00 * (n13 * n21 - n11 * n23) + n01 * (n10 * n23 - n13 * n20) + n03 * (n11 * n20 - n10 * n21)) * t));
-	}
-
-	Matrix4 Adjugate(const Matrix4& m)
-	{
-		float n00 = m(0,0);
-		float n01 = m(0,1);
-		float n02 = m(0,2);
-		float n03 = m(0,3);
-
-		float n10 = m(1,0);
-		float n11 = m(1,1);
-		float n12 = m(1,2);
-		float n13 = m(1,3);
-
-		float n20 = m(2,0);
-		float n21 = m(2,1);
-		float n22 = m(2,2);
-		float n23 = m(2,3);
-
-		return (Matrix4(n11 * n22 - n12 * n21,
-			n02 * n21 - n01 * n22,
-			n01 * n12 - n02 * n11,
-			n01 * (n13 * n22 - n12 * n23) + n02 * (n11 * n23 - n13 * n21) + n03 * (n12 * n21 - n11 * n22),
-			n12 * n20 - n10 * n22,
-			n00 * n22 - n02 * n20,
-			n02 * n10 - n00 * n12,
-			n00 * (n12 * n23 - n13 * n22) + n02 * (n13 * n20 - n10 * n23) + n03 * (n10 * n22 - n12 * n20),
-			n10 * n21 - n11 * n20,
-			n01 * n20 - n00 * n21,
-			n00 * n11 - n01 * n10,
-			n00 * (n13 * n21 - n11 * n23) + n01 * (n10 * n23 - n13 * n20) + n03 * (n11 * n20 - n10 * n21)));
-	}
-
-	Vector3 InverseTransform(const Matrix4& m, const Vector3& v)
-	{
-		float n00 = m(0,0);
-		float n01 = m(0,1);
-		float n02 = m(0,2);
-
-		float n10 = m(1,0);
-		float n11 = m(1,1);
-		float n12 = m(1,2);
-
-		float n20 = m(2,0);
-		float n21 = m(2,1);
-		float n22 = m(2,2);
-
-		float p00 = n11 * n22 - n12 * n21;
-		float p10 = n12 * n20 - n10 * n22;
-		float p20 = n10 * n21 - n11 * n20;
-
-		float t = 1.0F / (n00 * p00 + n01 * p10 + n02 * p20);
-
-		return (Vector3D((p00 * v.x + (n02 * n21 - n01 * n22) * v.y + (n01 * n12 - n02 * n11) * v.z) * t,
-			(p10 * v.x + (n00 * n22 - n02 * n20) * v.y + (n02 * n10 - n00 * n12) * v.z) * t,
-			(p20 * v.x + (n01 * n20 - n00 * n21) * v.y + (n00 * n11 - n01 * n10) * v.z) * t));
-	}
-
-	Vector3 InverseTransform(const Matrix4& m, const Vector3& p)
-	{
-		float n00 = m(0,0);
-		float n01 = m(0,1);
-		float n02 = m(0,2);
-		float n03 = m(0,3);
-
-		float n10 = m(1,0);
-		float n11 = m(1,1);
-		float n12 = m(1,2);
-		float n13 = m(1,3);
-
-		float n20 = m(2,0);
-		float n21 = m(2,1);
-		float n22 = m(2,2);
-		float n23 = m(2,3);
-
-		float p00 = n11 * n22 - n12 * n21;
-		float p10 = n12 * n20 - n10 * n22;
-		float p20 = n10 * n21 - n11 * n20;
-
-		float t = 1.0F / (n00 * p00 + n01 * p10 + n02 * p20);
-
-		return (Point3D((p00 * p.x + (n02 * n21 - n01 * n22) * p.y + (n01 * n12 - n02 * n11) * p.z + (n01 * (n13 * n22 - n12 * n23) + n02 * (n11 * n23 - n13 * n21) + n03 * (n12 * n21 - n11 * n22))) * t,
+		return (Vector3((p00 * p.x + (n02 * n21 - n01 * n22) * p.y + (n01 * n12 - n02 * n11) * p.z + (n01 * (n13 * n22 - n12 * n23) + n02 * (n11 * n23 - n13 * n21) + n03 * (n12 * n21 - n11 * n22))) * t,
 			(p10 * p.x + (n00 * n22 - n02 * n20) * p.y + (n02 * n10 - n00 * n12) * p.z + (n00 * (n12 * n23 - n13 * n22) + n02 * (n13 * n20 - n10 * n23) + n03 * (n10 * n22 - n12 * n20))) * t,
 			(p20 * p.x + (n01 * n20 - n00 * n21) * p.y + (n00 * n11 - n01 * n10) * p.z + (n00 * (n13 * n21 - n11 * n23) + n01 * (n10 * n23 - n13 * n20) + n03 * (n11 * n20 - n10 * n21))) * t));
 	}
 
-	Vector3 AdjugateTransform(const Matrix4& m, const Vector3& v)
+	inline Vector3 AdjugateTransform(const Matrix4& m, const Vector3& v)
 	{
 		float n00 = m(0,0);
 		float n01 = m(0,1);
@@ -625,32 +370,11 @@ namespace Argon
 		float n21 = m(2,1);
 		float n22 = m(2,2);
 
-		return (Vector3D((n11 * n22 - n12 * n21) * v.x + (n02 * n21 - n01 * n22) * v.y + (n01 * n12 - n02 * n11) * v.z,
+		return (Vector3((n11 * n22 - n12 * n21) * v.x + (n02 * n21 - n01 * n22) * v.y + (n01 * n12 - n02 * n11) * v.z,
 			(n12 * n20 - n10 * n22) * v.x + (n00 * n22 - n02 * n20) * v.y + (n02 * n10 - n00 * n12) * v.z,
 			(n10 * n21 - n11 * n20) * v.x + (n01 * n20 - n00 * n21) * v.y + (n00 * n11 - n01 * n10) * v.z));
 	}
 
-	Vector3 AdjugateTransform(const Matrix4& m, const Vector3& p)
-	{
-		float n00 = m(0,0);
-		float n01 = m(0,1);
-		float n02 = m(0,2);
-		float n03 = m(0,3);
-
-		float n10 = m(1,0);
-		float n11 = m(1,1);
-		float n12 = m(1,2);
-		float n13 = m(1,3);
-
-		float n20 = m(2,0);
-		float n21 = m(2,1);
-		float n22 = m(2,2);
-		float n23 = m(2,3);
-
-		return (Vector3((n11 * n22 - n12 * n21) * p.x + (n02 * n21 - n01 * n22) * p.y + (n01 * n12 - n02 * n11) * p.z + (n01 * (n13 * n22 - n12 * n23) + n02 * (n11 * n23 - n13 * n21) + n03 * (n12 * n21 - n11 * n22)),
-			(n12 * n20 - n10 * n22) * p.x + (n00 * n22 - n02 * n20) * p.y + (n02 * n10 - n00 * n12) * p.z + (n00 * (n12 * n23 - n13 * n22) + n02 * (n13 * n20 - n10 * n23) + n03 * (n10 * n22 - n12 * n20)),
-			(n10 * n21 - n11 * n20) * p.x + (n01 * n20 - n00 * n21) * p.y + (n00 * n11 - n01 * n10) * p.z + (n00 * (n13 * n21 - n11 * n23) + n01 * (n10 * n23 - n13 * n20) + n03 * (n11 * n20 - n10 * n21))));
-	}
 } //Namespace
 
 #endif //_ARGONMATRIX4_HEADER_

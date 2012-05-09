@@ -2,9 +2,75 @@
 #define _ARGONBASE_HEADER_
 
 #include "ArgonStandard.h"
+#include "Math.h"
+
+#include "limits.h"
+
+namespace 
+{
+	unsigned long hex_7F800000		= 0x7F800000;
+	unsigned long hex_FF800000		= 0xFF800000;
+}
 
 namespace Argon
 {
+	const float infinity =				*(float *) &hex_7F800000;
+	const float minus_infinity =		*(float *) &hex_FF800000;
+
+	const float one_over_3 =			1.0F / 3.0F;
+	const float one_over_6 =			1.0F / 6.0F;
+	const float one_over_7 =			1.0F / 7.0F;
+	const float one_over_12 =			1.0F / 12.0F;
+	const float one_over_31 =			1.0F / 31.0F;
+	const float one_over_32 =			1.0F / 32.0F;
+	const float one_over_60 =			1.0F / 60.0F;
+	const float one_over_63 =			1.0F / 63.0F;
+	const float one_over_64 =			1.0F / 64.0F;
+	const float one_over_127 =			1.0F / 127.0F;
+	const float one_over_128 =			1.0F / 128.0F;
+	const float one_over_255 =			1.0F / 255.0F;
+	const float one_over_256 =			1.0F / 256.0F;
+	const float one_over_32767 =		1.0F / 32767.0F;
+	const float one_over_32768 =		1.0F / 32768.0F;
+	const float one_over_65535 =		1.0F / 65535.0F;
+	const float one_over_65536 =		1.0F / 65536.0F;
+
+	const float pi =					3.1415926535897932384626433832795F;
+	const float two_pi =				6.2831853071795864769252867665590F;
+	const float four_pi =				12.566370614359172953850573533118F;
+	const float three_pi_over_2 =		4.7123889803846898576939650749193F;
+	const float three_pi_over_4 = 		2.3561944901923449288469825374596F;
+	const float two_pi_over_3 =			2.0943951023931954923084289221863F;
+	const float four_pi_over_3 = 		4.1887902047863909846168578443727F;
+	const float two_pi_over_15 = 		0.41887902047863909846168578443727F;
+	const float four_pi_over_15 = 		0.83775804095727819692337156887453F;
+	const float pi_over_2 =				1.5707963267948966192313216916398F;
+	const float pi_over_3 =				1.0471975511965977461542144610932F;
+	const float pi_over_4 =				0.78539816339744830961566084581988F;
+	const float pi_over_6 =				0.52359877559829887307710723054658F;
+	const float pi_over_8 =				0.39269908169872415480783042290994F;
+	const float pi_over_12 =			0.26179938779914943653855361527329F;
+	const float pi_over_20 =			0.15707963267948966192313216916398F;
+	const float pi_over_240 =			0.01308996938995747182692768076366F;
+	const float one_over_pi =			1.0F / pi;
+	const float two_over_pi =			2.0F / pi;
+	const float one_over_two_pi =		1.0F / two_pi;
+	const float one_over_four_pi =		1.0F / four_pi;
+
+	const float sqrt_2 =				1.4142135623730950488016887242097F;
+	const float sqrt_2_over_2 =			0.70710678118654752440084436210485F;
+	const float sqrt_2_over_3 =			0.47140452079103168293389624140323F;
+	const float sqrt_3 =				1.7320508075688772935274463415059F;
+	const float sqrt_3_over_2 =			0.86602540378443864676372317075294F;
+	const float sqrt_3_over_3 =			0.57735026918962576450914878050196F;
+
+	const float ln_2 =					0.69314718055994530941723212145818F;
+	const float one_over_ln_2 =			1.4426950408889634073599246810019F;
+
+	const float gravity =				-9.8e-6F;
+	const float half_gravity =			-4.9e-6F;
+	const float degrees =				180.0F * one_over_pi;
+
 	template<typename T, size_t nSize>
 	size_t ArraySize(const T (&rgArray)[nSize])
 	{
@@ -93,16 +159,7 @@ namespace Argon
 		return (x & ((x - y) >> 31));
 	}
 	
-	inline unsigned long Pwr2Floor(unsigned long n)
-	{
-		return (0x80000000U >> Cntlz(n));
-	}
 
-	inline unsigned long Pwr2Ceil(unsigned long n)
-	{
-		return ((unsigned long) (1 << (32 - Cntlz(n - 1))));
-	}
-	
 	inline bool Fnan(float f)
 	{
 		return (f != f);
@@ -192,7 +249,29 @@ namespace Argon
 
 	inline machine_address GetPointerAddress(const void *ptr)
 	{
-		return (static_cast<const char *>(ptr) - static_cast<char *>(nullptr));
+		return (static_cast<const char *>(ptr) - static_cast<char *>(NULL));
+	}
+
+	inline float Sqrt(float f) 
+	{ 
+		if (f == 0.0F) return (0.0F);
+		 
+		unsigned long i = 0x5F375A86 - (*reinterpret_cast<unsigned long *>(&f) >> 1); 
+		float r = *reinterpret_cast<float *>(&i); 
+		r = 0.5F * r * (3.0F - f * r * r); 
+		r = 0.5F * r * (3.0F - f * r * r);
+		return (r * f);
+	}
+
+	inline float InverseSqrt(float f)
+	{
+		if (f == 0.0F) return (infinity);
+		
+		unsigned long i = 0x5F375A86 - (*reinterpret_cast<unsigned long *>(&f) >> 1);
+		float r = *reinterpret_cast<float *>(&i);
+		r = 0.5F * r * (3.0F - f * r * r);
+		r = 0.5F * r * (3.0F - f * r * r);
+		return (r);
 	}
 
 }//Namespace

@@ -499,10 +499,6 @@
 				RelativePath="..\..\..\Include\Interface\IMessageBoardReader.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\..\Include\Interface\IRenderSystem.h"
-				>
-			</File>
 			<Filter
 				Name="Graphics"
 				>
@@ -540,6 +536,10 @@
 				>
 				<File
 					RelativePath="..\..\..\Include\Interface\IDriver.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Include\Interface\IRenderSystem.h"
 					>
 				</File>
 				<File
@@ -632,6 +632,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Standard\ArgonQuaternion.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Standard\ArgonSingleton.h"
 				>
 			</File>
@@ -700,28 +704,8 @@
 				>
 			</File>
 		</Filter>
-		<Filter
-			Name="Core"
-			>
-			<File
-				RelativePath="..\..\..\Include\Core\ArgonCamera.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\Include\Core\ArgonSceneNode.h"
-				>
-			</File>
-		</Filter>
-		<File
-			RelativePath=".\ArgonCamera.cpp"
-			>
-		</File>
 		<File
 			RelativePath=".\ArgonLog.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\ArgonSceneNode.cpp"
 			>
 		</File>
 		<File

@@ -1,6 +1,8 @@
 #ifndef _ARGONPAIR_HEADER_
 #define _ARGONPAIR_HEADER_
 
+#include <Standard/ArgonBase.h>
+
 namespace Argon
 {
 	template<class T, class T2> class Pair
@@ -10,14 +12,14 @@ namespace Argon
 		typedef T2		SecondType;
 
 		inline Pair()	
-			: First( NULL ),
-			Second( NULL )
+			: First(NULL),
+			Second(NULL)
 		{
 		}
 
 		inline Pair(const T& first, const T2& second)
-			: First( first ),
-			Second( second )
+			: First(first),
+			Second(second)
 		{
 
 		}

@@ -17,7 +17,7 @@
 namespace Argon
 {
 	class Root;
-	class Node;
+	class SceneNode;
 
 	class SceneManager : public IArgonUnknownImp2<IComponent, GUID_IComponent, IFrameListner, GUID_IFrameListner>
 	{
@@ -106,10 +106,9 @@ namespace Argon
 	protected:
 		Vector<SceneNode*>		m_SceneNodes;
 		Vector<Camera*>			m_Cameras;
-		Vector<IRenderable*>	m_Renderables;
 
 		Root*					m_Creator;	//The Root which created this Manager
-		Node*					m_RootNode;
+		SceneNode*				m_RootNode;
 		QString					m_Name;		//The name of the Component
 	};
 

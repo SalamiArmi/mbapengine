@@ -11,7 +11,8 @@ namespace Argon
 	class D3D10Texture : public IArgonUnknownImp<ITexture, GUID_ITexture>
 	{
 	public:
-		D3D10Texture(String FileName, uint Width, uint Height, Format TextureFormat, bool Renderable, uint MipLevels);
+		D3D10Texture(uint Width, uint Height, Format TextureFormat, bool Renderable, uint MipLevels);
+		D3D10Texture(String FileData);
 		~D3D10Texture();
 
 		bool		UnLoad();
@@ -67,7 +68,7 @@ namespace Argon
 		uint						m_Width;
 		uint						m_Height;
 		uint						m_MipLevels;
-		String						m_FileName;
+		String						m_FileData;
 		
 		Format						m_Format;
 		MemoryPool					m_Pool;

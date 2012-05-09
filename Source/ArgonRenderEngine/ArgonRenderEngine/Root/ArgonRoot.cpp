@@ -70,13 +70,7 @@ namespace Argon
 
 	bool Root::FrameUpdate(float DeltaT)
 	{
-		//Update the Listners
-		for(Vector<IFrameListner*>::Iterator it = m_FrameListners.Begin(); it != m_FrameListners.End(); ++it)
-		{
-			(*it)->FrameUpdate(DeltaT);
-		}
-
-		return false;
+		return m_ActiveSceneManager->FrameUpdate(DeltaT);
 	}
 
 

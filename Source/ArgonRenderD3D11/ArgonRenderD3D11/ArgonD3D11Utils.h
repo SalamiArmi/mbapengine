@@ -7,7 +7,7 @@
 
 namespace Argon
 {
-	DXGI_FORMAT ArgonFormatToD3D11(ISurface::Format Format);
+	DXGI_FORMAT ArgonFormatToD3D11(Format Format);
 
 } //Namespace
 #endif //_ARGOND3D11UTILS_HEADER_

@@ -79,7 +79,7 @@ namespace Argon
 			///Get the Type info for this type
 			///
 			///No Params:
-			virtual std::type_info& GetType() const = 0;
+			virtual const std::type_info& GetType() const = 0;
 		};
 
 		template<typename T> class Holder : public PlaceHolder
@@ -95,7 +95,7 @@ namespace Argon
 				return new Holder(m_Held);
 			}
 
-			std::type_info& GetType() const
+			const std::type_info& GetType() const
 			{
 				return typeid(T);
 			}
@@ -133,7 +133,7 @@ namespace Argon
 
 	template<typename T> T* AnyCast(Any* RHS)
 	{
-		return RHS && RHS->GetType() == typeid(T) ? & static_cast<Any::Holder<T>*>(RHS->m_Content) : 0;
+		return RHS && RHS->GetType() == typeid(T) ? &static_cast<Any::Holder<T>*>(RHS->m_Content)->m_Held : 0;
 	}
 
 	template<typename T> const T* AnyCast(const Any* RHS)

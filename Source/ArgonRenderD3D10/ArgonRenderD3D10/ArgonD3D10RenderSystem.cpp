@@ -121,12 +121,12 @@ namespace Argon
 
 	ITexture* D3D10RenderSystem::CreateTexture(uint Width, uint Height, Format TextureFormat, bool Renderable)
 	{
-		return NULL;//new D3D10Texture(Width, Height, TextureFormat, Renderable);
+		return new D3D10Texture(Width, Height, TextureFormat, Renderable, 1);
 	}
 
-	ITexture* D3D10RenderSystem::CreateTexture(String Filename)
+	ITexture* D3D10RenderSystem::CreateTexture(String FileData)
 	{
-		return NULL; //TODO
+		return new D3D10Texture(FileData);
 	}
 
 	ISurface* D3D10RenderSystem::CreateDepthStencil(uint Width, uint Height, Format DepthStencilFormat)
@@ -199,6 +199,25 @@ namespace Argon
 		m_Viewports.Push_Back(Viewport);
 
 		return Viewport;
+	}
+
+	IShader* D3D10RenderSystem::CreateShader(String ResourceName, String FileData)
+	{
+		D3D10Shader* Shader = NULL;
+		if(FileData.Length() > 0)
+		{
+			Shader = new D3D10Shader(ResourceName, FileData);
+			bool Success = Shader->Load();
+			ArgonAssert(Success);
+
+			if(!Success)
+			{
+				Shader->UnLoad();
+				Shader = NULL;
+			}
+		}
+
+		return Shader;
 	}
 
 	IViewport* D3D10RenderSystem::GetViewport(uint Index)

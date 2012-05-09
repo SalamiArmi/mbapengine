@@ -90,6 +90,29 @@ namespace Argon
 #		define ArgonInline inline
 #	endif
 
+////////////////////////////////////////////////////////////
+// Argon Assert
+
+#	ifndef ArgonAssert
+#		if _DEBUG
+#			define ArgonAssert(Expression) assert(Expression)
+#		else
+#			define ArgonAssert(Expression)
+#		endif
+#	endif
+
+////////////////////////////////////////////////////////////
+// Argon NULL
+#	ifndef NULL
+#		define NULL 0
+#	endif
+
+////////////////////////////////////////////////////////////
+// Argon FLT_EPSILON
+#	ifndef FLT_EPSILON
+#		define FLT_EPSILON 1.192092896e-07F
+#	endif
+
 }
 
 #endif //_ARGONSTANDARD_HEADER_

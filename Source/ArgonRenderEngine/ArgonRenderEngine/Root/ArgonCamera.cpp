@@ -2,31 +2,31 @@
 
 namespace Argon
 {
-	ArgonStandard Camera::Camera(QString Name)
+	Camera::Camera(QString Name)
 		: SceneNode(Name)
 	{
 	}
 
-	ArgonStandard Camera::~Camera()
+	Camera::~Camera()
 	{
 	}
 
-	ArgonStandard Matrix4 Camera::GetViewMatrix()
+	Matrix4 Camera::GetViewMatrix()
 	{
 		return m_View;
 	}
 
-	ArgonStandard Matrix4 Camera::GetProjectionMatrix()
+	Matrix4 Camera::GetProjectionMatrix()
 	{
 		return m_Projection;
 	}
 
-	ArgonStandard Matrix4 Camera::GetViewProjectionMatrix()
+	Matrix4 Camera::GetViewProjectionMatrix()
 	{
 		return m_View * m_Projection;
 	}
 
-	ArgonStandard void Camera::SetProjection(float FOVY, float Aspect, float Near, float Far)
+	void Camera::SetProjection(float FOVY, float Aspect, float Near, float Far)
 	{
 		m_Fovy = FOVY;
 		m_Aspect = Aspect;
@@ -36,7 +36,7 @@ namespace Argon
 		m_Projection.Perspective(FOVY, Aspect, Near, Far);
 	}
 
-	ArgonStandard void Camera::GetProjection(float &FOVY, float &Aspect, float &Near, float &Far)
+	void Camera::GetProjection(float &FOVY, float &Aspect, float &Near, float &Far)
 	{
 		FOVY = m_Fovy;
 		Aspect = m_Aspect;
