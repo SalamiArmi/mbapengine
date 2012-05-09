@@ -6,7 +6,7 @@ namespace Argon
 	{
 	}
 
-	bool Parser::SupportsFile(String FileData)
+	bool Parser::SupportsFile(IOStream* Stream)
 	{
 		return false;
 	}

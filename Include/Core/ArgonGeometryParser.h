@@ -3,6 +3,11 @@
 
 #include "ArgonParser.h"
 
+#include <Standard/ArgonStandard.h>
+#include <Standard/ArgonString.h>
+#include <Standard/ArgonVector.h>
+#include <Standard/ArgonVector3.h>
+
 namespace Argon
 {
 	class GeometryParser : public Parser
@@ -68,7 +73,7 @@ namespace Argon
 		String GetMaterialIDName(uint MaterialIndex);
 
 	protected:
-		Vector<Vector3T<ulong>>		m_Vertices;
+		Vector<Vector3>				m_Vertices;
 		Vector<ulong>				m_Indices;
 		Vector<ulong>				m_Attributes;
 		Vector<uint>				m_FaceMaterial;

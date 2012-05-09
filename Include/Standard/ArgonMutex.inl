@@ -1,17 +1,17 @@
-Mutex::Mutex()
+inline Mutex::Mutex()
 {
 }
 
-Mutex::~Mutex()
+inline Mutex::~Mutex()
 {
 }
 
-void Mutex::Lock()
+inline void Mutex::Lock()
 {
 	LockImpl();
 }
 
-void Mutex::Unlock()
+inline void Mutex::Unlock()
 {
 	UnlockImpl();
 }
