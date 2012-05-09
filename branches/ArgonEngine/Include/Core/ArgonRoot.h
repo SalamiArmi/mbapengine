@@ -169,6 +169,8 @@ namespace Argon
 		SceneManager*			m_ActiveSceneManager;
 		IPlatform*				m_Platform;
 
+
+
 		Vector<IFrameListner*>	m_FrameListners;
 		Vector<SceneManager*>	m_SceneManagers;
 		Vector<IComponent*>		m_Components;
