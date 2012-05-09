@@ -25,14 +25,12 @@ namespace Argon
 		///
 		///Get the usage type of this buffer
 		///
-		///
 		///No Params:
 		virtual BufferType GetBufferType() = 0;
 
 		///GETUSAGETYPE(VOID)
 		///
 		///Get the usage type of this buffer
-		///
 		///
 		///No Params:
 		virtual Usage	GetUsageType()	= 0;

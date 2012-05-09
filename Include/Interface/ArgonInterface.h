@@ -15,6 +15,7 @@ namespace Argon
 	enum GUID
 	{
 		GUID_IArgonUnknown = 0,
+		GUID_IOStream,				//
 		GUID_IRenderSystem,			//The Render System for the Application
 		GUID_IPlatform,				//What Platform the Application is Running
 		GUID_IComponent,			//External and Internal Components

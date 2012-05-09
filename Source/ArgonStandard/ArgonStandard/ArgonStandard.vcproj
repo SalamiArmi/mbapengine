@@ -580,6 +580,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Standard\ArgonIOExplorer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Standard\ArgonList.h"
 				>
 			</File>
@@ -704,6 +708,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath="..\..\..\Include\Standard\ArgonIOExplorer.cpp"
+			>
+		</File>
 		<File
 			RelativePath=".\ArgonLog.cpp"
 			>

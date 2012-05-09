@@ -13,6 +13,8 @@
 #ifndef _ARGONSTANDARD_HEADER_
 #define _ARGONSTANDARD_HEADER_
 
+#include <assert.h>
+
 namespace Argon
 {
 
