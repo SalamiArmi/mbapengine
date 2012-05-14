@@ -26,6 +26,21 @@ namespace Argon
 		return m_Attributes[Face];
 	}
 
+	Vector3 GeometryParser::GetVextexPosition(ulong VertexIndex)
+	{
+		return m_Vertices[VertexIndex];
+	}
+
+	Vector3 GeometryParser::GetVextexNormal(ulong VertexIndex)
+	{
+		return m_Normals[VertexIndex];
+	}
+
+	Vector3 GeometryParser::GetVextexTexCoord(ulong VertexIndex)
+	{
+		return m_TexCoord[VertexIndex];
+	}
+
 	ulong GeometryParser::GetVextexCount()
 	{
 		return m_Vertices.Size();

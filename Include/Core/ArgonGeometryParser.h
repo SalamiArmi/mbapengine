@@ -44,6 +44,27 @@ namespace Argon
 		///Param Face: The face that will be used when retrieving the data
 		ulong GetFaceAttribute(ulong Face);
 
+		///GETVERTEXPOSITION()
+		///
+		///Get the Vertex count of the parsed geometry file
+		///
+		///No Params
+		Vector3 GetVextexPosition(ulong VertexIndex);
+
+		///GETVERTEXNORMAL()
+		///
+		///Get the Vertex count of the parsed geometry file
+		///
+		///No Params
+		Vector3 GetVextexNormal(ulong VertexIndex);
+
+		///GETVERTEXTEXCOORD()
+		///
+		///Get the Vertex count of the parsed geometry file
+		///
+		///No Params
+		Vector3 GetVextexTexCoord(ulong VertexIndex);
+
 		///GETVERTEXCOUNT(ULONG)
 		///
 		///Get the Vertex count of the parsed geometry file

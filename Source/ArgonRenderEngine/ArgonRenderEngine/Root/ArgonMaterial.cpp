@@ -25,7 +25,7 @@ namespace Argon
 
 	void Material::Add(String Name, AttributeType Type)
 	{
-		//TODO
+		m_Attributes.Push_Back(new Attribute(Name, Type));
 	}
 
 	void Material::Add(Attribute* Add)
