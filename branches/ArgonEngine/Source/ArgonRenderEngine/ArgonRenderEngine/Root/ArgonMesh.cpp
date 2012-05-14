@@ -257,4 +257,50 @@ namespace Argon
 		}
 	}
 
+	unsigned Mesh::GetDeclarationSize(IRenderSystem::VertexDeclaration& Decl)
+	{
+		unsigned Size = 0;
+
+		if(Decl & IRenderSystem::VERTEXDECL_Position)
+		{
+			Size += 3;
+		}
+
+		if(Decl & IRenderSystem::VERTEXDECL_Normal)
+		{
+			Size += 3;
+		}
+
+		if(Decl & IRenderSystem::VERTEXDECL_TexCoord)
+		{
+			Size += 2;
+		}
+
+		if(Decl & IRenderSystem::VERTEXDECL_TexCoord1)
+		{
+			Size += 2;
+		}
+
+		if(Decl & IRenderSystem::VERTEXDECL_Binormal)
+		{
+			Size += 3;
+		}
+
+		if(Decl & IRenderSystem::VERTEXDECL_Tangent)
+		{
+			Size += 3;
+		}
+
+		if(Decl & IRenderSystem::VERTEXDECL_TesselationFactor)
+		{
+			Size += 1;
+		}
+		if(Decl & IRenderSystem::VERTEXDECL_Color)
+		{
+			Size += 4;
+		}
+
+		return Size * sizeof(float);
+	}
+
 } //namespace

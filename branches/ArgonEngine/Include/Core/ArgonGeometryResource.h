@@ -45,6 +45,9 @@ namespace Argon
 
 	private:
 
+		template<typename T>
+		void ParseIndexData(GeometryParser* Parser, char* Data);
+
 		///CONSTRUCT(BOOL)
 		///
 		///Construct the mesh from a Parser
@@ -55,6 +58,9 @@ namespace Argon
 		Vector<Material*> m_Materials;
 		String m_Name;
 	};
+
+#include "ArgonGeometryResource.inl"
+
 } //Namespace
 
 #endif //_ARGONGEOMETRYRESOURCE_HEADER_

@@ -1406,6 +1406,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Core\ArgonGeometryResource.inl"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Core\ArgonIOMemory.h"
 				>
 			</File>

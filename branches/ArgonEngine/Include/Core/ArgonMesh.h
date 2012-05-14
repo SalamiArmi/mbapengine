@@ -143,7 +143,7 @@ namespace Argon
 		///Param MaterialID: The Material ID that intersected
 		bool Intersect(const Vector3& CollisionOrigin, const Vector3& CollisionDirection, Vector3& Intersection, int& MaterialID);
 
-	private:
+	protected:
 
 		///UPLOADTOVIDEOMEMORY(VOID)
 		///
@@ -174,7 +174,13 @@ namespace Argon
 		///Params FaceCount: The Total amount of faces to search
 		ulong GetMaterialCount(ulong* AttributeBuffer, ulong FaceCount);
 
-	protected:
+		///GETDECLARATIONSIZE(UNSIGNED)
+		///
+		///Get the size of a Declaration
+		///
+		///Param Decl: The Declaration being measured
+		unsigned GetDeclarationSize(IRenderSystem::VertexDeclaration& Decl);
+
 		IRenderSystem::VertexDeclaration	m_VertexDeclaration;
 		PhysicalMemory<char>*				m_VertexBuffer;
 		PhysicalMemory<char>*				m_IndexBuffer;
