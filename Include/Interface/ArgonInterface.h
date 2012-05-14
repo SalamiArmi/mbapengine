@@ -35,6 +35,7 @@ namespace Argon
 		GUID_IRenderable,			//
 		GUID_IShader,				//
 		GUID_ITexture,				//
+		GUID_IManager,				//
 	};
 } //Namespace
  

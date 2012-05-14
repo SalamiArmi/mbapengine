@@ -217,17 +217,17 @@ namespace Argon
 			Vector3 U = S.Cross(F);
 
 			Matrix4T Temp;
-			Temp.m_RowCol[0][0] = S[0];
-			Temp.m_RowCol[1][0] = S[1];
-			Temp.m_RowCol[2][0] = S[2];
+			Temp.m_RowCol[0][0] = S.x;
+			Temp.m_RowCol[1][0] = S.y;
+			Temp.m_RowCol[2][0] = S.z;
 
-			Temp.m_RowCol[0][1] = U[0];
-			Temp.m_RowCol[1][1] = U[1];
-			Temp.m_RowCol[2][1] = U[2];
+			Temp.m_RowCol[0][1] = U.x;
+			Temp.m_RowCol[1][1] = U.y;
+			Temp.m_RowCol[2][1] = U.z;
 
-			Temp.m_RowCol[0][2] = -F[0];
-			Temp.m_RowCol[1][2] = -F[1];
-			Temp.m_RowCol[2][2] = -F[2];
+			Temp.m_RowCol[0][2] = -F.x;
+			Temp.m_RowCol[1][2] = -F.y;
+			Temp.m_RowCol[2][2] = -F.z;
 
 			*this = *this * Temp;
 

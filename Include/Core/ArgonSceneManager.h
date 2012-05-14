@@ -107,6 +107,8 @@ namespace Argon
 		Vector<SceneNode*>		m_SceneNodes;
 		Vector<Camera*>			m_Cameras;
 
+		Vector<IRenderable*>	m_Renderable;
+
 		Root*					m_Creator;	//The Root which created this Manager
 		SceneNode*				m_RootNode;
 		QString					m_Name;		//The name of the Component

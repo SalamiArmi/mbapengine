@@ -11,7 +11,7 @@ template<typename IndexType> struct AttributeInfo
 	Vector<IndexType> Faces;
 };
 
-template<typename IndexType> bool Mesh::OptimizeInplace()
+template<typename IndexType> inline bool Mesh::OptimizeInplace()
 {
 	ulong* SystemAttribs = NULL;
 	IndexType* IndexBuffer = NULL;
@@ -98,16 +98,16 @@ template<typename IndexType> bool Mesh::OptimizeInplace()
 
 		m_AttributeTable[(*it).MaterialID ].IndexCount = (*it).Faces.Size();
 
-		/*if((*it).MaxVertex == ULONG_MAX || (*it).MinVertex == -ULONG_MAX)
+		if((*it).MaxVertex == ULONG_MAX || (*it).MinVertex == -ULONG_MAX)
 		{
-			m_AttributeTable[(*it).MaterialID ].VertexCount = 0;
-			m_AttributeTable[(*it).MaterialID ].nVertexStart = 0;
+			m_AttributeTable[(*it).MaterialID].VertexCount = 0;
+			m_AttributeTable[(*it).MaterialID].VertexStart = 0;
 		}
 		else
 		{
 			m_AttributeTable[(*it).MaterialID].VertexCount = ((*it).MaxVertex - (*it).MinVertex ) + 1;
-			m_AttributeTable[(*it).MaterialID].nVertexStart = (*it).MinVertex;
-		}*/
+			m_AttributeTable[(*it).MaterialID].VertexStart = (*it).MinVertex;
+		}
 	}
 
 	m_IndexBuffer->UnloadPhysicalData();
@@ -116,7 +116,7 @@ template<typename IndexType> bool Mesh::OptimizeInplace()
 	return true;
 }
 
-template<typename IndexType> bool Mesh::GenerateTangents()
+template<typename IndexType> inline bool Mesh::GenerateTangents()
 {
 	if(m_VertexDeclaration & VERTEXDECL_Tangent)
 	{
@@ -248,7 +248,7 @@ template<typename IndexType> bool Mesh::GenerateTangents()
 	return false;
 }
 
-ulong Mesh::GetMaterialCount(ulong* AttributeBuffer, ulong FaceCount)
+inline ulong Mesh::GetMaterialCount(ulong* AttributeBuffer, ulong FaceCount)
 {
 	ulong HeighestMaterialID = 0;
 	for(ulong Index = 0; Index < m_FaceCount; ++Index)

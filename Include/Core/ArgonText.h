@@ -9,7 +9,7 @@
 
 namespace Argon
 {
-	class Text : public SceneNode
+	class Text : public SceneNode, public IArgonUnknownImp<IRenderable, GUID_IRenderable>
 	{
 	public:
 		Text(QString Name);
@@ -29,6 +29,13 @@ namespace Argon
 		///
 		///No Params:
 		bool UnLoad();
+
+		///SUPPORTSPASS(BOOL)
+		///
+		///Check if this Renderable Supports a pass
+		///
+		///Param Pass: The pass that will be checked against this is the current pass
+		bool SupportsPass(IFrameListner::RenderPass Pass);
 
 		///BIND(BOOL)
 		///

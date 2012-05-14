@@ -2,10 +2,18 @@
 #define _ARGONIRENDERABLE_HEADER_
 
 #include "IArgonUnknown.h"
+#include "IFrameListner.h"
 
 namespace Argon
 {
 	DeclareBasedInterface(IRenderable, IArgonUnknown)
+
+		///SUPPORTSPASS(BOOL)
+		///
+		///Check if this Renderable Supports a pass
+		///
+		///Param Pass: The pass that will be checked against this is the current pass
+		bool SupportsPass(IFrameListner::RenderPass Pass);
 	
 		///BIND(BOOL)
 		///

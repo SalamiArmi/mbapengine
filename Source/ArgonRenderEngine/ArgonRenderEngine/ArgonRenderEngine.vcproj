@@ -24,8 +24,6 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			>
 			<Tool
@@ -158,11 +156,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
-			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -181,14 +175,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
-				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
-				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -201,12 +187,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				LinkIncremental="1"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -313,9 +293,9 @@
 		</Configuration>
 		<Configuration
 			Name="Debug Static Lib|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			OutputDirectory="$(SolutionDir)/Build"
+			IntermediateDirectory="$(SolutionDir)/Build/$(PlatformName)/$(ProjectName)"
+			ConfigurationType="4"
 			CharacterSet="1"
 			>
 			<Tool
@@ -336,7 +316,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)Include&quot;;&quot;$(SolutionDir)Include\Core&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;ArgonDebug "
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -354,17 +335,11 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLinkerTool"
-				LinkIncremental="2"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				TargetMachine="1"
+				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\$(ProjectName)_x86.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -374,9 +349,6 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -460,7 +432,7 @@
 		</Configuration>
 		<Configuration
 			Name="Debug Dynamic Lib|Win32"
-			OutputDirectory="$(SolutionDir)/Build/$(PlatformName)"
+			OutputDirectory="$(SolutionDir)/Build"
 			IntermediateDirectory="$(SolutionDir)/Build/$(PlatformName)/$(ProjectName)"
 			ConfigurationType="2"
 			CharacterSet="1"
@@ -486,8 +458,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)Include&quot;;../../ArgonWindows"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS; "
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)Include&quot;;&quot;$(SolutionDir)Include\Core&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;ArgonAPIExport;ArgonDebug "
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -506,9 +478,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ArgonStandard_x86.lib ArgonWindows.lib"
+				AdditionalDependencies="ArgonStandard_x86.lib"
+				OutputFile="$(OutDir)\$(ProjectName)_x86.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(SolutionDir)Build/$(PlatformName)"
+				AdditionalLibraryDirectories="$(SolutionDir)Build"
 				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -614,18 +587,13 @@
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|Win32"
-			OutputDirectory="$(SolutionDir)/Build"
-			IntermediateDirectory="$(SolutionDir)/Build/$(PlatformName)/$(ProjectName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description=""
-				CommandLine=""
-				Outputs=""
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -638,13 +606,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)Include&quot;;&quot;$(SolutionDir)Include\Core&quot;"
-				PreprocessorDefinitions="ArgonAPIExport;ArgonStaticLibrary"
-				KeepComments="false"
-				RuntimeLibrary="1"
-				WarningLevel="3"
-				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -656,11 +617,13 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)\$(ProjectName)_x86.lib"
+				Name="VCLinkerTool"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -672,11 +635,16 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Argon Engine|Pocket PC 2003 (ARMV4)"
+			OutputDirectory="$(SolutionDir)Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
+			IntermediateDirectory="Pocket PC 2003 (ARMV4)\$(ConfigurationName)"
 			ConfigurationType="1"
 			>
 			<Tool
@@ -1354,11 +1322,23 @@
 			Name="Source/Root"
 			>
 			<File
+				RelativePath=".\Root\ArgonAttribute.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Root\ArgonCamera.cpp"
 				>
 			</File>
 			<File
+				RelativePath=".\Root\ArgonGeometryManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Root\ArgonGeometryParser.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Root\ArgonGeometryResource.cpp"
 				>
 			</File>
 			<File
@@ -1393,16 +1373,16 @@
 				RelativePath=".\Root\ArgonText.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Root\ArgonTransform4.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header/Core"
 			>
 			<File
 				RelativePath="..\..\..\Include\Core\ArgonAttribute.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\Include\Core\ArgonAttribute.inl"
 				>
 			</File>
 			<File
@@ -1414,11 +1394,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Core\ArgonGeometryManager.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Core\ArgonGeometryParser.h"
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Core\ArgonGeometryResource.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Core\ArgonIOMemory.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonManager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonManager.inl"
 				>
 			</File>
 			<File
@@ -1459,10 +1455,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Include\Core\ArgonTransform.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Root\ArgonTransform4.cpp"
 				>
 			</File>
 			<File

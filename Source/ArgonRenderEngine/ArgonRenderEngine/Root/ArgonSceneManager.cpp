@@ -45,7 +45,19 @@ namespace Argon
 	bool SceneManager::FrameDraw(RenderPass Pass)
 	{
 		if(Root::instance()->GetCurrentSceneManager() != this) return false;
-		
+
+		for(Vector<IRenderable*>::Iterator RenderableIt = m_Renderable.Begin(); RenderableIt != m_Renderable.End(); ++RenderableIt)
+		{
+			if((*RenderableIt)->SupportsPass(Pass))
+			{
+				if((*RenderableIt)->Bind())
+				{
+					(*RenderableIt)->FrameDraw();
+					(*RenderableIt)->UnBind();
+				}
+			}
+		}
+
 		return false;
 	}
 
@@ -80,12 +92,16 @@ namespace Argon
 
 	bool SceneManager::SupportsPass(IFrameListner::RenderPass Pass)
 	{
-		return (Pass & IFrameListner::RENDERPASS_Normal);
+		return true;
 	}
 
 	Text* SceneManager::CreateText(QString Name)
 	{
-		return NULL;
+		Text* Return = new Text("Hello World");
+		Return->Load();
+		m_Renderable.Push_Back(Return);
+
+		return Return;
 	}
 
 	Text* SceneManager::GetText(QString Name)

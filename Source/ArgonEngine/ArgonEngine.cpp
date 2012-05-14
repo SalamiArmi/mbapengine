@@ -22,6 +22,11 @@ namespace Argon
 
 	bool ArgonEngine::Load()
 	{
+		//Get Current Drive
+		char Dir[4096];
+		Dir[4095] = '\0';
+		GetCurrentDirectoryA(4096, Dir);
+
 		//Create the Platform and the Root to render with
 		CreatePlatform(&m_Platform);
 		m_Platform->Load();
@@ -63,9 +68,12 @@ namespace Argon
 		m_SceneManager = m_Root->CreateSceneManager("Main Scene");
 		m_Root->SetCurrentSceneManager(m_SceneManager);
 
-		Text* Txt = m_SceneManager->CreateText("Text Test");
-		Txt->SetText("BOOBS");
-		Txt->Load();
+		Text* t = m_SceneManager->CreateText("Hello World");
+		Vector3 Scale(10,10,0);
+		t->SetScale(Scale);
+		t->SetColor(Vector4(1,0,1,0));
+		t->SetWorldPosition(Vector3(10,10,0));
+
 
 		return true;
 	}
@@ -75,7 +83,8 @@ namespace Argon
 		try
 		{
 			//Get Time Delta
-			float DeltaT = (float)m_Timer->GetMilliseconds();
+			float DeltaT = ((float)m_Timer->GetMilliseconds() / 1000.0f) - m_TimeElapsed;
+			m_TimeElapsed += DeltaT;
 
 			//Update the Active SceneManager
 			m_Root->FrameUpdate(DeltaT);

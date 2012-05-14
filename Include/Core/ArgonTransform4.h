@@ -156,7 +156,7 @@ namespace Argon
 
 		const Vector3& GetTranslation() const
 		{
-			return (*reinterpret_cast<const Vector3 *>(&m_Single[3]));
+			return (*reinterpret_cast<const Vector3 *>(&m_RowCol[3][0]));
 		}
 
 		Transform4& SetTranslation(const Vector3& p)

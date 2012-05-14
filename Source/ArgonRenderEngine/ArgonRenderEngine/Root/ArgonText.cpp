@@ -6,7 +6,7 @@ namespace Argon
 	Text::Text(QString Name)
 		: SceneNode(Name),
 		m_Font(NULL),
-		m_Text(""),
+		m_Text("HELLO WORLD"),
 		m_Alignment(TEXTALIGN_Left),
 		m_Color(Vector4(1.0f, 1.0f, 1.0f, 1.0f))
 	{
@@ -28,6 +28,11 @@ namespace Argon
 		return false;
 	}
 
+	bool Text::SupportsPass(IFrameListner::RenderPass Pass)
+	{
+		return (Pass & IFrameListner::RENDERPASS_TopMost);
+	}
+
 	bool Text::Bind()
 	{
 		return m_Font->Bind();
@@ -35,7 +40,9 @@ namespace Argon
 
 	bool Text::FrameDraw()
 	{
-		return m_Font->Draw(m_Text, m_Color, Vector3(0,0,0), Vector3(1,1,0), m_Alignment);
+		bool DrawnText = m_Font->Draw(m_Text, m_Color, m_WorldTransform.GetTranslation(), m_WorldTransform.GetScale(), m_Alignment);
+		ArgonAssert(DrawnText);
+		return DrawnText;
 	}
 
 	bool Text::UnBind()

@@ -20,6 +20,7 @@ namespace Argon
 	{
 		ulong MaterialID;
 		ulong VertexStart;
+		ulong VertexCount;
 		ulong FaceStart;
 		ulong IndexCount;
 	};
