@@ -70,6 +70,7 @@ namespace Argon
 		IWindow*				m_Window;
 
 		Timer*					m_Timer;				//Main frame update timer
+		float					m_TimeElapsed;			//The time that has elapsed since the start of the scene
 	};
 } //Namespace
 

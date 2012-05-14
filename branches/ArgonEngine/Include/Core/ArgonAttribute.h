@@ -2,6 +2,9 @@
 #define _ARGONATTRIBUTE_HEADER_
 
 #include <Standard/ArgonVector.h>
+#include <Standard/ArgonVector2.h>
+#include <Standard/ArgonVector3.h>
+#include <Standard/ArgonVector4.h>
 #include <Standard/ArgonString.h>
 #include <Standard/ArgonMatrix3.h>
 #include <Standard/ArgonMatrix4.h>
@@ -55,91 +58,91 @@ namespace Argon
 		///Get the name of the attribute
 		///
 		///No Params:
-		inline String GetName();
+		String GetName();
 
 		///GETASBOOLEAN(BOOL)
 		///
 		///Get the internal value as a boolean
 		///
 		///No Params:
-		inline bool GetAsBoolean();
+		bool GetAsBoolean();
 
 		///GETASINTEGER(INT)
 		///
 		///Get the internal value value as a integer
 		///
 		///No Params:
-		inline int GetAsInteger();
+		int GetAsInteger();
 
 		///GETVALUE(TEMPLATE)
 		///
 		///Get the internal value value as a float
 		///
 		///No Params:
-		inline float GetAsFloat();
+		float GetAsFloat();
 
 		///GETASVECTOR2(VECTOR2)
 		///
 		///Get the internal value value as a Vector2
 		///
 		///No Params:
-		inline Vector2 GetAsVector2();
+		Vector2 GetAsVector2();
 
 		///GETASVECTOR3(VECTOR3)
 		///
 		///Get the internal value value as a Vector3
 		///
 		///No Params:
-		inline Vector3 GetAsVector3();
+		Vector3 GetAsVector3();
 
 		///GETASVECTOR4(VECTOR4)
 		///
 		///Get the internal value value as a Vector4
 		///
 		///No Params:
-		inline Vector4 GetAsVector4();
+		Vector4 GetAsVector4();
 
 		///GETASMATRIX3(MATRIX3)
 		///
 		///Get the internal value as a Matrix3
 		///
 		///No Params:
-		inline Matrix3 GetAsMatrix3();
+		Matrix3 GetAsMatrix3();
 
 		///GETASMATRIX4(MATRIX4)
 		///
 		///Get the internal value as a Matrix4
 		///
 		///No Params:
-		inline Matrix4 GetAsMatrix4();
+		Matrix4 GetAsMatrix4();
 
 		///GETASSTRING(STRING)
 		///
 		///Get the internal value as a String
 		///
 		///No Params:
-		inline String GetAsString();
+		String GetAsString();
 
 		///SETVALUE(VOID)
 		///
 		///Set the internal value
 		///
 		///Param Pass: The value in its native form
-		inline void SetValue(Any& Value);
+		void SetValue(Any& Value);
 
 		///SETALUEFROMSTRING(VOID)
 		///
 		///Set the internal value from a string
 		///
 		///Param Value: The value in string form
-		inline void SetValueFromString(String Value);
+		void SetValueFromString(String Value);
 
 		///GETTYPE(UNSIGNEDINT)
 		///
 		///Get the type of Attribute this is
 		///
 		///No Params
-		inline uint GetType();
+		uint GetType();
 
 		///ADDLISTNER(VOID)
 		///
@@ -163,9 +166,6 @@ namespace Argon
 
 		Vector<Listner*>	m_Listners;
 	}; //Class
-
-#include <ArgonAttribute.inl>
-
 } //Namespace
 
 #endif //_ARGONATTRIBUTE_HEADER_

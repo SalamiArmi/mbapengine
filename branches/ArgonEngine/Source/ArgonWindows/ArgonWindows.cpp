@@ -1,6 +1,7 @@
 #include "ArgonWindows.h"
 #include "ArgonWindowsDll.h"
 #include "ArgonWindowsWindow.h"
+#include <stdio.h>
 
 namespace Argon
 {
@@ -103,6 +104,21 @@ namespace Argon
 	{
 		Window* Win = new Window();
 		return Win;
+	}
+
+	Vector<char> WindowsPlatform::GetFileData(String FileName)
+	{
+		FILE* File = NULL;
+		fseek(File, 0, SEEK_END); //Seek the end of the file to get the size
+		long FileSize = ftell(File);
+		rewind(File); //Place the reader back to the start
+
+		Vector<char> FileContenst;
+		FileContenst.Resize(FileSize);
+		fread(&FileContenst[0], 1, FileSize, File); //Read the total amount of bytes
+
+		fclose(File);
+		return FileContenst;
 	}
 
 } //Namespace

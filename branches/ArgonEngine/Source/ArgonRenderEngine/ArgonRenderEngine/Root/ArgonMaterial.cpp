@@ -18,6 +18,11 @@ namespace Argon
 	{
 	}
 
+	String Material::GetName()
+	{
+		return m_Name;
+	}
+
 	void Material::Add(String Name, AttributeType Type)
 	{
 		//TODO

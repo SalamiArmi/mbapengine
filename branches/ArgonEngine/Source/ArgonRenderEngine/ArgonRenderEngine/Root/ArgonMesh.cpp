@@ -19,6 +19,21 @@ namespace Argon
 	{
 	}
 
+	Mesh::Mesh()
+		: m_VertexDeclaration(IRenderSystem::VERTEXDECL_Unknown),
+		m_VideoVertexDeclaration(IRenderSystem::VERTEXDECL_Unknown),
+		m_VideoVertexBuffer(NULL),
+		m_VideoIndexBuffer(NULL),
+		m_VertexCount(0),
+		m_FaceCount(0),
+		m_Dirty(false),
+		m_IndicesAre32bit(true),
+		m_VertexBuffer(NULL),
+		m_IndexBuffer(NULL),
+		m_AttributeBuffer(NULL)
+	{
+	}
+
 	Mesh::~Mesh()
 	{
 
@@ -132,6 +147,94 @@ namespace Argon
 	ulong Mesh::GetStride()
 	{
 		return 0;
+	}
+
+	bool Mesh::Intersect(const Vector3& CollisionOrigin, const Vector3& CollisionDirection, Vector3& Intersection, int& MaterialID)
+	{
+		//Vector3 MeshOrg(m_BoundingSphereCentre.x,m_BoundingSphereCentre.y,m_BoundingSphereCentre.z);
+		//Vector3 RayOrg(rCollisionOrigin.x,rCollisionOrigin.y,rCollisionOrigin.z);
+		//Vector3 RayDir(rCollisionDirection.x,rCollisionDirection.y,rCollisionDirection.z);
+		//RayDir.Normalize();
+		//Vector3 PointOnRay( RayOrg + RayDir * ((MeshOrg-RayOrg).Dot(RayDir)) );
+		//float RayToCenterDistSquared = (PointOnRay-MeshOrg).MagnitudeSquared();
+		//if( RayToCenterDistSquared > m_BoundingSphereRadius*m_BoundingSphereRadius ) {
+		//	// ray and sphere do not intersect
+		//	return false;
+		//} else {
+		//	bool bIntersect = false;
+
+		//	unsigned char* pIndices = NULL;
+		//	m_pIndexBuffer->Lock( (void**)&pIndices, IBuffer::LOCKTYPE_ReadOnly );
+		//	unsigned char* pVertices = NULL;
+		//	m_pVertexBuffer->Lock( (void**)&pVertices, IBuffer::LOCKTYPE_ReadOnly );
+		//	for(ulong i=0; i<m_nFaceCount; ++i) {
+		//		ulong iV0 = (m_bIndicesAre32bit) ?  *((ulong*)pIndices + i*3 + 0) : *((ushort*)pIndices + i*3 + 0);
+		//		assert(iV0<m_nVertexCount);
+		//		ulong iV1 = (m_bIndicesAre32bit) ?  *((ulong*)pIndices + i*3 + 1) : *((ushort*)pIndices + i*3 + 1);
+		//		assert(iV1<m_nVertexCount);
+		//		ulong iV2 = (m_bIndicesAre32bit) ?  *((ulong*)pIndices + i*3 + 2) : *((ushort*)pIndices + i*3 + 2);
+		//		assert(iV2<m_nVertexCount);
+		//		const Vector3& rV0 = *((const Vector3*)( pVertices + m_nSystemMemoryStride*iV0 ));
+		//		const Vector3& rV1 = *((const Vector3*)( pVertices + m_nSystemMemoryStride*iV1 ));
+		//		const Vector3& rV2 = *((const Vector3*)( pVertices + m_nSystemMemoryStride*iV2 ));
+
+		//		Vector3 TriNorm( (rV1-rV0).Cross( rV2-rV0 ) );
+		//		float Denominator = RayDir.Dot(TriNorm);
+		//		if( !bIgnoreTriangleNormals && Denominator>=0.0f ) {
+		//			continue;
+		//		}
+		//		Vector3 W( RayOrg - rV0 );
+		//		float Numerator = -TriNorm.Dot( W );
+		//		if( !bIgnoreTriangleNormals && Numerator>=0.0 ) {
+		//			// Denominator is always negative, thus S will be negative. We dont want that.
+		//			continue;
+		//		}
+		//		float S = Numerator / Denominator;
+		//		if( S >= 0.0f ) { // avoid NaN
+		//			Vector3 IntersectionPoint = RayOrg + RayDir*S;
+		//			Vector3 Test0( (rV1-rV0).Cross(IntersectionPoint-rV0) );
+		//			if( Test0.Dot(TriNorm)<0.0f ) {
+		//				continue;
+		//			}
+		//			Vector3 Test1( (rV2-rV1).Cross(IntersectionPoint-rV1) );
+		//			if( Test1.Dot(TriNorm)<0.0f ) {
+		//				continue;
+		//			}
+		//			Vector3 Test2( (rV0-rV2).Cross(IntersectionPoint-rV2) );
+		//			if( Test2.Dot(TriNorm)<0.0f ) {
+		//				continue;
+		//			}
+
+		//			// Ok, this triangle does intersect with our ray.
+		//			bool bUpdate = false;
+		//			if(!bIntersect) {
+		//				// first intersecting triangle found
+		//				bUpdate = true;
+		//			} else {
+		//				// is the new point closer to the camera ?
+		//				bUpdate = ((rCollisionOrigin-IntersectionPoint).MagnitudeSquared()) < ((rCollisionOrigin-rIntersection).MagnitudeSquared());
+		//			}
+		//			if(bUpdate) {
+		//				rIntersection = IntersectionPoint;
+		//				if(m_pAttributeBuffer) {
+		//					int* pMaterialIDs = NULL;
+		//					m_pAttributeBuffer->Lock( (void**)&pMaterialIDs, IBuffer::LOCKTYPE_ReadOnly );
+		//					rMaterialID = pMaterialIDs[i];
+		//					m_pAttributeBuffer->UnLock();
+		//				} else {
+		//					rMaterialID = 0;
+		//				}
+		//			}
+		//			bIntersect = true;
+		//		}
+		//	}
+		//	m_pVertexBuffer->UnLock();
+		//	m_pIndexBuffer->UnLock();
+
+		//	return bIntersect;
+		//}
+
+		return false;
 	}
 
 	void Mesh::UploadToVideoMemory()

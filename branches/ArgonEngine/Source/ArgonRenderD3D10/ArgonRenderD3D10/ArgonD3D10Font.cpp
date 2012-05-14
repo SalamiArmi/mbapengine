@@ -2,6 +2,8 @@
 #include "ArgonD3D10RenderTarget.h"
 #include "ArgonD3D10ShaderCompiler.h"
 
+#include "Dxerr.h"
+
 namespace Argon
 {
 	ID3DX10Sprite* D3D10Font::m_Sprite = NULL;
@@ -27,7 +29,7 @@ namespace Argon
 
 		if(!m_Sprite)
 		{
-			if(D3DX10CreateSprite(Device, 4096, &m_Sprite) != S_OK)
+			if(D3DX10CreateSprite(Device, 1, &m_Sprite) != S_OK)
 			{
 				assert(false);
 			}
@@ -64,7 +66,7 @@ namespace Argon
 	{
 		if(m_Sprite)
 		{
-			if(m_Sprite->Begin(D3DX10_SPRITE_SORT_TEXTURE) == S_OK)
+			if(m_Sprite->Begin(D3DX10_SPRITE_SORT_DEPTH_FRONT_TO_BACK) == S_OK)
 			{
 				return true;
 			}
@@ -78,13 +80,21 @@ namespace Argon
 		RECT Rectangle;
 		Rectangle.left = (long)Position.x;
 		Rectangle.top = (long)Position.y;
-		Rectangle.right = (long)(m_Width * Scale.x);
-		Rectangle.bottom = (long)(m_Height * Scale.y);
+		Rectangle.right = 0;
+		Rectangle.bottom = 0;
 
 		HRESULT hr = S_OK;
-		hr = m_Font->DrawTextA(m_Sprite, Text.c_str(), -1, &Rectangle, Align, D3DXCOLOR(Col.x, Col.y, Col.z, Col.w));
+		hr = m_Font->PreloadTextA(Text.c_str(), Text.Length());
+		hr = m_Font->DrawTextA(m_Sprite, Text.c_str(), Text.Length(), &Rectangle, Align | DT_NOCLIP, D3DXCOLOR(Col.x, Col.y, Col.z, Col.w));
 
-		if( hr == S_OK)
+		const char* Error = DXGetErrorStringA(hr);
+		const char* Desc = DXGetErrorDescriptionA(hr);
+
+		char Dir[4096];
+		Dir[4095] = '\0';
+		GetCurrentDirectoryA(4096, Dir);
+
+		if(hr == S_OK)
 			return true;
 
 		return false;

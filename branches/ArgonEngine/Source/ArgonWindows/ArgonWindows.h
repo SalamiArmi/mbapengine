@@ -27,6 +27,7 @@ namespace Argon
 		bool			UnLoadLibrary(String LibraryFileName);						///UnLoad the Library to freeup memory
 		void			FindAllFiles(String Directory, Vector<String>* Out);		///Find all files in a directory
 		IWindow*		CreateArgonWindow();
+		Vector<char>	GetFileData(String FileName);								///Get the contenst of a file and put it into a Vector of char's
 
 	protected:
 		Vector<WindowsDll*>				m_LoadedLibraries;				//All Current loaded libraries, When the Platoform is deleted remove all platforms

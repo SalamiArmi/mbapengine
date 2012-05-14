@@ -30,6 +30,13 @@ namespace Argon
 		Material(String Name, const char* FileData);
 		~Material();
 
+		///GETNAME(STRING)
+		///
+		///Get the name of this $Material$
+		///
+		///No Params:
+		String GetName();
+
 		///ADD(VOID)
 		///
 		///Add a new $Attribute$ to this $Material$, the $Attribute$ is created internally

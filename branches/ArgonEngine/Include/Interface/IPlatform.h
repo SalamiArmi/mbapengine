@@ -53,6 +53,13 @@ namespace Argon
 		///No Params:
 		IWindow* CreateArgonWindow() = 0;
 
+		///GETFILEDATA(VECTOR<CHAR>)
+		///
+		///Get the contenst of a file and put it into a Vector of char's
+		///
+		///No Params:
+		Vector<char> GetFileData(String FileName);
+
 	EndInterface(IPlatform)
 
 	ArgonExport void CreatePlatform(IPlatform** Platform);
