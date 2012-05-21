@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ArgonLinux" />
+		<Option pch_mode="2" />
+		<Option compiler="icc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../../Build/libArgonLinux" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="../../Build/ArgonLinux/" />
+				<Option type="2" />
+				<Option compiler="icc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="/Zi" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="../../Build/libArgonLinux" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="../../Build/ArgonLinux/" />
+				<Option type="2" />
+				<Option compiler="icc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="/O2" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="../../Include/Interface/ArgonInterface.h" />
+		<Unit filename="../../Include/Interface/IArgonUnknown.h" />
+		<Unit filename="../../Include/Interface/IArgonUnknownImp.h" />
+		<Unit filename="../../Include/Interface/IBuffer.h" />
+		<Unit filename="../../Include/Interface/IComponent.h" />
+		<Unit filename="../../Include/Interface/IDriver.h" />
+		<Unit filename="../../Include/Interface/IFont.h" />
+		<Unit filename="../../Include/Interface/IFrameListner.h" />
+		<Unit filename="../../Include/Interface/IMessageBoard.h" />
+		<Unit filename="../../Include/Interface/IMessageBoardReader.h" />
+		<Unit filename="../../Include/Interface/IOStream.h" />
+		<Unit filename="../../Include/Interface/IPlatform.h" />
+		<Unit filename="../../Include/Interface/IRenderSystem.h" />
+		<Unit filename="../../Include/Interface/IRenderable.h" />
+		<Unit filename="../../Include/Interface/ISceneManager.h" />
+		<Unit filename="../../Include/Interface/IShader.h" />
+		<Unit filename="../../Include/Interface/ISurface.h" />
+		<Unit filename="../../Include/Interface/ITexture.h" />
+		<Unit filename="../../Include/Interface/IVideoMode.h" />
+		<Unit filename="../../Include/Interface/IViewport.h" />
+		<Unit filename="../../Include/Interface/IWindow.h" />
+		<Unit filename="../../Include/Standard/ArgonAny.h" />
+		<Unit filename="../../Include/Standard/ArgonBase.h" />
+		<Unit filename="../../Include/Standard/ArgonBaseTree.h" />
+		<Unit filename="../../Include/Standard/ArgonEvent.h" />
+		<Unit filename="../../Include/Standard/ArgonEvent.inl" />
+		<Unit filename="../../Include/Standard/ArgonEventWin32.h" />
+		<Unit filename="../../Include/Standard/ArgonException.h" />
+		<Unit filename="../../Include/Standard/ArgonIOExplorer.h" />
+		<Unit filename="../../Include/Standard/ArgonList.h" />
+		<Unit filename="../../Include/Standard/ArgonLog.h" />
+		<Unit filename="../../Include/Standard/ArgonMap.h" />
+		<Unit filename="../../Include/Standard/ArgonMatrix3.h" />
+		<Unit filename="../../Include/Standard/ArgonMatrix3.inl" />
+		<Unit filename="../../Include/Standard/ArgonMatrix4.h" />
+		<Unit filename="../../Include/Standard/ArgonMatrix4.inl" />
+		<Unit filename="../../Include/Standard/ArgonMemory.h" />
+		<Unit filename="../../Include/Standard/ArgonMemoryPool.h" />
+		<Unit filename="../../Include/Standard/ArgonMessageBoardManager.h" />
+		<Unit filename="../../Include/Standard/ArgonMutex.h" />
+		<Unit filename="../../Include/Standard/ArgonMutex.inl" />
+		<Unit filename="../../Include/Standard/ArgonMutexWin32.h" />
+		<Unit filename="../../Include/Standard/ArgonPair.h" />
+		<Unit filename="../../Include/Standard/ArgonPhysicalMemory.h" />
+		<Unit filename="../../Include/Standard/ArgonPlatform.h" />
+		<Unit filename="../../Include/Standard/ArgonQString.h" />
+		<Unit filename="../../Include/Standard/ArgonQuaternion.h" />
+		<Unit filename="../../Include/Standard/ArgonShared.h" />
+		<Unit filename="../../Include/Standard/ArgonSingleton.h" />
+		<Unit filename="../../Include/Standard/ArgonStandard.h" />
+		<Unit filename="../../Include/Standard/ArgonString.h" />
+		<Unit filename="../../Include/Standard/ArgonStringAllocator.h" />
+		<Unit filename="../../Include/Standard/ArgonStringConvertor.h" />
+		<Unit filename="../../Include/Standard/ArgonStringConvertor.inl" />
+		<Unit filename="../../Include/Standard/ArgonThread.h" />
+		<Unit filename="../../Include/Standard/ArgonThread.inl" />
+		<Unit filename="../../Include/Standard/ArgonThreadTarget.h" />
+		<Unit filename="../../Include/Standard/ArgonThreadTarget.inl" />
+		<Unit filename="../../Include/Standard/ArgonThreadWin32.h" />
+		<Unit filename="../../Include/Standard/ArgonTimer.h" />
+		<Unit filename="../../Include/Standard/ArgonTree.h" />
+		<Unit filename="../../Include/Standard/ArgonVector.h" />
+		<Unit filename="../../Include/Standard/ArgonVector2.h" />
+		<Unit filename="../../Include/Standard/ArgonVector3.h" />
+		<Unit filename="../../Include/Standard/ArgonVector3.inl" />
+		<Unit filename="../../Include/Standard/ArgonVector4.h" />
+		<Unit filename="ArgonLinux.h" />
+		<Unit filename="Linux.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

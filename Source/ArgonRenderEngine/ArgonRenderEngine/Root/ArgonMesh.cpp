@@ -62,7 +62,7 @@ namespace Argon
 	}
 
 	bool Mesh::Draw(ulong MeshID)
-	{	
+	{
 		Root::instance()->GetActiveRenderSystem()->DrawPrimitive(m_AttributeTable[MeshID]);
 		return true;
 	}
@@ -301,6 +301,15 @@ namespace Argon
 		}
 
 		return Size * sizeof(float);
+	}
+
+	void Mesh::PreDrawCallback(IShader* BoundShader)
+	{
+	}
+
+	bool Mesh::PostDrawCallback(IShader* BoundShader)
+	{
+		return false;
 	}
 
 } //namespace

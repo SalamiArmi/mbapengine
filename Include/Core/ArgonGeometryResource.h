@@ -5,10 +5,11 @@
 #include "ArgonGeometryParser.h"
 #include "ArgonMesh.h"
 #include "ArgonMaterial.h"
+#include "ArgonEntity.h"
 
 namespace Argon
 {
-	class GeometryResource : public Mesh
+	class GeometryResource : public Mesh, public Entity
 	{
 	public:
 		GeometryResource(String Name);
