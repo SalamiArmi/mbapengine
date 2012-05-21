@@ -24,110 +24,112 @@ namespace Argon
 	public:
 		Root(IPlatform* Platform);
 
+		
+
 		///SETPLATFORM(VOID)
 		///
 		/// Set the Desired platform
 		///
 		///Param Platfom: 
-		void				SetPlatform(IPlatform* Platform);
+		void SetPlatform(IPlatform* Platform);
 
 		///LOAD(BOOL)
 		///
 		///Load and init the Root
 		///
 		///No Params:
-		bool				Load();
+		bool Load();
 
 		///UNLOAD(VOID)
 		///
 		///Release and Cleanup the Root
 		///
 		///No Params:
-		bool				UnLoad();
+		bool UnLoad();
 
 		///CREATE(BOOL)
 		///
 		/// Create the Rendersystem with the desired Resolution and window
 		///
 		///No Params:
-		bool				Create(void* Window, size_t RenderSystemIndex, size_t DriverIndex, size_t ModeIndex);
+		bool Create(void* Window, size_t RenderSystemIndex, size_t DriverIndex, size_t ModeIndex);
 
 		///FRAMEUPDATE(BOOL)
 		///
 		/// Update the Frame
 		///
 		///Param DeltaT:
-		bool				FrameUpdate(float DeltaT);
+		bool FrameUpdate(float DeltaT);
 
 		///DRAWONEFRAME(BOOL)
 		///
 		/// Render a single fame
 		///
 		///Param DeltaT: The new frame time since last frame
-		bool				DrawOneFrame();
+		bool DrawOneFrame();
 
 		///GETRENDERSYSTEMCOUNT(SIZE_T)
 		///
 		///Get all the Found and loaded rendersystems once the render system is chosen all others are unloaded
 		///
 		///No Params:
-		size_t				GetRenderSystemCount();
+		size_t GetRenderSystemCount();
 
 		///GETRENDERSYSTEM(IRENDERSYSTEM)
 		///
 		///Get a RenderSystem
 		///
 		///Param Index: Which render system to get
-		IRenderSystem*		GetRenderSystem(size_t Index) const;
+		IRenderSystem* GetRenderSystem(size_t Index) const;
 
 		///CREATESCENEMANAGER(SCENEMANAGER)
 		///
 		/// Create a new SceneManager
 		///
 		///No Params:
-		SceneManager*		CreateSceneManager(QString Name);
+		SceneManager* CreateSceneManager(QString Name);
 
 		///UNLOADSCENEMANAGER(VOID)
 		///
 		///Unload a desired SceneManager
 		///
 		///Param Manager: The SceneManager that will be Destroyed or removed from existance
-		void				UnLoadSceneManager(SceneManager* Manager);
+		void UnLoadSceneManager(SceneManager* Manager);
 
 		///GETCURRENTSCENEMANAGER(SCENEMANAGER)
 		///
 		/// Get the Current SceneManager that is being used to render the frames
 		///
 		///No Params:
-		SceneManager*		GetCurrentSceneManager() const;
+		SceneManager* GetCurrentSceneManager() const;
 
 		///SETCURRENTSCENEMANAGER(VOID)
 		///
 		/// Set the Current SceneManager
 		///
 		///No Params:
-		void				SetCurrentSceneManager(SceneManager* Manager);
+		void SetCurrentSceneManager(SceneManager* Manager);
 
 		///ADDFRAMELISTNER(VOID)
 		///
 		/// Add a frame listner to the Render Calls
 		///
 		///Param FrameListner: The Listner that will be called when a new frame is rendered
-		void				AddFrameListner(IFrameListner* FrameListner);
+		void AddFrameListner(IFrameListner* FrameListner);
 
 		///REMOVEFRAMELISTNER(VOID)
 		///
 		/// Remove the desired frame listners
 		///
 		///Param FrameListner: The Listner that will be removed from the New Frame Calls
-		void				RemoveFrameListner(IFrameListner* FrameListner);
+		void RemoveFrameListner(IFrameListner* FrameListner);
 
 		///GETACTIVERENDERSYSTEM(IRENDERSYSTEM)
 		///
 		/// Get the current working render system
 		///
 		///No Params:
-		IRenderSystem*		GetActiveRenderSystem() const;
+		IRenderSystem* GetActiveRenderSystem() const;
 
 	protected:
 		Root();

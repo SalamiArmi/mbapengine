@@ -68,13 +68,6 @@ namespace Argon
 		m_SceneManager = m_Root->CreateSceneManager("Main Scene");
 		m_Root->SetCurrentSceneManager(m_SceneManager);
 
-		Text* t = m_SceneManager->CreateText("Hello World");
-		Vector3 Scale(10,10,0);
-		t->SetScale(Scale);
-		t->SetColor(Vector4(1,0,1,0));
-		t->SetWorldPosition(Vector3(10,10,0));
-
-
 		return true;
 	}
 

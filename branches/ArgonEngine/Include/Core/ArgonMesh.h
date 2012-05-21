@@ -3,6 +3,7 @@
 
 #include <Standard/ArgonVector.h>
 
+#include <Interface/IShader.h>
 #include <Interface/IBuffer.h>
 #include <Interface/IRenderSystem.h>
 #include <Standard/ArgonPhysicalMemory.h>
@@ -143,6 +144,42 @@ namespace Argon
 		///Param MaterialID: The Material ID that intersected
 		bool Intersect(const Vector3& CollisionOrigin, const Vector3& CollisionDirection, Vector3& Intersection, int& MaterialID);
 
+		///PREPACKTRANSFORMS(VOID)
+		///
+		///When the Geometry is rendered all transforms packed will be rendered at once
+		///
+		///Param Transforms: All the Transforms used to draw
+		///Param Count: The total amount of Transforms in the Ptr
+		void PrePackTransforms(Matrix4* Transforms, uint Count);
+
+		///GETPREPACKEDTRANSFORM(MATRIX4)
+		///
+		///Get a pre packed transform
+		///
+		///Param Index: Which Transform to retrieve
+		void PrePackedTransformsCount(uint Index);
+
+		///GETPREPACKEDTRANSFORMSCOUNT(VOID)
+		///
+		///Get how many transforms are packed into this mesh
+		///
+		///No Params:
+		void GetPrePackedTransformsCount();
+
+		///PREDRAWCALLBACK(VOID)
+		///
+		///When the material is about to draw the geometry this will be called
+		///
+		///Param BoundShader: The current bound shader being used to draw
+		virtual void PreDrawCallback(IShader* BoundShader);
+
+		///POSTDRAWCALLBACK(VOID)
+		///
+		///When the material has finished drawing the geometry this will be called
+		///
+		///Param BoundShader: The current bound shader being used to draw
+		virtual bool PostDrawCallback(IShader* BoundShader);
+
 	protected:
 
 		///UPLOADTOVIDEOMEMORY(VOID)
@@ -180,6 +217,8 @@ namespace Argon
 		///
 		///Param Decl: The Declaration being measured
 		unsigned GetDeclarationSize(IRenderSystem::VertexDeclaration& Decl);
+
+		Vector<Matrix4>						m_PackedTransforms;
 
 		IRenderSystem::VertexDeclaration	m_VertexDeclaration;
 		PhysicalMemory<char>*				m_VertexBuffer;

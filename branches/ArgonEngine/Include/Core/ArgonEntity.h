@@ -19,14 +19,7 @@ namespace Argon
 			TYPE_Animator	= 'ANIM',
 		}; //Enum
 
-		Entity(String ResourceName, Type EntityType);
-
-		///DRAW(BOOL)
-		///
-		///
-		///
-		///No Params:
-		bool Draw();
+		Entity(Type EntityType);
 
 		///GETTYPE(TYPE)
 		///
@@ -35,16 +28,9 @@ namespace Argon
 		///No Params:
 		Type GetType();
 
-		///ATTATCH(BOOL)
-		///
-		/// Attatch a $Scenenode$ which will allow the entity to have a transform
-		///
-		///Param Node: The node which will hold all the transformed information
-		bool Attatch(SceneNode* Node);
-
 		///DETATCH(BOOL)
 		///
-		/// Detatch the $Scenenode$ that is currently holding the Transformed information
+		/// Detatch from the $Scenenode$ that is currently holding the Transformed information
 		///
 		///No Params:
 		bool Detatch();
@@ -64,10 +50,9 @@ namespace Argon
 		Manipulator* GetManipulator();
 
 	private:
-		String			m_ResourceName;
-		Type			m_Type;
-		SceneNode*		m_SceneNode;
-		Manipulator*	m_Manipulator;
+		Type					m_Type;
+		Array<SceneNode*>		m_SceneNode;
+		Manipulator*			m_Manipulator;
 	};
 } //Namespace
 
