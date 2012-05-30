@@ -19,6 +19,9 @@ namespace OOS
 #		endif
 #	endif
 
+	typedef unsigned int UINT;
+	typedef unsigned short USHORT;
+	typedef unsigned __int64 UINT64;
 }
 
 #endif //_CONFIG_HEADER_

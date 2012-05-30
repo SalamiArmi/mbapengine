@@ -4,10 +4,12 @@
 #include "Window.h"
 #include "Vector.h"
 #include "Singleton.h"
+#include "Config.h"
 #include <string>
 
 namespace OOS
 {
+
 	class RenderingSystem;
 	class Manager;
 	class SceneManager;

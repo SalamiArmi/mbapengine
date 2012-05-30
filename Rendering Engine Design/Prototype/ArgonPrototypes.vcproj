@@ -171,6 +171,10 @@
 			Name="Platform Dependencies"
 			>
 			<File
+				RelativePath=".\Platform Dependencies\ArgonBoundingBox.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Platform Dependencies\ArgonEvent.cpp"
 				>
 			</File>
@@ -187,6 +191,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ArgonLog.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Platform Dependencies\ArgonMap.h"
 				>
 			</File>
@@ -199,6 +207,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\AgronPrototypes\Platform Dependencies\ArgonMemoryPool.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Platform Dependencies\ArgonMutex.cpp"
 				>
 			</File>
@@ -208,6 +220,10 @@
 			</File>
 			<File
 				RelativePath=".\Platform Dependencies\ArgonMutexWin32.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Platform Dependencies\ArgonPair.h"
 				>
 			</File>
 			<File

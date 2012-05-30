@@ -5,6 +5,8 @@
 #include "ArgonMutex.h"
 #include "ArgonEvent.h"
 
+#include "ArgonPair.h"
+
 #include "stdio.h"
 #include "math.h"
 #include "time.h"
@@ -13,7 +15,9 @@
 #include <iostream>
 #include <map>
 
-#include <ArgonMemory.h>
+#include "C:\Users\Mitchel\Desktop\Rendering Engine\trunk\Rendering Engine Design\Prototype\AgronPrototypes\Platform Dependencies\ArgonMemoryPool.h"
+
+Argon::MemoryPool* Pool2;
 
 Argon::Event GlobalEvent;
 
@@ -22,9 +26,13 @@ class StdThread : public Argon::ThreadTarget
 public:
 	void Method()
 	{
-		Argon::AutoPtr< Argon::CharAllocator > pp;
+		GlobalEvent.Wait();
+		for (int i = 0; i < 10000; ++i)
+		{
+			char *ptrArray = new char[1000];
+		}
 
-		char* AllocatedStr = pp->Allocate(5);
+		std::cout << "New Done" << std::endl;
 	}
 };
 
@@ -34,41 +42,25 @@ public:
 	void Method()
 	{
 		GlobalEvent.Wait();
-		for (int i = 0; i < 100000; ++i)
+		Argon::Vector< char* > pppp;
+		for (int i = 0; i < 10000; ++i)
 		{
-			Argon::String aaaa;	
-			aaaa = "TESTING STRING";
-			char a = aaaa.At(0);
-			aaaa += "AAA";
-			bool t = aaaa == "TESTING STRING";
-			t = aaaa != "TESTING STRING";
-			aaaa += aaaa;
-
-			for(Argon::String::Iterator it = aaaa.Begin(); it != aaaa.End(); ++it)
-			{
-				int i = 0;
-				std::stringstream
-			}
+			char *ptrArray = (char *)Pool2->GetDataBlock(1000) ;
+			pppp.Push_Back( ptrArray );
 		}
 
-
-		std::cout << "Argon String Done" << std::endl;
+		std::cout << "Argon MemoryPool Done" << std::endl;
 	}
 };
 
 int main()
 {
-	Argon::Map<int, int> mm;
-	std::cout << sizeof(Argon::Map<int, int>) << std::endl;
-	for (int i = 0; i < 1000000; ++i)
-	{
-		mm.Insert(i,i);
-	}
-
 	StdThread TargetA;
 	ArgonStringThread TargetB;
 
 	Argon::Thread threads[2];
+
+	Pool2 = new Argon::MemoryPool(128);
 
 	threads[0].Start(&TargetA);
 	threads[1].Start(&TargetB);
@@ -82,5 +74,6 @@ int main()
 
 	threads[0].Stop();
 	threads[1].Stop();
+
 	return 0;
 }

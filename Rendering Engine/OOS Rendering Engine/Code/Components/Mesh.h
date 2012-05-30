@@ -4,33 +4,27 @@
 #include "Pair.h"
 #include <string>
 
-
 namespace OOS
 {
-
 	class Mesh
 	{
 	public:
+		Mesh();
 		virtual ~Mesh();
 
 		virtual bool loadMesh(std::string fileName) { return false; }
 				
-		virtual void releaseMesh() 
-		{ 
-			SafeRelease<m_AdjcentsBuffer>; 
-			SafeRelease<m_MaterialBuffer>; 
-			SafeRelease<m_EffectBuffer>; 
-		}
+		virtual void releaseMesh();
 
 	protected:
 
-		Pair<D3DMATERIAL9, LPDIRECT3DTEXTURE9> m_Materials;
+		/*Pair<D3DMATERIAL9, LPDIRECT3DTEXTURE9> m_Materials;
 
 		DWORD m_Segments;
 		
 		LPD3DXBUFFER m_AdjcentsBuffer;
 		LPD3DXBUFFER m_MaterialBuffer;
-		LPD3DXBUFFER m_EffectBuffer;
+		LPD3DXBUFFER m_EffectBuffer;*/
 	};
 
 }
