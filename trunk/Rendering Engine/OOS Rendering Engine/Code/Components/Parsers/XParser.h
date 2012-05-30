@@ -2,18 +2,20 @@
 #define _XPARSER_HEADER_
 
 #include <string>
+#include "Parser.h"
 
 namespace OOS
 {
-	class Parser;
-
 	class XParser : public Parser
 	{
 	public:
-		XParser(std::string Name);
+		XParser();
 		~XParser();
 
+		Mesh* ReadFile( std::string FileName );
+		bool writeFile( std::string FileName );
 
+		bool canParse( std::string FileName );
 
 	protected:
 

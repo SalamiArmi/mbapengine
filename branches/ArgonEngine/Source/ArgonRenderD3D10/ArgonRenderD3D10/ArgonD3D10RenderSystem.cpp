@@ -414,6 +414,13 @@ namespace Argon
 		m_ClearColor[3] = B;
 	}
 
+	ISprite* D3D10RenderSystem::CreateSprite(uint MaxInstances)
+	{
+		D3D10Sprite* Sprite = new D3D10Sprite(MaxInstances);
+		Sprite->Load();
+		return Sprite;
+	}
+
 	D3D10Device* D3D10RenderSystem::GetDevice()
 	{
 		return m_Device;

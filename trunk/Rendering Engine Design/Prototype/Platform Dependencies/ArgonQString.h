@@ -12,7 +12,7 @@
 
 #include "ArgonQString.h"
 #include "ArgonPlatform.h"
-#include "ArgonMap.h"
+#include "ArgonPair.h"
 #include "ArgonVector.h"
 #include "ArgonSingleton.h"
 #include "ArgonString.h"
@@ -124,14 +124,14 @@ namespace Argon
 		T CreateString(T String, QStringT<T> Referance) const
 		{
 			//Check if the string exists
-			if( !m_Referances.IsEmpty() )
+			if( m_Referances.Size() > 0 )
 			{
-				for(Map<const T, Vector<QStringT<T>>>::container* it = m_Referances.First(); it != m_Referances.Last(); ++it)
+				for(Vector<Pair<const T, Vector<QStringT<T>>>>::Const_Iterator it = m_Referances.Begin(); it != m_Referances.End(); ++it)
 				{
-					if((*it).m_Key == String)
+					if((*it).First == String)
 					{
-						(*it).m_Data.Push_Back(Referance);
-						return (*it).m_Key;
+						(*it).Second.Push_Back(Referance);
+						return (*it).First;
 					}
 				}
 			}
@@ -142,7 +142,7 @@ namespace Argon
 			T StoreString = m_Allocator->Allocate(m_Allocator->Length(String));
 			for(size_t Index = 0; Index < m_Allocator->Length(String); ++Index)
 				StoreString[Index] = String[Index];
-			m_Referances.Insert(StoreString, StoreVector);
+			m_Referances.Push_Back(MakePair(StoreString, StoreVector));
 
 			return StoreString;
 		}
@@ -152,16 +152,16 @@ namespace Argon
 		{
 			if(!m_Referances.IsEmpty())
 			{
-				Map< const T, Vector<QStringT<T>>>::container* it = m_Referances.First();
-				for(ulong Index = 0; it != m_Referances.Last(); ++it, ++Index)
+				Vector<Pair<const T, Vector<QStringT<T>>>>::Const_Iterator it = m_Referances.Begin();
+				for(ulong Index = 0; it != m_Referances.End(); ++it, ++Index)
 				{
-					if((*it).m_Key == String)
+					if((*it).First == String)
 					{
-						(*it).m_Data.Erase((*it).m_Data.Begin() + Index);
-						if((*it).m_Data.Size() == 0)
+						(*it).Second->Erase((*it).Second.Begin() + Index)8
+						if((*it).Second.Size() == 0)
 						{
-							delete (*it).m_Key;
-							//m_Referances.Erase(it);
+							delete (*it).First;
+							m_Referances.Erase(it);
 						}	
 						return true;
 					}
@@ -178,7 +178,7 @@ namespace Argon
 	protected:
 
 	private:
-		Map<const T, Vector<QStringT<T>>> m_Referances;
+		Vector<Pair<const T, Vector<QStringT<T>>>> m_Referances;
 		AllocatorT* m_Allocator;
 	};
 

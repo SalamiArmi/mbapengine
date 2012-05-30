@@ -312,13 +312,7 @@ namespace Argon
 							ArgonAssert((*MeshIterator).First->Bind());
 
 							//Draw the Mesh ID
-							
-							for(uint PackCount = 0; PackCount < (*MeshIterator).First->GetPrePackedTransformsCount(); ++PackCount)
-							{
-								(*MeshIterator).First->PreDrawCallback((*ShaderIterator).m_Shader);
-								ArgonAssert((*MeshIterator).First->Draw((*MeshIterator).Second)); //Draw
-								(*MeshIterator).First->PostDrawCallback((*ShaderIterator).m_Shader);
-							}
+							ArgonAssert((*MeshIterator).First->Draw((*ShaderIterator).m_Shader, (*MeshIterator).Second)); //Draw
 							 
 
 							ArgonAssert((*MeshIterator).First->UnBind());

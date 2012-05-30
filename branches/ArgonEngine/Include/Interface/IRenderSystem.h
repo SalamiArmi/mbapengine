@@ -9,6 +9,7 @@
 #include "IFont.h"
 #include "IBuffer.h"
 #include "IShader.h"
+#include "ISprite.h"
 
 #include <Standard/ArgonMatrix4.h>
 
@@ -74,14 +75,14 @@ namespace Argon
 		///Get all the supported drivers for this renderer and computer
 		///
 		///No Params:
-		size_t		GetDriverCount() = 0;
+		size_t GetDriverCount() = 0;
 
 		///GETDRIVER(IDRIVER)
 		///
 		///Get a driver from the renderer
 		///
 		///Param Index: Which driver to retrieve
-		IDriver*	GetDriver(size_t Index);
+		IDriver* GetDriver(size_t Index);
 
 		///CREATEDEVICE(BOOL)
 		///
@@ -91,7 +92,7 @@ namespace Argon
 		///Param DriverIndex: The driver that will be used to create the Device
 		///Param ModeIndex: The video description
 		///Param Window: The window that will be rendered to
-		bool		CreateDevice(uint DriverIndex, uint ModeIndex, void* Window);
+		bool CreateDevice(uint DriverIndex, uint ModeIndex, void* Window);
 
 		//////////////////////////////////////////////////////////////////////////////////
 		// Wrapper for RenderSystem type mainly used in engine or internally
@@ -264,21 +265,28 @@ namespace Argon
 		///
 		///Param Type: The type of buffer to set
 		///Param Buffer: The buffer that will be added to the render system
-		bool SetBuffer( IBuffer::BufferType Type, IBuffer* Buffer );
+		bool SetBuffer(IBuffer::BufferType Type, IBuffer* Buffer);
 
 		///SETTOPOLOFY(BOOL)
 		///
 		/// Set the Buffer Topology
 		///
 		///Param Type: The type of Topology that will be used to create the final render
-		bool SetTopology( Topology Type );
+		bool SetTopology(Topology Type);
 
 		///DRAWPRIMITIVE(VOID)
 		///
 		/// Draw the Mesh ID with the current set Vertex and Index Buffers.
 		///
 		///Param MeshID: The information about the ID to be Rendered
-		void DrawPrimitive( MeshID& ID );
+		void DrawPrimitive(MeshID& ID);
+
+		///CREATESPRITE(ISPRITE)
+		///
+		/// Create a sprite that will be used for drawing GUI elements and instances very quick
+		///
+		///Param MaxInstances: The max amount of instances this sprite can render at once
+		ISprite* CreateSprite(uint MaxInstances);
 		
 	EndInterface(IRenderSystem) //Interface
 

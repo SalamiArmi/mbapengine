@@ -11,7 +11,7 @@ DynamicDllLoader::DynamicDllLoader( char* Name )
 bool DynamicDllLoader::Load()
 {
 	//Scan directory
-	HINSTANCE pModule = LoadLibraryExA( "C:\\NVIDIA\\DisplayDriver\\196.21\\WinVista_Win7_64\\English\\_setup.dll", 0x0, 0x0 );
+	HINSTANCE pModule = LoadLibraryExA("C:\\NVIDIA\\DisplayDriver\\196.21\\WinVista_Win7_64\\English\\_setup.dll", 0x0, 0x0 );
 	if ( pModule )
 	{
 		EntryPoint LibEntryPoint = (EntryPoint)GetProcAddress( pModule, "AEntry" );

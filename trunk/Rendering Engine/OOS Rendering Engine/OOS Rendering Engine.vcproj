@@ -184,6 +184,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Code\Components\Listner.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Code\Components\Mesh.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Code\Components\Mesh.h"
 				>
 			</File>
@@ -307,6 +315,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Code\Components\Parsers\XParser.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Code\Components\Parsers\XParser.h"
 					>
 				</File>
@@ -375,11 +387,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Code\Tools\Vector2.h"
+					RelativePath=".\Code\Math\Vector2.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Code\Tools\Vector3.h"
+					RelativePath=".\Code\Math\Vector3.h"
 					>
 				</File>
 			</Filter>

@@ -1394,6 +1394,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\Include\Core\ArgonEntityCreator.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonEntityCreator.inl"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Include\Core\ArgonGeometryManager.h"
 				>
 			</File>
@@ -1407,6 +1415,18 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Include\Core\ArgonGeometryResource.inl"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonGUIElement.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonGUIManager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonGUIResource.h"
 				>
 			</File>
 			<File
@@ -1686,6 +1706,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\Include\Interface\ISceneManager.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Include\Interface\ISprite.h"
 					>
 				</File>
 				<File

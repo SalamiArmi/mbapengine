@@ -99,7 +99,7 @@ namespace Argon
 #		if _DEBUG
 #			define ArgonAssert(Expression) assert(Expression)
 #		else
-#			define ArgonAssert(Expression)
+#			define ArgonAssert(Expression) Expression
 #		endif
 #	endif
 

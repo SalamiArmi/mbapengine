@@ -44,6 +44,14 @@ namespace Argon
 		///Param Mat: The $Material$ Ptr to remove
 		bool RemoveMaterial(Material* Mat);
 
+		///DRAW(BOOL)
+		///
+		///Draw the Geometry to the backbuffer
+		///
+		///Param Shader: The shader that will be used to render with
+		///Param MeshID: The Id that will be drawn
+		bool Draw(IShader* Shader, ulong MeshID);
+
 	private:
 
 		template<typename T>

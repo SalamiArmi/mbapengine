@@ -61,7 +61,7 @@ namespace Argon
 		return Success;
 	}
 
-	bool Mesh::Draw(ulong MeshID)
+	bool Mesh::Draw(IShader* Shader, ulong MeshID)
 	{
 		Root::instance()->GetActiveRenderSystem()->DrawPrimitive(m_AttributeTable[MeshID]);
 		return true;
