@@ -50,12 +50,14 @@ namespace Argon
 		ITexture*	CreateTexture(uint Width, uint Height, Format Format, bool Renderable);
 		ITexture*	CreateTexture(String FileData);
 		IShader*	CreateShader(String ResourceName, String FileData);
-		void 		SetViewport(IViewport* Viewport);
 		void 		SetVertexDeclaration(VertexDeclaration* VertexDecl, ulong Size);
 		void		SetDepthStencil(ISurface* DepthStencil);
+
+		void 		SetViewport(IViewport* Viewport);
 		IViewport*	CreateViewport(uint Width, uint Height, uint PositionX, uint PositionY);
 		IViewport*	CreateViewport(Vector2T<uint> Size, Vector2T<uint> Position);
 		IViewport*	GetViewport(uint Index);
+
 		IFont*		CreateAFont();
 		IFont*		GetFont(uint Index);
 		
@@ -64,6 +66,8 @@ namespace Argon
 		bool		SetBuffer(IBuffer::BufferType Type, IBuffer* Buffer);
 		bool		SetTopology(Topology Type);
 		void		DrawPrimitive(MeshID& ID);
+
+		ISprite*	CreateSprite(uint MaxInstances);
 
 		///GETDEVICE(D3D10DEVICE)
 		///

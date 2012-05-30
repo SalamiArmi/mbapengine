@@ -389,6 +389,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\ArgonD3D10Sprite.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\ArgonD3D10Sprite.h"
+			>
+		</File>
+		<File
 			RelativePath=".\ArgonD3D10Texture.cpp"
 			>
 		</File>

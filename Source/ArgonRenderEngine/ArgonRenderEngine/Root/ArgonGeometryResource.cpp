@@ -167,4 +167,9 @@ namespace Argon
 		return false;
 	}
 
+	bool GeometryResource::Draw(IShader* Shader, ulong MeshID)
+	{
+		Mesh::Draw(Shader, MeshID);
+	}
+
 } //Namespace
