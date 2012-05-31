@@ -1,6 +1,16 @@
 #ifndef _ARGONISPRITE_HEADER_
 #define _ARGONISPRITE_HEADER_
 
+#include <Interface/ArgonInterface.h>
+#include <Interface/IArgonUnknown.h>
+#include <Interface/ITexture.h>
+
+#include <Standard/ArgonString.h>
+#include <Standard/ArgonMatrix4.h>
+#include <Standard/ArgonVector2.h>
+
+//#include <Interface/IRenderSystem.h>
+
 namespace Argon
 {
 	DeclareBasedInterface(ISprite, IArgonUnknown)
@@ -10,21 +20,21 @@ namespace Argon
 		/// Set all resources to the device and set all the render states and preserve current states
 		///
 		///No Params:
-		bool Bind();
+		virtual bool Bind() = 0;
 
 		///DRAW(BOOL)
 		///
 		/// Draw the Graphical object
 		///
 		///No Params:
-		bool Draw(bool Clear = true);
+		virtual bool Draw(bool Clear = true) = 0;
 
 		///UNBIND(BOOL)
 		///
 		/// Remove the font from the device and reset any render states
 		///
 		///No Params:
-		bool UnBind();
+		virtual bool UnBind() = 0;
 
 		///ADDSPRITEINSTANCE(VOID)
 		///
@@ -34,31 +44,32 @@ namespace Argon
 		///Param TexCoord: Offset from the upper-left corner of the texture indicating where the sprite image should start in the texture. TexCoord is in texture coordinates.
 		///Param TextureSize: A vector containing the width and height of the sprite in texture coordinates.
 		///Param TextureResource: A texture that will represent this Sprites Instance Texture
-		bool AddSpriteInstance(Matrix4 Worldtransform, Vector2 TexCoord, Vector2 TextureSize, ITexture* TextureResource);
+		virtual bool AddSpriteInstance(Matrix4 Worldtransform, Vector2 TexCoord, Vector2 TextureSize, ITexture* TextureResource) = 0;
 
 		///GETSPRITEINSTANCECOUNT(UINT)
 		///
 		/// Get the current amount of sprite instances in the draw list
 		///
 		///No Params:a
-		uint GetSpriteInstanceCount();
+		virtual uint GetSpriteInstanceCount() = 0;
 
 		///CLEARSPRITEINSTANCES(VOID)
 		///
 		/// Clear all the render instances from this Sprite
 		///
 		///No Params:
-		void ClearSpriteInstances();
+		virtual void ClearSpriteInstances() = 0;
 
 		///SETTRANSFORM(VOID)
 		///
 		/// Remove the font from the device and reset any render states
 		///
-		///Param MatrixType: Which type of matrix will be set
+		///Param Type: Which type of matrix will be set
 		///Param Matrix: The Matrix that will be bound the the sprite
-		void SetTransform(IRenderSystem::MatrixType MatrixType, Matrix4& Matrix);
+		//virtual void SetTransform(IRenderSystem::MatrixType Type, Matrix4& Matrix) = 0;
 
 	EndInterface(ISprite)
+
 } //Namespace
 
-#endif //_ARGONIFONT_HEADER_
+#endif //_ARGONISPRITE_HEADER_

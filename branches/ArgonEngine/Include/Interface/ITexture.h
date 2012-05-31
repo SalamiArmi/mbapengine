@@ -13,21 +13,21 @@ namespace Argon
 		///Get how many MipMaps this Texture Resource contains
 		///
 		///No Params:
-		uint GetMipLevelCount() = 0;
+		virtual uint GetMipLevelCount() = 0;
 
 		///GETMIPLEVEL(ISURFACE)
 		///
 		///Get a specific MipLevel
 		///
 		///Param MipIndex: The Index of the desired MipMap
-		ISurface* GetMipLevel(uint MipIndex) = 0;
+		virtual ISurface* GetMipLevel(uint MipIndex) = 0;
 
 		///GETRENDERABLE(BOOL)
 		///
 		///Can the Texture be Rendered to Via the surface
 		///
 		///No Params:
-		bool GetRenderable() = 0;
+		virtual bool GetRenderable() = 0;
 		
 	EndInterface(ITexture)
 } //Namespace

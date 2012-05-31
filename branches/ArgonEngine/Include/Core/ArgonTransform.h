@@ -7,10 +7,10 @@
 
 namespace Argon
 {
-	class Transform
+	class Transformable
 	{
 	public:
-		Transform()
+		virtual ~Transformable()
 		{
 		}
 

@@ -68,21 +68,21 @@ namespace Argon
 		///Load and init all possible information
 		///
 		///No Params:
-		bool Load() = 0;
+		virtual bool Load() = 0;
 	
 		///GETDRIVERCOUNT(SIZE_T)
 		///
 		///Get all the supported drivers for this renderer and computer
 		///
 		///No Params:
-		size_t GetDriverCount() = 0;
+		virtual size_t GetDriverCount() = 0;
 
 		///GETDRIVER(IDRIVER)
 		///
 		///Get a driver from the renderer
 		///
 		///Param Index: Which driver to retrieve
-		IDriver* GetDriver(size_t Index);
+		virtual IDriver* GetDriver(size_t Index);
 
 		///CREATEDEVICE(BOOL)
 		///
@@ -92,7 +92,7 @@ namespace Argon
 		///Param DriverIndex: The driver that will be used to create the Device
 		///Param ModeIndex: The video description
 		///Param Window: The window that will be rendered to
-		bool CreateDevice(uint DriverIndex, uint ModeIndex, void* Window);
+		virtual bool CreateDevice(uint DriverIndex, uint ModeIndex, void* Window);
 
 		//////////////////////////////////////////////////////////////////////////////////
 		// Wrapper for RenderSystem type mainly used in engine or internally
@@ -103,7 +103,7 @@ namespace Argon
 		/// return false if this fails must not end frame will produce error
 		///
 		///No Params:
-		bool BeginFrame() = 0;
+		virtual bool BeginFrame() = 0;
 
 		///ENDFRAME(BOOL)
 		///
@@ -111,7 +111,7 @@ namespace Argon
 		///If fails will return false
 		///
 		///No Params:
-		bool EndFrame() = 0;
+		virtual bool EndFrame() = 0;
 
 		///SETMATRIX(VOID)
 		///
@@ -120,21 +120,21 @@ namespace Argon
 		///
 		///Param Matrix: The matrix that will be set
 		///Param Type: The type of matrix that will be set
-		void SetMatrix(Matrix4 Matrix, MatrixType Type) = 0;
+		virtual void SetMatrix(Matrix4 Matrix, MatrixType Type) = 0;
 
 		///SETRENDERTARGET(VOID)
 		///
 		///Set the rendersystems current rendertarget
 		///
 		///Param RenderTarget: The rendertaget that will be used
-		void SetRenderTarget(ISurface* RenderTarget);
+		virtual void SetRenderTarget(ISurface* RenderTarget) = 0;
 
 		///SETDEPTHSTENCIL(VOID)
 		///
 		///Set the depth stencil that will be used in the renderer
 		///
 		///Param DepthStencil: The surface that will be used
-		void SetDepthStencil(ISurface* DepthStencil);
+		virtual void SetDepthStencil(ISurface* DepthStencil) = 0;
 
 		///SETCLEARCOLOR(VOID)
 		///
@@ -144,7 +144,7 @@ namespace Argon
 		///Param R: Red
 		///Param G: Green
 		///Param B: Blue
-		void SetClearColor(float A, float R, float G, float B);
+		virtual void SetClearColor(float A, float R, float G, float B) = 0;
 
 		///CREATERENDERTARGET(ISURFACE)
 		///
@@ -153,7 +153,7 @@ namespace Argon
 		///Param Width: The width of the RenderTarget
 		///Param Height: The height of the RenderTarget
 		///Param Format: The format in which the pixels will be arranged in this object
-		ISurface* CreateRenderTarget(uint Width, uint Height, Format Format);
+		virtual ISurface* CreateRenderTarget(uint Width, uint Height, Format Format) = 0;
 
 		///CREATETEXTURE(ITEXTURE)
 		///
@@ -163,14 +163,14 @@ namespace Argon
 		///Param Height: The height of the Height
 		///Param Format: The format in which the pixels will be arranged in this object
 		///Param Renderable: Can this Texture be rendered to
-		ITexture* CreateTexture(uint Width, uint Height, Format Format, bool Renderable);
+		virtual ITexture* CreateTexture(uint Width, uint Height, Format Format, bool Renderable) = 0;
 
 		///CREATETEXTURE(ITEXTURE)
 		///
 		/// Create a texture from file
 		///
 		///Param Filename: The file to attempt to open
-		ITexture* CreateTexture(String Filename);
+		virtual ITexture* CreateTexture(String Filename) = 0;
 
 		///CREATEDEPTHSTENCIL(ISURFACE)
 		///
@@ -180,7 +180,7 @@ namespace Argon
 		///Param Width: The width of the DepthStencil
 		///Param Height: The height of the DepthStencil
 		///Param Format: The format in which the pixels will be arranged in this object
-		ISurface* CreateDepthStencil(uint Width, uint Height, Format Format);
+		virtual ISurface* CreateDepthStencil(uint Width, uint Height, Format Format) = 0;
 
 		///CREATEVIEWPORT(IVIEWPORT)
 		///
@@ -190,7 +190,7 @@ namespace Argon
 		///Param Height: The desired height of the Viewport
 		///Param PositionX: The top left corner of the viewport along the X axis
 		///Param PositionY: The top left corner of the viewport along the Y axis
-		IViewport* CreateViewport(uint Width, uint Height, uint PositionX, uint PositionY);
+		virtual IViewport* CreateViewport(uint Width, uint Height, uint PositionX, uint PositionY) = 0;
 
 		///CREATEVIEWPORT(IVIEWPORT)
 		///
@@ -198,7 +198,7 @@ namespace Argon
 		///
 		///Param Size: The desired size of the Viewport
 		///Param Position: The starting position starting from the top left corner
-		IViewport* CreateViewport(Vector2T<uint> Size, Vector2T<uint> Position);
+		virtual IViewport* CreateViewport(Vector2T<uint> Size, Vector2T<uint> Position) = 0;
 
 		///CREATESHADER(ISHADER)
 		///
@@ -206,49 +206,49 @@ namespace Argon
 		///
 		///Param ResourceName: The Resource name of the Shader on file
 		///Param FileData: The compiled shader
-		IShader* CreateShader(String ResourceName, String FileData);
+		virtual IShader* CreateShader(String ResourceName, String FileData) = 0;
 
 		///SETVIEWPORT(VOID)
 		///
 		///Set the viewport for the render system
 		///
 		///Param Viewport: the main viewport to render to
-		void SetViewport(IViewport* Viewport);
+		virtual void SetViewport(IViewport* Viewport) = 0;
 
 		///SETVERTEXDECLARATION(VOID)
 		///
 		///Set the vertex declaratio
 		///
 		///Params VertexDecl: The vertex Declarartion that will be set
-		void SetVertexDeclaration(VertexDeclaration* VertexDecl, ulong Size);
+		virtual void SetVertexDeclaration(VertexDeclaration* VertexDecl, ulong Size) = 0;
 
 		///GETVIEWPORT(IVIEWPORT)
 		///
 		/// Get the desired viewport at the Index
 		///
 		///Param Index: Which Viewport to retrieve
-		IViewport* GetViewport(uint Index);
+		virtual IViewport* GetViewport(uint Index) = 0;
 
 		///CREATEAFONT(IFONT)
 		///
 		/// Create a new Font
 		///
 		///No Params:
-		IFont* CreateAFont();
+		virtual IFont* CreateAFont() = 0;
 
 		///GETFONT(IFONT)
 		///
 		/// Get the Desired Font at the Index
 		///
 		///Param Index: Which Font to retrieve
-		IFont* GetFont(uint Index);
+		virtual IFont* GetFont(uint Index) = 0;
 
 		///CREATEBUFFER(IBUFFER)
 		///
 		/// Create a new Buffer
 		///
 		///Param Type: The type of buffer to create
-		IBuffer* CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, ulong DataSize);
+		virtual IBuffer* CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, ulong DataSize) = 0;
 
 		///CREATEBUFFER(IBUFFER)
 		///
@@ -257,7 +257,7 @@ namespace Argon
 		///Param Type: The type of buffer to create
 		///Param Data: The Data the will be added to the Buffer
 		///Param DataSize: The total size of the buffer in bytes
-		IBuffer* CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, char* Data, ulong DataSize);
+		virtual IBuffer* CreateBuffer(IBuffer::BufferType Type, IBuffer::Usage Usage, char* Data, ulong DataSize) = 0;
 
 		///SETBUFFER(BOOL)
 		///
@@ -265,28 +265,28 @@ namespace Argon
 		///
 		///Param Type: The type of buffer to set
 		///Param Buffer: The buffer that will be added to the render system
-		bool SetBuffer(IBuffer::BufferType Type, IBuffer* Buffer);
+		virtual bool SetBuffer(IBuffer::BufferType Type, IBuffer* Buffer) = 0;
 
 		///SETTOPOLOFY(BOOL)
 		///
 		/// Set the Buffer Topology
 		///
 		///Param Type: The type of Topology that will be used to create the final render
-		bool SetTopology(Topology Type);
-
-		///DRAWPRIMITIVE(VOID)
-		///
-		/// Draw the Mesh ID with the current set Vertex and Index Buffers.
-		///
-		///Param MeshID: The information about the ID to be Rendered
-		void DrawPrimitive(MeshID& ID);
+		virtual bool SetTopology(Topology Type) = 0;
 
 		///CREATESPRITE(ISPRITE)
 		///
 		/// Create a sprite that will be used for drawing GUI elements and instances very quick
 		///
 		///Param MaxInstances: The max amount of instances this sprite can render at once
-		ISprite* CreateSprite(uint MaxInstances);
+		virtual ISprite* CreateSprite(uint MaxInstances) = 0;
+
+		///DRAWPRIMITIVE(VOID)
+		///
+		/// Draw the Mesh ID with the current set Vertex and Index Buffers.
+		///
+		///Param MeshID: The information about the ID to be Rendered
+		virtual void DrawPrimitive(MeshID& ID) = 0;
 		
 	EndInterface(IRenderSystem) //Interface
 

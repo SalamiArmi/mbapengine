@@ -4,6 +4,7 @@ namespace Argon
 {
 	GeometryResource::GeometryResource(String Name)
 		: Mesh(),
+		Entity(Name, Entity::TYPE_Geometry),
 		m_Name(Name)
 	{	
 		//TODO Threading
@@ -169,7 +170,7 @@ namespace Argon
 
 	bool GeometryResource::Draw(IShader* Shader, ulong MeshID)
 	{
-		Mesh::Draw(Shader, MeshID);
+		return Mesh::Draw(Shader, MeshID);
 	}
 
 } //Namespace

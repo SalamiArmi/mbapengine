@@ -1330,6 +1330,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Root\ArgonEntity.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Root\ArgonGeometryManager.cpp"
 				>
 			</File>
@@ -1339,6 +1343,14 @@
 			</File>
 			<File
 				RelativePath=".\Root\ArgonGeometryResource.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Root\ArgonGUIManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Root\ArgonGUIResource.cpp"
 				>
 			</File>
 			<File
@@ -1366,10 +1378,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Root\ArgonSceneNode.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Root\ArgonText.cpp"
 				>
 			</File>
@@ -1394,10 +1402,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\Include\Core\ArgonEntityCreator.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\Include\Core\ArgonEntityCreator.inl"
 				>
 			</File>
@@ -1415,10 +1419,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Include\Core\ArgonGeometryResource.inl"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\Include\Core\ArgonGUIElement.h"
 				>
 			</File>
 			<File
@@ -1467,10 +1467,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Include\Core\ArgonSceneManager.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\Include\Core\ArgonSceneNode.h"
 				>
 			</File>
 			<File

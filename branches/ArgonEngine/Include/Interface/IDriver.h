@@ -15,28 +15,28 @@ namespace Argon
 		///Get the drivers name
 		///
 		///No Params:
-		String			GetName()						= 0;
+		virtual String GetName() = 0;
 		
 		///GETDESCRIPTION(STRING)
 		///
 		///Get the description of the driver
 		///
 		///No Params:
-		String			GetDescription()				= 0;
+		virtual String GetDescription() = 0;
 
 		///GETVIDEOMODE(IVIDEOMODE)
 		///
 		///Get a supported Video mode
 		///
 		///Param Index: Which video mode to retrieve
-		IVideoMode*		GetVideoMode(uint Index)		= 0;
+		virtual IVideoMode* GetVideoMode(uint Index) = 0;
 
 		///GETVIDEOMODECOUNT(UNSIGNEDINT)
 		///
 		///Get the total amount of videomodes for this driver
 		///
 		///No Params:
-		uint			GetVideoModeCount()				= 0;
+		virtual uint GetVideoModeCount() = 0;
 
 	EndInterface(IDriver) //Interface
 }//Namespace

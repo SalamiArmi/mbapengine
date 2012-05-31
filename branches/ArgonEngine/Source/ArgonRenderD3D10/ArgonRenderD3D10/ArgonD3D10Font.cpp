@@ -80,19 +80,12 @@ namespace Argon
 		RECT Rectangle;
 		Rectangle.left = (long)Position.x;
 		Rectangle.top = (long)Position.y;
-		Rectangle.right = 0;
-		Rectangle.bottom = 0;
+		Rectangle.right = (long)Position.x * Scale.x;
+		Rectangle.bottom = (long)Position.y * Scale.y;
 
 		HRESULT hr = S_OK;
 		hr = m_Font->PreloadTextA(Text.c_str(), Text.Length());
 		hr = m_Font->DrawTextA(m_Sprite, Text.c_str(), Text.Length(), &Rectangle, Align | DT_NOCLIP, D3DXCOLOR(Col.x, Col.y, Col.z, Col.w));
-
-		const char* Error = DXGetErrorStringA(hr);
-		const char* Desc = DXGetErrorDescriptionA(hr);
-
-		char Dir[4096];
-		Dir[4095] = '\0';
-		GetCurrentDirectoryA(4096, Dir);
 
 		if(hr == S_OK)
 			return true;

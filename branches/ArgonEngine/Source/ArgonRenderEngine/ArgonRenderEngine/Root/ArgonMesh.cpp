@@ -303,13 +303,4 @@ namespace Argon
 		return Size * sizeof(float);
 	}
 
-	void Mesh::PreDrawCallback(IShader* BoundShader)
-	{
-	}
-
-	bool Mesh::PostDrawCallback(IShader* BoundShader)
-	{
-		return false;
-	}
-
 } //namespace

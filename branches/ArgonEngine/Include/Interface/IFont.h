@@ -34,21 +34,21 @@ namespace Argon
 		/// Set all resources to the device and set all the render states and preserve current states
 		///
 		///No Params:
-		bool Bind();
+		virtual bool Bind() = 0;
 
 		///DRAW(BOOL)
 		///
 		/// Draw the Graphical object
 		///
 		///No Params:
-		bool Draw(String Text, Vector4 Color, Vector3 Position, Vector3 Scale, TextAlign Align);
+		virtual bool Draw(String Text, Vector4 Color, Vector3 Position, Vector3 Scale, TextAlign Align) = 0;
 
 		///UNBIND(BOOL)
 		///
 		/// Remove the font from the device and reset any render states
 		///
 		///No Params:
-		bool UnBind();
+		virtual bool UnBind() = 0;
 
 	EndInterface(IFont)
 } //Namespace

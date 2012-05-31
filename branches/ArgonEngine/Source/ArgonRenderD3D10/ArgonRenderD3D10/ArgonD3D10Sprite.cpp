@@ -1,4 +1,5 @@
 #include "ArgonD3D10Sprite.h"
+#include "ArgonD3D10Texture.h"
 
 namespace Argon
 {
@@ -40,7 +41,7 @@ namespace Argon
 			}
 		}
 
-		return IArgonUnknownImp<IFont, GUID_IFont>::UnLoad();
+		return IArgonUnknownImp<ISprite, GUID_ISprite>::UnLoad();
 	}
 
 	bool D3D10Sprite::Bind()
@@ -60,7 +61,12 @@ namespace Argon
 	{
 		if(m_BufferedSprites.Size() > 0)
 		{
-			return (m_Sprite->DrawSpritesImmediate(&m_BufferedSprites[0], m_BufferedSprites.Size(), sizeof(D3DX10_SPRITE)) == S_OK);
+			bool Success = (m_Sprite->DrawSpritesImmediate(&m_BufferedSprites[0], m_BufferedSprites.Size(), sizeof(D3DX10_SPRITE), 0) == S_OK);
+			
+			if(Clear) 
+				m_BufferedSprites.Clear();
+
+			return Success;
 		}		
 		return false;
 	}
@@ -84,12 +90,12 @@ namespace Argon
 
 		if(Texture->GetD3D10ShaderResource())
 		{
-			m_BufferedSprites.Push_Back(D3DX10_SPRITE()));
+			m_BufferedSprites.Push_Back(D3DX10_SPRITE());
 
-			m_BufferedSprites.Back().matWorld = (D3DXMATRIX)Worldtransform;
+			m_BufferedSprites.Back().matWorld = (*((D3DXMATRIX*)&Worldtransform));
 
-			m_BufferedSprites.Back().TexCoord = (D3DXVECTOR2)TexCoord;
-			m_BufferedSprites.Back().TexSize = (D3DXVECTOR2)TextureSize;
+			m_BufferedSprites.Back().TexCoord = (*((D3DXVECTOR2*)&TexCoord));
+			m_BufferedSprites.Back().TexSize = (*((D3DXVECTOR2*)&TextureSize));
 
 			m_BufferedSprites.Back().pTexture = Texture->GetD3D10ShaderResource();
 
@@ -101,9 +107,20 @@ namespace Argon
 		return false;
 	}
 
+	uint D3D10Sprite::GetSpriteInstanceCount()
+	{
+		return m_BufferedSprites.Size();
+	}
+
+	void D3D10Sprite::ClearSpriteInstances()
+	{
+		m_BufferedSprites.Clear();
+	}
+
 	void D3D10Sprite::SetTransform(IRenderSystem::MatrixType MatrixType, Matrix4& Matrix)
 	{
-
+		MatrixType;
+		Matrix;
 	}
 	
 } //namespace

@@ -10,6 +10,7 @@
 #include "ArgonD3D10Viewport.h"
 #include "ArgonD3D10Shader.h"
 #include "ArgonD3D10Texture.h"
+#include "ArgonD3D10Sprite.h"
 
 #include <Standard/ArgonMemory.h>
 

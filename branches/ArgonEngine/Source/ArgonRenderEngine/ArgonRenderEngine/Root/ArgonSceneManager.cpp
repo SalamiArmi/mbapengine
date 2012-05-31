@@ -1,14 +1,14 @@
 #include "ArgonRoot.h"
 #include "ArgonSceneManager.h"
 #include "ArgonText.h"
-#include "ArgonSceneNode.h"
+#include "ArgonEntity.h"
 
 namespace Argon
 {
 	SceneManager::SceneManager(QString Name, Root *Creator)
 		: m_Creator(Creator),
 		m_Name(Name),
-		m_RootNode(new SceneNode("Root"))
+		m_RootEntity(new Entity("Root", Entity::TYPE_Root))
 	{
 		
 	}
@@ -37,7 +37,7 @@ namespace Argon
 	{	
 		if(Root::instance()->GetCurrentSceneManager() != this) return false;
 
-		m_RootNode->Update(DeltaT);
+		m_RootEntity->Update(DeltaT);
 
 		return true;
 	}
@@ -61,29 +61,21 @@ namespace Argon
 		return false;
 	}
 
-	SceneNode* SceneManager::CreateSceneNode(QString Name)
-	{
-		//Create a new SceneNode
-		SceneNode* Node = new SceneNode(Name);
-		m_SceneNodes.Push_Back(Node);
-		return Node;
-	}
-
 	Camera* SceneManager::CreateCamera(QString Name)
 	{
 		//Create a new Camera
-		Camera* Cam = new Camera(Name);
-		m_Cameras.Push_Back(Cam);
+		Camera* Cam = new Camera(Name.c_str());
+		m_Entities.Push_Back(Cam);
 		return Cam;
 	}
 
 	Camera* SceneManager::GetCamera(QString Name)
 	{
-		for(Vector<Camera*>::Iterator it = m_Cameras.Begin(); it != m_Cameras.End(); ++it)
+		for(Vector<Entity*>::Iterator it = m_Entities.Begin(); it != m_Entities.End(); ++it)
 		{
-			if((*it)->GetName() == Name)
+			if((*it)->GetName() == Name.c_str() && (*it)->GetType() == Entity::TYPE_Camera)
 			{
-				return (*it);
+				return (Camera*)(*it);
 			}
 		}
 

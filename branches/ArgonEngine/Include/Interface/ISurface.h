@@ -30,21 +30,21 @@ namespace Argon
 		///Get the Height of the Surface
 		///
 		///No Params:
-		uint GetHeight() = 0;
+		virtual uint GetHeight() = 0;
 
 		///GETWIDTH(UNSIGNEDINT)
 		///
 		///Get the Width of the Surface
 		///
 		///No Params
-		uint GetWidth() = 0;
+		virtual uint GetWidth() = 0;
 
 		///GETPOOLTYPE(MEMORYPOOL)
 		///
 		///Get the type of pool this item was created on
 		///
 		///No Params:
-		MemoryPool GetPoolType() = 0;
+		virtual MemoryPool GetPoolType() = 0;
 
 	EndInterface(ISurface)
 } //Namespace
