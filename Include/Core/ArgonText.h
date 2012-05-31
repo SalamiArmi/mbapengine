@@ -7,12 +7,14 @@
 #include <Interface/IRenderable.h>
 #include <Interface/IFont.h>
 
+#include "ArgonEntity.h"
+
 namespace Argon
 {
-	class Text : public SceneNode, public IArgonUnknownImp<IRenderable, GUID_IRenderable>
+	class Text : public Entity, public IArgonUnknownImp<IRenderable, GUID_IRenderable>
 	{
 	public:
-		Text(QString Name);
+		Text(String Name);
 
 		///LOAD(BOOL)
 		///

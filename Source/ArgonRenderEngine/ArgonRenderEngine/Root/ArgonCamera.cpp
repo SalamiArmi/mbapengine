@@ -2,8 +2,8 @@
 
 namespace Argon
 {
-	Camera::Camera(QString Name)
-		: SceneNode(Name)
+	Camera::Camera(String Name)
+		: Entity(Name, Entity::TYPE_Camera)
 	{
 	}
 

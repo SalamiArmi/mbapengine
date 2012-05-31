@@ -4,22 +4,15 @@
 #include <Interface/ISprite.h>
 #include <Interface/IFrameListner.h>
 
-#include "ArgonGUIElement.h"
+#include "ArgonEntity.h"
 
 namespace Argon
 {
-	class GUIResource : public Entity, public Transform
+	class GUIResource : public Entity
 	{
 	public:
 		GUIResource(String ResourceName);
 		~GUIResource();
-
-		///DRAW(BOOL)
-		///
-		///Draw the Graphical object
-		///
-		///Param Pass: The pass that will be preformed
-		bool Draw(IFrameListner::RenderPass Pass);
 
 		///SETTEXTURE(VOID)
 		///
@@ -63,7 +56,23 @@ namespace Argon
 		///No Params:
 		Vector2& GetDimensions();
 
+		///GETDIMENSIONS(GETRENDERORDER)
+		///
+		///Get the Renderorder for this $GUIResource$
+		///
+		///No Params:
+		int& GetDrawOrder();
+
+		///SETRENDERORDER(VOID)
+		///
+		///Set the Renderorder for this $GUIResource$
+		///
+		///Param DrawOrder: The new DrawOrder, the higher the number the later it will be drawn
+		void SetDrawOrder(int DrawOrder);
+
 	private:
+		int			m_DrawOrder;
+
 		Vector2		m_HotSpot;
 		Vector2		m_Dimensions;
 

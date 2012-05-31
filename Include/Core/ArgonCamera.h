@@ -1,19 +1,19 @@
 #ifndef _ICAMERA_HEADER_
 #define _ICAMERA_HEADER_
 
-#include <Core/ArgonSceneNode.h>
-
 #include <Standard/ArgonMatrix4.h>
 #include <Standard/ArgonQString.h>
+
+#include <Core/ArgonEntity.h>
 
 #pragma warning(disable : 4251 )
 
 namespace Argon
 {
-	class Camera : public SceneNode
+	class Camera : public Entity
 	{
 	public:
-		Camera(QString Name);
+		Camera(String Name);
 		~Camera();
 
 		///GETVIEWMATRIX(MATRIX4)

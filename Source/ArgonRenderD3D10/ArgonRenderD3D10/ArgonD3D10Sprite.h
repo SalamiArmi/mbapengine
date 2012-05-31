@@ -2,12 +2,15 @@
 #define _ARGOND3D10SPRITE_HEADER_
 
 #include <Interface/ISprite.h>
+#include <Interface/IArgonUnknownImp.h>
 
 #include <Standard/ArgonVector.h>
 
+#include "ArgonD3D10RenderSystem.h"
+
 namespace Argon
 {
-	class D3D10Sprite : IArgonUnknownImp<ISprite, GUID_ISprite>
+	class D3D10Sprite : public IArgonUnknownImp<ISprite, GUID_ISprite>
 	{
 	public:
 		D3D10Sprite(uint InstanceMax);
@@ -58,13 +61,27 @@ namespace Argon
 		///Param TextureResource: A texture that will represent this Sprites Instance Texture
 		bool AddSpriteInstance(Matrix4 Worldtransform, Vector2 TexCoord, Vector2 TextureSize, ITexture* TextureResource);
 
+		///GETSPRITEINSTANCECOUNT(UINT)
+		///
+		/// Get the current amount of sprite instances in the draw list
+		///
+		///No Params:
+		uint GetSpriteInstanceCount();
+
+		///CLEARSPRITEINSTANCES(VOID)
+		///
+		/// Clear all the render instances from this Sprite
+		///
+		///No Params:
+		void ClearSpriteInstances();
+
 		///SETTRANSFORM(VOID)
 		///
 		/// Remove the font from the device and reset any render states
 		///
-		///Param MatrixType: Which type of matrix will be set
+		///Param Type: Which type of matrix will be set
 		///Param Matrix: The Matrix that will be bound the the sprite
-		void SetTransform(IRenderSystem::MatrixType MatrixType, Matrix4& Matrix);
+		void SetTransform(IRenderSystem::MatrixType Type, Matrix4& Matrix);
 
 	private:
 		Vector<D3DX10_SPRITE>	m_BufferedSprites;

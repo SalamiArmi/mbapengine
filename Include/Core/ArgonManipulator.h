@@ -8,7 +8,7 @@ namespace Argon
 	class Manipulator
 	{
 	public:
-		Manipulator(Entity* SceneNode);
+		Manipulator(Entity* Ent);
 		~Manipulator();
 
 		///GETATTACHEDENTITY(ENTITY)

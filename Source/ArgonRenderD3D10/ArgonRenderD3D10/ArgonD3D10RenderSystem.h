@@ -104,7 +104,6 @@ namespace Argon
 		D3D10Shader*		m_BoundShader;
 		ID3D10InputLayout*	m_InputLayout;
 	};
-
 } //Namespace
 
 #endif //_ARGOND3D10RENDERSYSTEM_HEADER_

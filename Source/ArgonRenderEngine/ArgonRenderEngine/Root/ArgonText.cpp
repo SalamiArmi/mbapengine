@@ -3,8 +3,8 @@
 
 namespace Argon
 {
-	Text::Text(QString Name)
-		: SceneNode(Name),
+	Text::Text(String Name)
+		: Entity(Name, Entity::TYPE_Text),
 		m_Font(NULL),
 		m_Text("HELLO WORLD"),
 		m_Alignment(TEXTALIGN_Left),

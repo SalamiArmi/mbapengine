@@ -77,7 +77,7 @@ namespace Argon
 		///Param Name: The new name of the Resource attempting to be created
 		virtual Resource* CreateResource(String Name);
 
-	private:
+	protected:
 		Vector<Resource*>	m_Resources;
 	}; //Class
 

@@ -15,56 +15,56 @@ namespace Argon
 		/// Begin Rendering for this viewport
 		///
 		///No Params:
-		bool Begin();
+		virtual bool Begin() = 0;
 
 		///END(BOOL)
 		///
 		/// Rendering for this viewport complete
 		///
 		///No Params:
-		bool End();
+		virtual bool End() = 0;
 
 		///GETPOSITION(VECTOR2)
 		///
 		/// Get the Top left corner of the Viewport
 		///
 		///No Params:
-		Vector2T<uint> GetPosition();
+		virtual Vector2T<uint> GetPosition() = 0;
 
 		///GETDIMENSIONS(VECTOR2)
 		///
 		/// Get the Dimensions of the Viewport
 		///
 		///No Params:
-		Vector2T<uint> GetDimensions();
+		virtual Vector2T<uint> GetDimensions() = 0;
 
 		///SETENABLED(VOID)
 		///
 		/// Set if the viewport will be rendered to or not
 		///
 		///Param Enabled: The new State of the Viewport
-		void SetEnabled(bool Enabled);
+		virtual void SetEnabled(bool Enabled) = 0;
 
 		///GETENABLED(BOOL)
 		///
 		/// Get if the Viewport will be rendered to or not
 		///
 		///No Params:
-		bool GetEnabled();
+		virtual bool GetEnabled() = 0;
 
 		///(VOID)
 		///
 		/// Set the Camera that will be used for viewing
 		///
 		///Params Cam: The Camera that is required for attaining the View Projection Matrix
-		void SetCamera(Camera* Cam);
+		virtual void SetCamera(Camera* Cam) = 0;
 
 		///(VOID)
 		///
 		/// Get the Camera in which rendering is begining viewed from
 		///
 		///No Params:
-		Camera* GetCamera();
+		virtual Camera* GetCamera() = 0;
 
 		///SETCLEARCOLOR(VOID)
 		///
@@ -74,14 +74,14 @@ namespace Argon
 		///Params Alpha: How much Red will be used. 0 - 255
 		///Params Alpha: How much Green will be used. 0 - 255
 		///Params Alpha: How much Blue will be used. 0 - 255
-		void SetClearColor(size_t Alpha, size_t Red, size_t Green, size_t Blue);
+		virtual void SetClearColor(size_t Alpha, size_t Red, size_t Green, size_t Blue) = 0;
 
 		///GETCLEARCOLOR(SIZE_T)
 		///
 		/// Get the Clear Color as a Array pointer
 		///
 		///No Params:
-		size_t* GetClearColor();
+		virtual size_t* GetClearColor() = 0;
 
 	EndInterface(IViewport)
 } //Namespace
