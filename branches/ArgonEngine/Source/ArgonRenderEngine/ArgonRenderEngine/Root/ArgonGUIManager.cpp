@@ -18,7 +18,7 @@ namespace Argon
 
 	QString GUIManager::GetName()
 	{
-		return QString("GUIManager");
+		return QString("GUI Manager");
 	}
 
 	bool GUIManager::Load()
@@ -52,15 +52,30 @@ namespace Argon
 		return m_Resources.Back();
 	}
 
-	bool GUIManager::FrameDraw(RenderPass Pass)
-	{		
-		if(m_Sprite && m_Resources.Size() > 0)
+	void GUIManager::AddSpriteInstance(GUIResource* Resource)
+	{
+		//Check if the Resource is already in the list
+		for(Vector<GUIResource*>::Iterator it = m_SpriteInstances.Begin(); it != m_SpriteInstances.End(); ++it)
+		{
+			if((*it) == Resource)
+			{
+				return;
+			}
+		}
+
+		//Add to buffer list
+		m_SpriteInstances.Push_Back(Resource);
+	}
+
+	bool GUIManager::DrawBufferedInstances(bool Clear)
+	{
+		if(m_Sprite && m_SpriteInstances.Size() > 0)
 		{ 
 			Refresh(); //TODO Flag Dirty
 			
 			if(m_Sprite->Bind())
 			{
-				bool Success = m_Sprite->Draw(false); //Draw
+				bool Success = m_Sprite->Draw(Clear); //Draw
 				m_Sprite->UnBind();
 
 				return Success;
@@ -72,11 +87,6 @@ namespace Argon
 		return false;
 	}
 
-	bool GUIManager::SupportsPass(RenderPass Pass)
-	{
-		return (IFrameListner::RENDERPASS_TopMost == (Pass & IFrameListner::RENDERPASS_TopMost));
-	}
-
 	void GUIManager::Refresh()
 	{
 		m_Sprite->ClearSpriteInstances(); //Clear the current Instances
@@ -84,10 +94,10 @@ namespace Argon
 		//Repopulate
 		QuickSort(); //Sort by RenderOrder
 		
-		for(Vector<GUIResource*>::Iterator it = m_Resources.Begin(); it != m_Resources.End(); ++it)
+		for(Vector<GUIResource*>::Iterator it = m_SpriteInstances.Begin(); it != m_SpriteInstances.End(); ++it)
 		{
 #if _DEBUG
-			ArgonAssert(m_Sprite->AddSpriteInstance((*it)->GetWorldTransform(), (*it)->GetHotSpot(), (*it)->GetDimensions(), (*it)->GetTexture()));
+			ArgonAssert(m_Sprite->AddSpriteInstance((*it)->GetWorldTransform(), (*it)->GetHotSpot(), (*it)->GetDimensions(), (*it)->GetTexture()->GetResource()));
 #else
 			m_Sprite->AddSpriteInstance((*it)->GetTransform(), (*it)->GetHotSpot(), (*it)->GetDimensions(), (*it)->GetTexture());
 #endif
@@ -96,14 +106,17 @@ namespace Argon
 
 	void GUIManager::QuickSort()
 	{
-		int Middle = SortPartition(0, m_Resources.Size());
+		if(m_SpriteInstances.Size() < 2) 
+			return;
+
+		int Middle = SortPartition(0, m_SpriteInstances.Size());
 		SortPartition(0, Middle);
-		SortPartition(Middle + 1, m_Resources.Size());
+		SortPartition(Middle + 1, m_SpriteInstances.Size());
 	}
 
 	int GUIManager::SortPartition(int Start, int End)
 	{
-		int x = m_Resources[Start]->GetDrawOrder();
+		int x = m_SpriteInstances[Start]->GetDrawOrder();
 		int i = Start - 1;
 		int j = End + 1;
 		GUIResource* Temp = NULL;
@@ -113,20 +126,20 @@ namespace Argon
 			{
 				--j;
 			}
-			while (x < m_Resources[j]->GetDrawOrder());
+			while (x < m_SpriteInstances[j]->GetDrawOrder());
 
 			do  
 			{
 				++i;
 			} 
-			while (x > m_Resources[i]->GetDrawOrder());
+			while (x > m_SpriteInstances[i]->GetDrawOrder());
 
 			if (i < j)
 			{ 
 
 				Temp = m_Resources[i];    // switch elements at positions i and j
-				m_Resources[i] = m_Resources[j];
-				m_Resources[j] = Temp;
+				m_SpriteInstances[i] = m_SpriteInstances[j];
+				m_SpriteInstances[j] = Temp;
 			}
 		}
 		while (i < j);  

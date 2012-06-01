@@ -154,7 +154,7 @@
 		</Configuration>
 		<Configuration
 			Name="Static Library|Win32"
-			OutputDirectory="$(SolutionDir)/Build/"
+			OutputDirectory="$(SolutionDir)/Build"
 			IntermediateDirectory="$(SolutionDir)/Build/$(PlatformName)/$(ProjectName)"
 			ConfigurationType="4"
 			UseOfMFC="0"

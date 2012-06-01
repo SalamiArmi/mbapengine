@@ -1382,6 +1382,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Root\ArgonTextureManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Root\ArgonTextureResource.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Root\ArgonTransform4.cpp"
 				>
 			</File>
@@ -1467,6 +1475,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Include\Core\ArgonText.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonTextureManager.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Include\Core\ArgonTextureResource.h"
 				>
 			</File>
 			<File
@@ -1657,6 +1673,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Include\Interface\IDrawable.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Include\Interface\IDriver.h"
 					>
 				</File>
@@ -1682,10 +1702,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\Include\Interface\IPlatform.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\Include\Interface\IRenderable.h"
 					>
 				</File>
 				<File

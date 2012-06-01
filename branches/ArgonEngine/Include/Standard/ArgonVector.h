@@ -22,15 +22,24 @@ namespace Argon
 		typedef T*			Iterator;
 		typedef const T*	Const_Iterator;
 
-		Vector() : m_Data(0x0), m_Size(0x0), m_AllocatedSize(0x0)
+		Vector() 
+			: m_Data(0x0), 
+			m_Size(0x0),
+			m_AllocatedSize(0x0)
 		{
 		}
 
-		Vector(size_t Size) : m_Size(Size), m_AllocatedSize(Size), m_Data(new T[Size])
+		Vector(size_t Size) 
+			: m_Size(Size),
+			m_AllocatedSize(Size),
+			m_Data(new T[Size])
 		{
 		}
 
 		Vector(const Vector& CopyVector)
+			: m_Data(0x0), 
+			m_Size(0x0),
+			m_AllocatedSize(0x0)
 		{
 			*this = CopyVector;
 		}
@@ -84,15 +93,15 @@ namespace Argon
 		{
 			m_Size = m_AllocatedSize = NewSize;
 			T* Data = new T[m_Size]; //Create a new buffer
-			if(m_Size > 0)
+			if(m_Size > 0 && m_Data)
 			{
 				T* OldData = m_Data;
 				for(size_t Index = 0; Index < m_Size; ++Data, ++OldData, ++Index) //Copy the old data into the new buffer
 				{
 					*Data = *OldData;
 				}
+				delete[] m_Data;
 			}
-			delete[] m_Data;
 			m_Data = Data; 
 		}
 

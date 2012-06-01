@@ -4,7 +4,7 @@
 #include <Interface/IFrameListner.h>
 #include <Interface/IComponent.h>
 #include <Interface/IArgonUnknownImp.h>
-#include <Interface/IRenderable.h>
+#include <Interface/IDrawable.h>
 
 #include <Standard/ArgonVector.h>
 
@@ -15,6 +15,7 @@ namespace Argon
 {
 	class Root;
 	class Entity;
+	class GUIResource;
 
 	class SceneManager : public IArgonUnknownImp2<IComponent, GUID_IComponent, IFrameListner, GUID_IFrameListner>
 	{
@@ -70,33 +71,32 @@ namespace Argon
 		/// Create a new camera that will contain all required transform information
 		///
 		///No Params:
-		Camera* CreateCamera(QString Name);
-
-		///GETCAMERA(CAMERA)
-		///
-		/// Get a Camera from the Name
-		///
-		///No Params:
-		Camera* GetCamera(QString Name);
+		Camera* CreateCamera(String Name);
 
 		///CREATETEXT(CAMERA)
 		///
 		/// Create a new Text Entity
 		///
 		///Param Name: The Name of the Text Entity to create
-		Text* CreateText(QString Name);
+		Text* CreateText(String Name);
 
-		///GETTEXT(CAMERA)
+		///CREATEGUI(GUIRESOURCE)
 		///
-		/// Create a new Text Entity
+		/// Create a new GUI Entity
 		///
-		///Param Name: The Name of the Text Entity to create
-		Text* GetText(QString Name);
+		///Param Name: The Name of the GUI Entity to create
+		GUIResource* CreateGUI(String Name);
+
+		///GETENTITY(ENTITY)
+		///
+		/// Get any entity that this $SceneManager$ contains
+		///
+		///Param Name: The Name of the Entity to retreive
+		Entity* GetEntity(String EntityName);
 
 	protected:
 		Vector<Entity*>			m_Entities;
-
-		Vector<IRenderable*>	m_Renderable;
+		Vector<IDrawable*>		m_Renderable;
 
 		Root*					m_Creator;	//The Root which created this Manager
 		Entity*					m_RootEntity;

@@ -3,20 +3,7 @@
 
 namespace Argon
 {
-	D3D10Texture::D3D10Texture(uint Width, uint Height, Format TextureFormat, bool Renderable, uint MipLevels)
-		: m_Renderable(Renderable),
-		m_Width(Width),
-		m_Height(Height),
-		m_MipLevels(MipLevels),
-		m_FileData(""),
-		m_Format(TextureFormat),
-		m_Pool(Renderable ? POOL_Default : POOL_Managed),
-		m_D3D10Texture(NULL),
-		m_D3D10ShaderResource(NULL)
-	{
-	}
-
-	D3D10Texture::D3D10Texture(String FileData)
+	D3D10Texture::D3D10Texture(const Vector<char>& FileData)
 		: m_Renderable(false),
 		m_Width(0),
 		m_Height(0),
@@ -29,6 +16,30 @@ namespace Argon
 	{
 	}
 
+	D3D10Texture::D3D10Texture(uint Width, uint Height, Format TextureFormat, bool Renderable, uint MipLevels)
+		: m_Renderable(Renderable),
+		m_Width(Width),
+		m_Height(Height),
+		m_MipLevels(MipLevels),
+		m_Format(TextureFormat),
+		m_Pool(Renderable ? POOL_Default : POOL_Managed),
+		m_D3D10Texture(NULL),
+		m_D3D10ShaderResource(NULL)
+	{
+	}
+
+	D3D10Texture::D3D10Texture(const Vector<char>& FileData, uint Width, uint Height, Format TextureFormat, bool Renderable, uint MipLevels)
+		: m_Renderable(Renderable),
+		m_Width(Width),
+		m_Height(Height),
+		m_MipLevels(MipLevels),
+		m_FileData(FileData),
+		m_Format(TextureFormat),
+		m_Pool(Renderable ? POOL_Default : POOL_Managed),
+		m_D3D10Texture(NULL),
+		m_D3D10ShaderResource(NULL)
+	{
+	}
 
 	D3D10Texture::~D3D10Texture()
 	{
@@ -36,32 +47,37 @@ namespace Argon
 	
 	bool D3D10Texture::Load()
 	{
-		if(m_FileData.Length() > 0)
+		ID3D10Device* Device = D3D10RenderSystem::instance()->GetDevice()->GetDevice();
+
+		if(m_FileData.Size() > 0)
 		{
 			//Check if the File Exists
 			D3DX10_IMAGE_INFO ImageInfo;
-			HRESULT hr = D3DX10GetImageInfoFromMemory(m_FileData.c_str(), m_FileData.Length(), NULL, &ImageInfo, NULL);
+			HRESULT hr = D3DX10GetImageInfoFromMemory(&m_FileData[0], m_FileData.Size(), NULL, &ImageInfo, NULL);
 
 			D3DX10_IMAGE_LOAD_INFO LoadInfo;
+			ZeroMemory(&LoadInfo, sizeof(D3DX10_IMAGE_LOAD_INFO));
 			LoadInfo.Width = (m_Width == 0) ? ImageInfo.Width : m_Width;
 			LoadInfo.Height = (m_Height == 0) ? ImageInfo.Height : m_Height;
-			LoadInfo.FirstMipLevel = 0;
 			LoadInfo.MipLevels = m_MipLevels;
 			LoadInfo.Usage = (m_Pool == POOL_Default) ? D3D10_USAGE_DYNAMIC : D3D10_USAGE_DEFAULT;
-			LoadInfo.BindFlags = D3D10_BIND_SHADER_RESOURCE | (m_Renderable ? D3D10_BIND_RENDER_TARGET : 0x0);
-			LoadInfo.CpuAccessFlags = 0;
-			LoadInfo.MiscFlags = D3D10_RESOURCE_MISC_GENERATE_MIPS;
-			LoadInfo.Format = (m_Format == FORMAT_Unknown) ? ImageInfo.Format : ArgonFormatToD3D10(m_Format);
-			LoadInfo.Filter = D3DX10_FILTER_LINEAR;
-			LoadInfo.MipFilter = D3DX10_FILTER_LINEAR;
-			LoadInfo.pSrcInfo = &ImageInfo;
+			//LoadInfo.BindFlags = D3D10_BIND_SHADER_RESOURCE | (m_Renderable ? D3D10_BIND_RENDER_TARGET : 0x0);
+			//LoadInfo.CpuAccessFlags = D3D10_CPU_ACCESS_WRITE | D3D10_CPU_ACCESS_READ;
+			//LoadInfo.MiscFlags = D3D10_RESOURCE_MISC_GENERATE_MIPS;
+			//LoadInfo.Format = (m_Format == FORMAT_Unknown) ? ImageInfo.Format : ArgonFormatToD3D10(m_Format);
+			//LoadInfo.Filter = D3DX10_FILTER_LINEAR;
+			//LoadInfo.MipFilter = D3DX10_FILTER_LINEAR;
+			//LoadInfo.pSrcInfo = &ImageInfo;
 
 			if(hr == S_OK)
 			{
-				ID3D10Resource* D3D10Resource;
-				hr = D3DX10CreateTextureFromMemory(D3D10RenderSystem::instance()->GetDevice()->GetDevice(), m_FileData.c_str(), m_FileData.Length(), &LoadInfo, NULL, &D3D10Resource, NULL);
+				ID3D10Resource* D3D10Resource = NULL;
+				hr = D3DX10CreateTextureFromMemory(Device, &m_FileData[0], m_FileData.Size(), NULL, NULL, &D3D10Resource, NULL);
 				if(hr == S_OK)
 				{
+					m_Width = ImageInfo.Width;
+					m_Height = ImageInfo.Height;
+
 					hr = D3D10Resource->QueryInterface(__uuidof(ID3D10Texture2D), (void**)&m_D3D10Texture);
 					if(hr == S_OK)
 					{
@@ -71,7 +87,7 @@ namespace Argon
 						ResourceViewDesc.Texture2D.MipLevels = LoadInfo.MipLevels;
 						ResourceViewDesc.Texture2D.MostDetailedMip = LoadInfo.FirstMipLevel;
 
-						hr = D3D10RenderSystem::instance()->GetDevice()->GetDevice()->CreateShaderResourceView(D3D10Resource, &ResourceViewDesc, &m_D3D10ShaderResource);
+						hr = Device->CreateShaderResourceView(D3D10Resource, &ResourceViewDesc, &m_D3D10ShaderResource);
 						return (hr == S_OK);
 					}
 				}
@@ -89,7 +105,7 @@ namespace Argon
 			TextureDesc.Usage = D3D10_USAGE_DEFAULT;
 			TextureDesc.BindFlags = D3D10_BIND_SHADER_RESOURCE | (m_Renderable ? D3D10_BIND_RENDER_TARGET : 0x0);
 
-			HRESULT hr = D3D10RenderSystem::instance()->GetDevice()->GetDevice()->CreateTexture2D(&TextureDesc, NULL, &m_D3D10Texture);
+			HRESULT hr = Device->CreateTexture2D(&TextureDesc, NULL, &m_D3D10Texture);
 			if(hr == S_OK)
 			{
 				D3D10_SHADER_RESOURCE_VIEW_DESC ResourceViewDesc;
@@ -98,7 +114,7 @@ namespace Argon
 				ResourceViewDesc.Texture2D.MipLevels = 1;
 				ResourceViewDesc.Texture2D.MostDetailedMip = 0;
 
-				hr = D3D10RenderSystem::instance()->GetDevice()->GetDevice()->CreateShaderResourceView(m_D3D10Texture, &ResourceViewDesc, &m_D3D10ShaderResource);
+				hr = Device->CreateShaderResourceView(m_D3D10Texture, &ResourceViewDesc, &m_D3D10ShaderResource);
 
 				if(hr == S_OK)
 				{

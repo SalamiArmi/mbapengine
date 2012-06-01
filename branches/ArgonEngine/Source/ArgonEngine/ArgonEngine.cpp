@@ -7,6 +7,9 @@
 #include <Standard/ArgonException.h>
 #include <Standard/ArgonMemory.h>
 
+#include <Core/ArgonTextureManager.h>
+#include <Core/ArgonGUIManager.h>
+
 namespace Argon
 {
 	ArgonEngine::ArgonEngine()
@@ -62,6 +65,12 @@ namespace Argon
 		m_Timer = new Timer();
 		m_SceneManager = m_Root->CreateSceneManager("Main Scene");
 		m_Root->SetCurrentSceneManager(m_SceneManager);
+
+		TextureManager* TexManager = (TextureManager* )m_Root->GetComponent("Texture Manager");
+		TextureResource* Texture = TexManager->CreateResource("Library/Textures/TestImage.jpeg");
+
+		GUIResource* Resource = m_SceneManager->CreateGUI("TestGui");
+		Resource->SetTexture(Texture);
 
 		return true;
 	}

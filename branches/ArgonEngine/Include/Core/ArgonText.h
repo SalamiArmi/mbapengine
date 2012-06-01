@@ -4,14 +4,14 @@
 #include <Standard/ArgonQString.h>
 #include <Standard/ArgonVector4.h>
 
-#include <Interface/IRenderable.h>
+#include <Interface/IDrawable.h>
 #include <Interface/IFont.h>
 
 #include "ArgonEntity.h"
 
 namespace Argon
 {
-	class Text : public Entity, public IArgonUnknownImp<IRenderable, GUID_IRenderable>
+	class Text : public Entity, public IArgonUnknownImp<IDrawable, GUID_IDrawable>
 	{
 	public:
 		Text(String Name);
@@ -31,34 +31,6 @@ namespace Argon
 		///
 		///No Params:
 		bool UnLoad();
-
-		///SUPPORTSPASS(BOOL)
-		///
-		///Check if this Renderable Supports a pass
-		///
-		///Param Pass: The pass that will be checked against this is the current pass
-		bool SupportsPass(IFrameListner::RenderPass Pass);
-
-		///BIND(BOOL)
-		///
-		///Set all resources to the device and set all the render states and preserve current states
-		///
-		///No Params:
-		bool Bind();
-
-		///BIND(BOOL)
-		///
-		///Attempt to draw the Renderable
-		///
-		///No Params:
-		bool FrameDraw();
-
-		///UNBIND(BOOL)
-		///
-		/// Remove the Renderable from the device and reset any render states
-		///
-		///No Params:
-		bool UnBind();
 
 		///SETCOLOR(VOID)
 		///
@@ -103,6 +75,36 @@ namespace Argon
 		TextAlign GetAlign();
 
 	protected:
+		
+		///SUPPORTSPASS(BOOL)
+		///
+		///Check if this Renderable Supports a pass
+		///
+		///Param Pass: The pass that will be checked against this is the current pass
+		bool SupportsPass(IFrameListner::RenderPass Pass);
+
+		///BIND(BOOL)
+		///
+		///Set all resources to the device and set all the render states and preserve current states
+		///
+		///No Params:
+		bool Bind();
+
+		///BIND(BOOL)
+		///
+		///Attempt to draw the Renderable
+		///
+		///No Params:
+		bool FrameDraw();
+
+		///UNBIND(BOOL)
+		///
+		/// Remove the Renderable from the device and reset any render states
+		///
+		///No Params:
+		bool UnBind();
+
+
 		~Text();
 		
 		IFont*					m_Font;
