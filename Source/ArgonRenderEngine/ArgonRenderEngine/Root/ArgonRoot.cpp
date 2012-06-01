@@ -4,6 +4,9 @@
 #include "ArgonSceneManager.h"
 #include "ArgonRoot.h"
 
+#include "ArgonGUIManager.h"
+#include "ArgonGeometryManager.h"
+
 namespace Argon
 {
 	void ArgonCreateRoot(Root** Root, IPlatform* Platform)
@@ -33,6 +36,9 @@ namespace Argon
 		FindSupportedComponents();		//Find all Supported Components
 		ImportRenderSystems();			//Import and prepare the render systems
 
+		AddComponent(new GeometryManager());
+		AddComponent(new GUIManager());
+
 		return true;
 	}
 
@@ -40,6 +46,46 @@ namespace Argon
 	{
 		m_Platform->UnLoad();
 		return true;
+	}
+
+	void Root::AddComponent(IComponent* Component)
+	{
+		QString Name = Component->GetName();
+
+		for(Vector<IComponent*>::Iterator it = m_Components.Begin(); it = m_Components.End(); ++it)
+		{
+			if((*it)->GetName() == Name)
+			{
+				return;
+			}
+		}
+
+		m_Components.Push_Back(Component);
+		Component->Load();
+	}
+
+	void Root::RemoveComponent(IComponent* Component)
+	{
+		for(Vector<IComponent*>::Iterator it = m_Components.Begin(); it = m_Components.End(); ++it)
+		{
+			if((*it) == Component)
+			{
+				m_Components.Erase(it);
+				return;
+			}
+		}
+	}
+
+	void Root::RemoveComponent(String ComponentName)
+	{
+		for(Vector<IComponent*>::Iterator it = m_Components.Begin(); it = m_Components.End(); ++it)
+		{
+			if((*it)->GetName() == ComponentName)
+			{
+				m_Components.Erase(it);
+				return;
+			}
+		}
 	}
 
 	IRenderSystem* Root::GetActiveRenderSystem() const

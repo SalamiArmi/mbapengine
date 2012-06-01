@@ -1402,10 +1402,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\Include\Core\ArgonEntityCreator.inl"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\Include\Core\ArgonGeometryManager.h"
 				>
 			</File>

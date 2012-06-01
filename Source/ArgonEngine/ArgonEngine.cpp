@@ -22,11 +22,6 @@ namespace Argon
 
 	bool ArgonEngine::Load()
 	{
-		//Get Current Drive
-		char Dir[4096];
-		Dir[4095] = '\0';
-		GetCurrentDirectoryA(4096, Dir);
-
 		//Create the Platform and the Root to render with
 		CreatePlatform(&m_Platform);
 		m_Platform->Load();

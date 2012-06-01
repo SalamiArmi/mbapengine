@@ -37,7 +37,7 @@ namespace Argon
 
 		QStringT(String String)
 		{
-			m_String = QStringCreator<T, AllocatorT>::instance()->CreateString(String.c_str());				//If string already exists dont make a new one
+			m_String = QStringCreator<T, CharAllocator>::instance()->CreateString(String.c_str());				//If string already exists dont make a new one
 			m_Length = String.Length();
 		}
 

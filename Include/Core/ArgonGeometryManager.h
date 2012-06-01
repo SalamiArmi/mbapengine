@@ -14,6 +14,13 @@ namespace Argon
 		GeometryManager();
 		~GeometryManager();
 		
+		///LOAD(BOOL)
+		///
+		///Load the Interface
+		///
+		///No Params:
+		bool Load();
+
 		///GETNAME(QSTRING)
 		///
 		///Get the name of the component

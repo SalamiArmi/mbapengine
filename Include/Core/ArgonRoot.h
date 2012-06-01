@@ -24,8 +24,6 @@ namespace Argon
 	public:
 		Root(IPlatform* Platform);
 
-		
-
 		///SETPLATFORM(VOID)
 		///
 		/// Set the Desired platform
@@ -53,6 +51,27 @@ namespace Argon
 		///
 		///No Params:
 		bool Create(void* Window, size_t RenderSystemIndex, size_t DriverIndex, size_t ModeIndex);
+
+		///ADDCOMPONENT(VOID)
+		///
+		///Add a new component to the Root. Each component must have a unique name or it will not be added.
+		///
+		///Param Component: The component that will be added
+		void AddComponent(IComponent* Component);
+
+		///REMOVECOMPONENT(VOID)
+		///
+		///Remove a new component to the Root.
+		///
+		///Param Component: The component that will be removed
+		void RemoveComponent(IComponent* Component);
+
+		///REMOVECOMPONENT(VOID)
+		///
+		///Remove a new component to the Root.
+		///
+		///Param ComponentName: The name of the Component that will be removed. 
+		void RemoveComponent(String ComponentName);
 
 		///FRAMEUPDATE(BOOL)
 		///

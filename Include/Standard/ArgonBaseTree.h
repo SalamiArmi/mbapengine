@@ -506,11 +506,11 @@ namespace Argon
 			Subnode->m_SuperNode = NULL;
 		}
 	private:
-		TreeBase		*m_PrevNode;
-		TreeBase		*m_NextNode;
-		TreeBase		*m_SuperNode;
-		TreeBase		*m_FirstSubnode;
-		TreeBase		*m_LastSubnode;
+		TreeBase*		m_PrevNode;
+		TreeBase*		m_NextNode;
+		TreeBase*		m_SuperNode;
+		TreeBase*		m_FirstSubnode;
+		TreeBase*		m_LastSubnode;
 	}; //Class
 } //Namespace
 

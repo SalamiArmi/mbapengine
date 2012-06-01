@@ -106,7 +106,7 @@ namespace Argon
 			}
 		}
 
-		virtual void Update(float DeltaT)
+		virtual void FrameUpdate(float DeltaT)
 		{
 			m_CurrentUpdateFlags = 0;
 
@@ -117,7 +117,7 @@ namespace Argon
 				UpdatableTree *Node = Tree<NodeType>::GetFirstSubnode();
 				while (Node)
 				{
-					Node->Update(DeltaT);
+					Node->FrameUpdate(DeltaT);
 					Node = Node->Next();
 				}
 			}

@@ -9,6 +9,13 @@ namespace Argon
 
 	GeometryManager::~GeometryManager()
 	{
+
+	}
+
+	bool GeometryManager::Load()
+	{
+		AddRef();
+		return true;
 	}
 
 	QString GeometryManager::GetName()
@@ -19,5 +26,16 @@ namespace Argon
 	GeometryResource* GeometryManager::CreateResource(String Name)
 	{
 		return new GeometryResource(Name);
+	}
+
+
+	bool GeometryManager::FrameDraw(RenderPass Pass)
+	{
+		return false;
+	}
+
+	bool GeometryManager::SupportsPass(IFrameListner::RenderPass Pass)
+	{
+		return (IFrameListner::RENDERPASS_Normal == (Pass & IFrameListner::RENDERPASS_Normal));
 	}
 }

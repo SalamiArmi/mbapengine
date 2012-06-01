@@ -17,6 +17,13 @@ namespace Argon
 	public:
 		GUIManager();
 		~GUIManager();
+
+		///LOAD(BOOL)
+		///
+		///Load the Interface
+		///
+		///No Params:
+		bool Load();
 		
 		///GETNAME(QSTRING)
 		///
