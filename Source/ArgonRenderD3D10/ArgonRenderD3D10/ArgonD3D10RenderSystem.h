@@ -47,8 +47,11 @@ namespace Argon
 		bool		PresentFrame();
 		void 		SetMatrix(Matrix4 Matrix, MatrixType Type);
 		void 		SetRenderTarget(ISurface* RenderTarget);
+
+		ITexture*	CreateTexture(const Vector<char>& Filedata);
 		ITexture*	CreateTexture(uint Width, uint Height, Format Format, bool Renderable);
-		ITexture*	CreateTexture(String FileData);
+		ITexture*	CreateTexture(const Vector<char>& Filedata, uint Width, uint Height, Format Format, bool Renderable);
+
 		IShader*	CreateShader(String ResourceName, String FileData);
 		void 		SetVertexDeclaration(VertexDeclaration* VertexDecl, ulong Size);
 		void		SetDepthStencil(ISurface* DepthStencil);

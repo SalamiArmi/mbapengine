@@ -125,9 +125,16 @@ namespace Argon
 		return new D3D10Texture(Width, Height, TextureFormat, Renderable, 1);
 	}
 
-	ITexture* D3D10RenderSystem::CreateTexture(String FileData)
+	ITexture* D3D10RenderSystem::CreateTexture(const Vector<char>& Filedata, uint Width, uint Height, Format Format, bool Renderable)
 	{
-		return new D3D10Texture(FileData);
+		return new D3D10Texture(Filedata, Width, Height, Format, Renderable, 1);
+	}
+
+	ITexture* D3D10RenderSystem::CreateTexture(const Vector<char>& FileData)
+	{
+		 D3D10Texture* Texture = new D3D10Texture(FileData);
+		 Texture->Load();
+		 return Texture;
 	}
 
 	ISurface* D3D10RenderSystem::CreateDepthStencil(uint Width, uint Height, Format DepthStencilFormat)

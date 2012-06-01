@@ -1,12 +1,11 @@
-#ifndef _ARGONIRENDERABLE_HEADER_
-#define _ARGONIRENDERABLE_HEADER_
+#ifndef _ARGONIDRAWABLE_HEADER_
+#define _ARGONIDRAWABLE_HEADER_
 
 #include "IArgonUnknown.h"
-#include "IFrameListner.h"
 
 namespace Argon
 {
-	DeclareBasedInterface(IRenderable, IArgonUnknown)
+	DeclareBasedInterface(IDrawable, IArgonUnknown)
 
 		///SUPPORTSPASS(BOOL)
 		///
@@ -36,7 +35,7 @@ namespace Argon
 		///No Params:
 		bool UnBind();
 	
-	EndInterface(IRenderable)
+	EndInterface(IDrawable)
 } //namespace
 
-#endif //_ARGONIRENDERABLE_HEADER_
+#endif //_ARGONIDRAWABLE_HEADER_

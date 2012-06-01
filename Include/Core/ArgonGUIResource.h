@@ -4,29 +4,41 @@
 #include <Interface/ISprite.h>
 #include <Interface/IFrameListner.h>
 
+#include <Interface/IArgonUnknownImp.h>
+#include <Interface/IDrawable.h>
+
+#include "ArgonTextureResource.h"
+
 #include "ArgonEntity.h"
 
 namespace Argon
 {
-	class GUIResource : public Entity
+	class GUIResource : public Entity, public IArgonUnknownImp<IDrawable, GUID_IDrawable>
 	{
 	public:
 		GUIResource(String ResourceName);
 		~GUIResource();
+
+		///LOAD(BOOL)
+		///
+		///Load and init the Root
+		///
+		///No Params:
+		bool Load();
 
 		///SETTEXTURE(VOID)
 		///
 		///Set the texture that will be used when Rendering this $GUIResource$
 		///
 		///Param Texture: The texture that will be used to render
-		void SetTexture(ITexture* Texture);
+		void SetTexture(TextureResource* Texture);
 
 		///GETTEXTURE(ITEXTURE)
 		///
 		///Get the Texture being used to draw
 		///
 		///No Params:
-		ITexture* GetTexture();
+		TextureResource* GetTexture();
 
 		///SETHOTSPOT(VECTOR2)
 		///
@@ -71,12 +83,41 @@ namespace Argon
 		void SetDrawOrder(int DrawOrder);
 
 	private:
-		int			m_DrawOrder;
 
-		Vector2		m_HotSpot;
-		Vector2		m_Dimensions;
+		///SUPPORTSPASS(BOOL)
+		///
+		///Check if this Renderable Supports a pass
+		///
+		///Param Pass: The pass that will be checked against this is the current pass
+		bool SupportsPass(IFrameListner::RenderPass Pass);
 
-		ITexture*	m_Texture;
+		///BIND(BOOL)
+		///
+		///Set all resources to the device and set all the render states and preserve current states
+		///
+		///No Params:
+		bool Bind();
+
+		///BIND(BOOL)
+		///
+		///Attempt to draw the Renderable
+		///
+		///No Params:
+		bool FrameDraw();
+
+		///UNBIND(BOOL)
+		///
+		/// Remove the Renderable from the device and reset any render states
+		///
+		///No Params:
+		bool UnBind();
+
+		int					m_DrawOrder;
+
+		Vector2				m_HotSpot;
+		Vector2				m_Dimensions;
+
+		TextureResource*	m_Texture;
 	}; //class
 } //namespace
 

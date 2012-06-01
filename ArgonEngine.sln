@@ -134,6 +134,7 @@ Global
 		{A60623F1-5018-433E-AD99-02ADDE4023ED}.Debug Static Lib|Win32.ActiveCfg = Debug|x86
 		{A60623F1-5018-433E-AD99-02ADDE4023ED}.Debug Static Lib|x64.ActiveCfg = Debug|x86
 		{A60623F1-5018-433E-AD99-02ADDE4023ED}.Debug Static Lib|x86.ActiveCfg = Debug|x86
+		{A60623F1-5018-433E-AD99-02ADDE4023ED}.Debug Static Lib|x86.Build.0 = Debug|x86
 		{546A4E0B-7C5E-4FA3-9A10-6DA24CE38EBF}.Argon Engine|Any CPU.ActiveCfg = Argon Engine|Win32
 		{546A4E0B-7C5E-4FA3-9A10-6DA24CE38EBF}.Argon Engine|Mixed Platforms.ActiveCfg = Argon Engine|Win32
 		{546A4E0B-7C5E-4FA3-9A10-6DA24CE38EBF}.Argon Engine|Mixed Platforms.Build.0 = Argon Engine|Win32
@@ -159,8 +160,8 @@ Global
 		{546A4E0B-7C5E-4FA3-9A10-6DA24CE38EBF}.Debug Static Lib|Win32.ActiveCfg = Debug|Win32
 		{546A4E0B-7C5E-4FA3-9A10-6DA24CE38EBF}.Debug Static Lib|Win32.Build.0 = Debug|Win32
 		{546A4E0B-7C5E-4FA3-9A10-6DA24CE38EBF}.Debug Static Lib|x64.ActiveCfg = Debug|Win32
-		{546A4E0B-7C5E-4FA3-9A10-6DA24CE38EBF}.Debug Static Lib|x86.ActiveCfg = Debug|Win32
-		{546A4E0B-7C5E-4FA3-9A10-6DA24CE38EBF}.Debug Static Lib|x86.Build.0 = Debug|Win32
+		{546A4E0B-7C5E-4FA3-9A10-6DA24CE38EBF}.Debug Static Lib|x86.ActiveCfg = Static Library|Win32
+		{546A4E0B-7C5E-4FA3-9A10-6DA24CE38EBF}.Debug Static Lib|x86.Build.0 = Static Library|Win32
 		{DBA37458-BC6D-4273-9D6D-9489F8108726}.Argon Engine|Any CPU.ActiveCfg = Argon Engine|Pocket PC 2003 (ARMV4)
 		{DBA37458-BC6D-4273-9D6D-9489F8108726}.Argon Engine|Mixed Platforms.ActiveCfg = Argon Engine|Pocket PC 2003 (ARMV4)
 		{DBA37458-BC6D-4273-9D6D-9489F8108726}.Argon Engine|Mixed Platforms.Build.0 = Argon Engine|Pocket PC 2003 (ARMV4)
@@ -220,8 +221,8 @@ Global
 		{221C49A9-6529-444B-8D20-FD1C70C15CBA}.Debug Static Lib|Win32.ActiveCfg = Debug|Win32
 		{221C49A9-6529-444B-8D20-FD1C70C15CBA}.Debug Static Lib|Win32.Build.0 = Debug|Win32
 		{221C49A9-6529-444B-8D20-FD1C70C15CBA}.Debug Static Lib|x64.ActiveCfg = Debug|Win32
-		{221C49A9-6529-444B-8D20-FD1C70C15CBA}.Debug Static Lib|x86.ActiveCfg = Debug|Win32
-		{221C49A9-6529-444B-8D20-FD1C70C15CBA}.Debug Static Lib|x86.Build.0 = Debug|Win32
+		{221C49A9-6529-444B-8D20-FD1C70C15CBA}.Debug Static Lib|x86.ActiveCfg = Argon Engine|Win32
+		{221C49A9-6529-444B-8D20-FD1C70C15CBA}.Debug Static Lib|x86.Build.0 = Argon Engine|Win32
 		{E6626E67-C1DA-4A08-ABDC-BA8EA2E6F2E0}.Argon Engine|Any CPU.ActiveCfg = Debug Dynamic Lib|Win32
 		{E6626E67-C1DA-4A08-ABDC-BA8EA2E6F2E0}.Argon Engine|Mixed Platforms.ActiveCfg = Debug Dynamic Lib|Win32
 		{E6626E67-C1DA-4A08-ABDC-BA8EA2E6F2E0}.Argon Engine|Mixed Platforms.Build.0 = Debug Dynamic Lib|Win32

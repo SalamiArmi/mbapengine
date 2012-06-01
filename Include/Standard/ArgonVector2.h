@@ -149,8 +149,11 @@ namespace Argon
 
 		void Normalize()
 		{
-
+			T fMagnitude = Magnitude( );
+			if (fMagnitude > FLT_EPSILON)
+				Scale(1.0f / fMagnitude);
 		}
+
 		void Scale(T Scale)
 		{
 			x *= Scale;

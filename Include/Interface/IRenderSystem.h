@@ -157,6 +157,13 @@ namespace Argon
 
 		///CREATETEXTURE(ITEXTURE)
 		///
+		/// Create a texture from file
+		///
+		///Param Filedata: The contenst of the entire file
+		virtual ITexture* CreateTexture(const Vector<char>& Filedata) = 0;
+
+		///CREATETEXTURE(ITEXTURE)
+		///
 		///Create a new Texture and return it
 		///
 		///Param Width: The width of the Texture
@@ -167,10 +174,14 @@ namespace Argon
 
 		///CREATETEXTURE(ITEXTURE)
 		///
-		/// Create a texture from file
+		///Create a new Texture and return it
 		///
-		///Param Filename: The file to attempt to open
-		virtual ITexture* CreateTexture(String Filename) = 0;
+		///Param Filedata: The contenst of the entire file
+		///Param Width: The width of the Texture
+		///Param Height: The height of the Height
+		///Param Format: The format in which the pixels will be arranged in this object
+		///Param Renderable: Can this Texture be rendered to
+		virtual ITexture* CreateTexture(const Vector<char>& Filedata, uint Width, uint Height, Format Format, bool Renderable) = 0;
 
 		///CREATEDEPTHSTENCIL(ISURFACE)
 		///

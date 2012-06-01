@@ -8,6 +8,7 @@ namespace Argon
 		m_InstanceMax(InstanceMax)
 	{
 		m_BufferedSprites.Clear();
+		m_RefCount = 0;
 	}
 
 	D3D10Sprite::~D3D10Sprite()
@@ -90,16 +91,26 @@ namespace Argon
 
 		if(Texture->GetD3D10ShaderResource())
 		{
+			Vector2 NormalizedTexCoord;
+			NormalizedTexCoord.x = TexCoord.x / TextureResource->GetWidth();
+			NormalizedTexCoord.y = TexCoord.y / TextureResource->GetHeight();
+
+			Vector2 NormalizedTexSize;
+			NormalizedTexSize.x = TextureSize.x / TextureResource->GetWidth();
+			NormalizedTexSize.y = TextureSize.y / TextureResource->GetHeight();
+
 			m_BufferedSprites.Push_Back(D3DX10_SPRITE());
 
 			m_BufferedSprites.Back().matWorld = (*((D3DXMATRIX*)&Worldtransform));
 
-			m_BufferedSprites.Back().TexCoord = (*((D3DXVECTOR2*)&TexCoord));
-			m_BufferedSprites.Back().TexSize = (*((D3DXVECTOR2*)&TextureSize));
+			m_BufferedSprites.Back().TexCoord = (*((D3DXVECTOR2*)&NormalizedTexCoord));
+			m_BufferedSprites.Back().TexSize = (*((D3DXVECTOR2*)&NormalizedTexSize));
+
+			m_BufferedSprites.Back().ColorModulate = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
 
 			m_BufferedSprites.Back().pTexture = Texture->GetD3D10ShaderResource();
 
-			m_BufferedSprites.Back().TextureIndex = 1;
+			m_BufferedSprites.Back().TextureIndex = 0;
 
 			return true;
 		}

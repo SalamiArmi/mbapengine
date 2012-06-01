@@ -6,6 +6,7 @@
 
 #include "ArgonGUIManager.h"
 #include "ArgonGeometryManager.h"
+#include "ArgonTextureManager.h"
 
 namespace Argon
 {
@@ -36,6 +37,7 @@ namespace Argon
 		FindSupportedComponents();		//Find all Supported Components
 		ImportRenderSystems();			//Import and prepare the render systems
 
+		AddComponent(new TextureManager());
 		AddComponent(new GeometryManager());
 		AddComponent(new GUIManager());
 
@@ -48,37 +50,63 @@ namespace Argon
 		return true;
 	}
 
+	IPlatform* Root::GetPlatform()
+	{
+		return m_Platform;
+	}
+
 	void Root::AddComponent(IComponent* Component)
 	{
 		QString Name = Component->GetName();
 
-		for(Vector<IComponent*>::Iterator it = m_Components.Begin(); it = m_Components.End(); ++it)
+		for(Vector<IComponent*>::Iterator it = m_Components.Begin(); it != m_Components.End(); it++)
 		{
 			if((*it)->GetName() == Name)
 			{
+				(*it)->UnLoad();
 				return;
 			}
 		}
 
 		m_Components.Push_Back(Component);
+
+#if _DEBUG
+		ArgonAssert(Component->Load());
+#else
 		Component->Load();
+#endif
+
+		
 	}
 
 	void Root::RemoveComponent(IComponent* Component)
 	{
-		for(Vector<IComponent*>::Iterator it = m_Components.Begin(); it = m_Components.End(); ++it)
+		for(Vector<IComponent*>::Iterator it = m_Components.Begin(); it != m_Components.End(); it++)
 		{
 			if((*it) == Component)
 			{
 				m_Components.Erase(it);
+				(*it)->UnLoad();
 				return;
 			}
 		}
 	}
 
+	IComponent* Root::GetComponent(String ComponentName)
+	{
+		for(Vector<IComponent*>::Iterator it = m_Components.Begin(); it != m_Components.End(); it++)
+		{
+			if((*it)->GetName() == ComponentName)
+			{
+				return (*it);
+			}
+		}
+		return NULL;
+	}
+
 	void Root::RemoveComponent(String ComponentName)
 	{
-		for(Vector<IComponent*>::Iterator it = m_Components.Begin(); it = m_Components.End(); ++it)
+		for(Vector<IComponent*>::Iterator it = m_Components.Begin(); it != m_Components.End(); it++)
 		{
 			if((*it)->GetName() == ComponentName)
 			{
@@ -133,6 +161,12 @@ namespace Argon
 
 		//Render Topmost Pass
 		RenderListners(IFrameListner::RENDERPASS_TopMost);
+
+		GUIManager* Manager = (GUIManager* )GetComponent("GUI Manager");
+		if(Manager)
+		{
+			Manager->DrawBufferedInstances(true); //Use the GUI Manager to render the Instanced Sprites very fast
+		}
 
 		//End the Frame and also present to the screen
 		m_ActiveRenderSystem->EndFrame();

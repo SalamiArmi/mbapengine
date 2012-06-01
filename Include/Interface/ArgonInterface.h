@@ -33,7 +33,7 @@ namespace Argon
 		GUID_IFont,					//
 		GUID_ISprite,				//
 		GUID_IText,					//
-		GUID_IRenderable,			//
+		GUID_IDrawable,				//
 		GUID_IShader,				//
 		GUID_ITexture,				//
 		GUID_IManager,				//

@@ -12,7 +12,7 @@
 
 namespace Argon
 {
-	class GUIManager : public IArgonUnknownImp3<Manager<GUIResource>, GUID_IManager, IComponent, GUID_IComponent, IFrameListner, GUID_IFrameListner>
+	class GUIManager : public IArgonUnknownImp2<Manager<GUIResource>, GUID_IManager, IComponent, GUID_IComponent>
 	{
 	public:
 		GUIManager();
@@ -40,19 +40,19 @@ namespace Argon
 		///Param Name: The new name of the Resource attempting to be created
 		GUIResource* CreateResource(String Name);
 
-		///DRAW(BOOL)
+		///ADDSPRITEINSTANCE(VOID)
 		///
-		///Draw the Graphical object
+		///Add a Sprite instance to this Manager
 		///
-		///Param Pass: The pass that will be preformed
-		bool FrameDraw(RenderPass Pass);
+		///Param Resource: The $GUIResource$ that will be buffered to the RenderQueue
+		void AddSpriteInstance(GUIResource* Resource);
 
-		///SUPPORTEDPASS(BOOL)
+		///DRAWBUFFEREDINSTANCES(VOID)
 		///
-		///Does the Graphics Support this pass if so make an attempt to render
+		///Draw all the buffered sprites to the current render target
 		///
-		///Param Pass: The Pass that will be checked against
-		bool SupportsPass(RenderPass Pass);
+		///Param Clear: After the sprites have been drawn to the RenderTarget does the buffer clear
+		bool DrawBufferedInstances(bool Clear);
 
 	private:
 
@@ -78,8 +78,9 @@ namespace Argon
 		///Param End:
 		int SortPartition(int Start, int End);
 
-		uint		m_MaxSprites;
-		ISprite*	m_Sprite;
+		uint					m_MaxSprites;
+		ISprite*				m_Sprite;
+		Vector<GUIResource*>	m_SpriteInstances;
 	}; //Class
 } //Namespace
 

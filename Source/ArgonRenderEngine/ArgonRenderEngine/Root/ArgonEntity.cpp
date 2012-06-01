@@ -9,6 +9,7 @@ namespace Argon
 		m_RenderOrder(0),
 		m_Flags(Entity::FLAG_None)
 	{
+		m_LocalTranslation.SetScale(1.0f);
 	}
 
 	Entity::~Entity()

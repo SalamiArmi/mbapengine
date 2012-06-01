@@ -24,12 +24,12 @@ namespace Argon
 	public:
 		Root(IPlatform* Platform);
 
-		///SETPLATFORM(VOID)
+		///GETPLATFORM(IPLATFORM)
 		///
-		/// Set the Desired platform
+		/// Get the current platform in use
 		///
-		///Param Platfom: 
-		void SetPlatform(IPlatform* Platform);
+		///No Params 
+		IPlatform* GetPlatform();
 
 		///LOAD(BOOL)
 		///
@@ -72,6 +72,13 @@ namespace Argon
 		///
 		///Param ComponentName: The name of the Component that will be removed. 
 		void RemoveComponent(String ComponentName);
+		
+		///GETCOMPONENT(ICOMPONENT)
+		///
+		///Remove a new component to the Root.
+		///
+		///Param ComponentName: The name of the Component that will be removed. 
+		IComponent* GetComponent(String ComponentName);
 
 		///FRAMEUPDATE(BOOL)
 		///

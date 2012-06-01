@@ -2,6 +2,8 @@
 #include "ArgonSceneManager.h"
 #include "ArgonText.h"
 #include "ArgonEntity.h"
+#include "ArgonGUIResource.h"
+#include "ArgonGUIManager.h"
 
 namespace Argon
 {
@@ -47,40 +49,30 @@ namespace Argon
 	{
 		if(Root::instance()->GetCurrentSceneManager() != this) return false;
 
-		for(Vector<IRenderable*>::Iterator RenderableIt = m_Renderable.Begin(); RenderableIt != m_Renderable.End(); ++RenderableIt)
+		for(Vector<IDrawable*>::Iterator DrawableIt = m_Renderable.Begin(); DrawableIt != m_Renderable.End(); ++DrawableIt)
 		{
-			if((*RenderableIt)->SupportsPass(Pass))
+			if((*DrawableIt)->SupportsPass(Pass))
 			{
-				if((*RenderableIt)->Bind())
+				if((*DrawableIt)->Bind())
 				{
-					(*RenderableIt)->FrameDraw();
-					(*RenderableIt)->UnBind();
+					(*DrawableIt)->FrameDraw();
+					(*DrawableIt)->UnBind();
 				}
 			}
 		}
 
-		return false;
+		return true;
 	}
 
-	Camera* SceneManager::CreateCamera(QString Name)
+	Camera* SceneManager::CreateCamera(String Name)
 	{
 		//Create a new Camera
-		Camera* Cam = new Camera(Name.c_str());
+		Camera* Cam = new Camera(Name);
+
+		m_RootEntity->AddSubnode(Cam);
 		m_Entities.Push_Back(Cam);
+
 		return Cam;
-	}
-
-	Camera* SceneManager::GetCamera(QString Name)
-	{
-		for(Vector<Entity*>::Iterator it = m_Entities.Begin(); it != m_Entities.End(); ++it)
-		{
-			if((*it)->GetName() == Name.c_str() && (*it)->GetType() == Entity::TYPE_Camera)
-			{
-				return (Camera*)(*it);
-			}
-		}
-
-		return NULL;
 	}
 
 	bool SceneManager::SupportsPass(IFrameListner::RenderPass Pass)
@@ -88,17 +80,41 @@ namespace Argon
 		return true;
 	}
 
-	Text* SceneManager::CreateText(QString Name)
+	Text* SceneManager::CreateText(String Name)
 	{
-		Text* Return = new Text("Hello World");
-		Return->Load();
-		m_Renderable.Push_Back(Return);
+		Text* Txt = new Text(Name);
+		Txt->Load();
 
-		return Return;
+		m_RootEntity->AddSubnode(Txt);
+		m_Renderable.Push_Back(Txt);
+		m_Entities.Push_Back(Txt);
+
+		return Txt;
 	}
 
-	Text* SceneManager::GetText(QString Name)
+	GUIResource* SceneManager::CreateGUI(String Name)
 	{
+		GUIManager* UIManager = (GUIManager* )Root::instance()->GetComponent("GUI Manager");
+		GUIResource* Gui = UIManager->CreateResource(Name);
+		Gui->Load();
+
+		m_RootEntity->AddSubnode(Gui);
+		m_Renderable.Push_Back(Gui);
+		m_Entities.Push_Back(Gui);
+
+		return Gui;
+	}
+
+	Entity* SceneManager::GetEntity(String EntityName)
+	{
+		for(Vector<Entity*>::Iterator it = m_Entities.Begin(); it != m_Entities.End(); ++it)
+		{
+			if((*it)->GetName() == EntityName)
+			{
+				return (*it);
+			}
+		}
+
 		return NULL;
 	}
 
