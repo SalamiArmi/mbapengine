@@ -37,7 +37,8 @@ namespace Argon
 	{	
 		if(Root::instance()->GetCurrentSceneManager() != this) return false;
 
-		m_RootEntity->Update(DeltaT);
+		//Start updating all the Entities
+		m_RootEntity->FrameUpdate(DeltaT);
 
 		return true;
 	}

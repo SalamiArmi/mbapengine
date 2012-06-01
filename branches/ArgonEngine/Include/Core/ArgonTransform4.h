@@ -357,6 +357,16 @@ namespace Argon
 			return (*this);
 		}
 
+		Transform4& SetScale(const Vector3& Scale)
+		{
+			m_RowCol[0][0] = Scale.x;
+			m_RowCol[1][1] = Scale.y;
+			m_RowCol[2][2] = Scale.z;
+			m_RowCol[3][3] = 1.0F;
+
+			return (*this);
+		}
+
 		Vector3 GetScale()
 		{
 			return Vector3(m_RowCol[0][0], m_RowCol[1][1], m_RowCol[2][2]);

@@ -21,6 +21,11 @@ namespace Argon
 			UpdateBoundingSphere	= 1 << 1,
 			UpdateVisibility		= 1 << 3,
 
+			FLAG_None				= 1 << 4,
+			FLAG_Visible			= 1 << 5,
+			FLAG_Collidable			= 1 << 6,
+			
+
 			InitialUpdateFlags		= UpdateTransform | UpdateBoundingSphere,
 
 		}; //Enum
@@ -55,12 +60,12 @@ namespace Argon
 		///No Params:
 		Type GetType();
 
-		///DETATCH(BOOL)
+		///FRAMEUPDATE(VOID)
 		///
-		/// Detatch from the $Entity$ that is currently holding the Transformed information
+		/// Update the Frame before drawing
 		///
-		///No Params:
-		bool Detatch();
+		///Param DeltaT: The time between two frames
+		void FrameUpdate(float DeltaT);
 
 		///SETORIENTATION(VOID)
 		///
@@ -111,6 +116,41 @@ namespace Argon
 		///No Params:
 		Vector3 GetScale();
 
+		///GETLOCALTRANSLATION(MATRIX4)
+		///
+		///Get the local translation for this entity
+		///
+		///No Params:
+		Transform4 GetLocalTranslation();
+
+		///SETVISIBLE(VOID)
+		///
+		///Set if the $Entity$ is visible or not
+		///
+		///Param Visible: Is the Entity visible or not
+		void SetVisible(bool Visible);
+
+		///GETVISIBLE(BOOL)
+		///
+		///Get if the $Entity$ is visible or not
+		///
+		///No Params:
+		bool GetVisible();
+
+		///SETCOLLIDABLE(VOID)
+		///
+		///Set if the $Entity$ is collidable or not
+		///
+		///No Params:
+		void SetCollidable(bool Collidable);
+
+		///GETCOLLIDABLE(BOOL)
+		///
+		///Get if the $Entity$ is collidable or not
+		///
+		///No Params:
+		bool GetCollidable();
+
 		///SETMANIPULATOR(VOID)
 		///
 		/// Set the Manipulator that will change the state of the current $Entity$
@@ -140,14 +180,9 @@ namespace Argon
 		int GetRenderOrder();
 
 	private:
+		Transform4				m_LocalTranslation;
 
-		///FRAMEUPDATE(BOOL)
-		///
-		/// Update the Frame before drawing
-		///
-		///Param DeltaT: The time between two frames
-		bool FrameUpdate(float DeltaT);
-
+		NodeFlags				m_Flags;
 		Type					m_Type;
 		String					m_Name;
 		Manipulator*			m_Manipulator;

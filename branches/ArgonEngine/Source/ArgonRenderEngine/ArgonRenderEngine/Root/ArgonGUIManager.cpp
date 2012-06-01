@@ -21,6 +21,12 @@ namespace Argon
 		return QString("GUIManager");
 	}
 
+	bool GUIManager::Load()
+	{
+		AddRef();
+		return true;
+	}
+
 	GUIResource* GUIManager::CreateResource(String Name)
 	{
 		m_Resources.Push_Back(new GUIResource(Name));
@@ -68,7 +74,7 @@ namespace Argon
 
 	bool GUIManager::SupportsPass(RenderPass Pass)
 	{
-		return (Pass & IFrameListner::RENDERPASS_TopMost);
+		return (IFrameListner::RENDERPASS_TopMost == (Pass & IFrameListner::RENDERPASS_TopMost));
 	}
 
 	void GUIManager::Refresh()

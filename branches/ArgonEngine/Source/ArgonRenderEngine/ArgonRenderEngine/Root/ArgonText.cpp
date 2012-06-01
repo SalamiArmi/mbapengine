@@ -30,7 +30,7 @@ namespace Argon
 
 	bool Text::SupportsPass(IFrameListner::RenderPass Pass)
 	{
-		return (Pass & IFrameListner::RENDERPASS_TopMost);
+		return (IFrameListner::RENDERPASS_TopMost == (Pass & IFrameListner::RENDERPASS_TopMost));
 	}
 
 	bool Text::Bind()
