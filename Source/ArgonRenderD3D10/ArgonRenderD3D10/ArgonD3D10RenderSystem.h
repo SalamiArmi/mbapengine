@@ -10,8 +10,6 @@
 
 #include "ArgonD3D10Device.h"
 
-#include <assert.h>
-
 namespace Argon
 {
 	//Predefines
@@ -88,7 +86,7 @@ namespace Argon
 		D3D10RenderTarget*	GetBackBuffer();
 
 	protected:
-		virtual ~D3D10RenderSystem();
+		~D3D10RenderSystem();
 		D3D10RenderSystem();
 
 		uint				m_Width;
